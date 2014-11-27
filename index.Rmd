@@ -445,7 +445,7 @@ In terms of the data used to run the regressions, the relative high number of co
  
 Another shortcoming faced at this stage was the integration of figures from the descriptive statistics into the final report. A transitory solution was to save those pictures in a subfolder of the repository.
 
-```{r}
+```{r, results='asis'}
 library(googleVis)
 RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
                         colorvar = 'Rural',
