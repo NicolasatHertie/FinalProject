@@ -1,0 +1,18 @@
+---
+title: "Untitled"
+output: pdf_document
+---
+
+
+
+```{r}
+library(googleVis)
+RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
+                        colorvar = 'Rural',
+                        options = list(
+                          colors = "['#fff7bc', '#d95f0e']"
+                        ))
+
+print(RuralMap, tag = 'chart')
+```
+
