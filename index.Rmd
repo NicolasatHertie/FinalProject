@@ -470,4 +470,8 @@ print(RuralMap, tag = 'chart')
 ```
 
 
+# Demo
+```{r, results='asis', echo=FALSE}
+demo(WorldBank)
+```
 
