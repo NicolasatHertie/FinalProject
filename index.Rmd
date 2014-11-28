@@ -445,8 +445,9 @@ In terms of the data used to run the regressions, the relative high number of co
  
 Another shortcoming faced at this stage was the integration of figures from the descriptive statistics into the final report. A transitory solution was to save those pictures in a subfolder of the repository.
 
-```{r, results='asis'}
-library(googleVis)
+# Rural population
+```{r, results='asis', echo=FALSE}
+suppressPackageStartupMessages(library(googleVis))
 RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
                         colorvar = 'Rural',
                         options = list(
@@ -458,8 +459,7 @@ print(RuralMap, tag = 'chart')
 
 
 # Female School Enrollment
-```{r, results='asis', echo=FALSE, include=FALSE}
-library(googleVis)
+```{r, results='asis', echo=FALSE}
 RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
                         colorvar = 'FemSchool',
                         options = list(
