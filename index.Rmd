@@ -458,7 +458,7 @@ print(RuralMap, tag = 'chart')
 
 
 # Female School Enrollment
-```{r, results='asis'}
+```{r, results='asis', echo=FALSE, include=FALSE}
 library(googleVis)
 RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
                         colorvar = 'FemSchool',
@@ -468,3 +468,6 @@ RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
 
 print(RuralMap, tag = 'chart')
 ```
+
+
+
