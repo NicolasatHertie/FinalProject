@@ -456,3 +456,15 @@ RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
 print(RuralMap, tag = 'chart')
 ```
 
+
+# Female School Enrollment
+```{r, results='asis'}
+library(googleVis)
+RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
+                        colorvar = 'FemSchool',
+                        options = list(
+                          colors = "['#fff7bc', '#d95f0e']"
+                        ))
+
+print(RuralMap, tag = 'chart')
+```
