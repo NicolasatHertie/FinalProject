@@ -391,6 +391,76 @@ stargazer(L4, L5, L6, title="Logistic Regression Results", type="latex",  font.s
 
 ```
 
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+#### Trying to get significant results ;)
+
+L9 <- lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data=Merged)
+
+summary(L9)
+
+L10 <- glm(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + as.factor(QFemSchool), data=Merged, family='binomial')
+
+
+# Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
+Predicted_10 <- with(Merged,
+                  data.frame(lGDPpc = 7.003,
+                             lRural = 4.461,
+                             lCO2 = -2.52,
+                             lHCexpend = 2.125,
+                             lLifeExpect = 3.98,
+                             lWater = 4.18,
+                             lSanitation = 3.46,
+                             lDPT = 4.199,
+                             lMeasles = 4.235,
+                             Inverse = -1.2576,
+                             QFemSchool = factor(1:4)))
+Predicted_10
+
+
+# Calculating the predicted probabilities
+Predicted_10 <- predict(L10, newdata = Predicted_10,
+                            type = 'response')
+
+Predicted_10
+
+# Combine
+Predicted_3 <- data.frame(Quintiles, Predicted_3)
+
+L11 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data=Merged, family='binomial')
+
+summary(L11)
+
+Merged2 <- Merged[which (!Merged$IncidenceDif==0), ] 
+
+L12 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data=Merged2, family='binomial')
+
+summary(L12)
+
+
+summary(L10)
+
+mean(Merged$Incidence)
+
+Merged$Dummy <- as.numeric(Merged$Incidence<=0.3493198)
+
+hist(Merged$Dummy)
+
+0.3493198
+
+Merged$Dummy[Merged$Incidence %in% 0.3493199:1] <- 0
+Merged$Dummy[Merged$Incidence %in% 0:0.3493198] <- 1
+summary(Merged$Dummy)
+
+<- Incidence
+### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
+            #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
+            #'FemSchool3', 'FemSchool4', 'Inverse2', 'Inverse3', 'Inverse4', 'FemSchool',
+            #'Life expectancy', 'DPT', 'Measles', 'Interaction2', 'Interaction3', 'Interaction4', 
+            #'Constant')
+
+```
+
 \pagebreak
 
 **Predicted Probabilities**
