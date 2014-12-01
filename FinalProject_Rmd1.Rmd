@@ -21,7 +21,6 @@ repmis::LoadandCite(pkgs, file = 'RpackageCitations.bib')
 
 # Loading the merged files from the Working directory
 Merged <- read.csv(file="MergedData")
-MergedOld <- read.csv(file="MergedOld")
 ```
 
 
@@ -98,7 +97,7 @@ The histogram of the dependent variable (Figure 1) shows that the incidence rate
 ### 1. Plotting the dependent variable
 
 # Histogram of dependent variable
-Histdep <- hist(MergedOld$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", main="Figure 1: Incidence Rate")
+Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", main="Figure 1: Incidence Rate")
 axis(side=1, at=seq(0,5, 0.5), labels=seq(0,5,0.5))
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 
@@ -107,7 +106,7 @@ axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates decreased between the period of 2000 to 2015 (see Figure 2).
 ```{r, echo=FALSE, include=FALSE}
 # Look at incidence over time - seee the general trend
-IncT <- ggplot(aes(x = year, y = Incidence), data = MergedOld) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
+IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
 IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig2.png", width=4, height=5, dpi=100)
 ```
@@ -117,7 +116,7 @@ ggsave("fig2.png", width=4, height=5, dpi=100)
 When plotting the incidence rates per country (Figure 3 in repository) the range of observations per country is shown and the outliers (countries with high incidence rates) can be identified.
 ``` {r, echo=FALSE, include=FALSE}
 # Look at incidence rate per country
-IncC <- ggplot2::ggplot(MergedOld, aes(Incidence, country)) + geom_point() + theme_bw()
+IncC <- ggplot2::ggplot(Merged, aes(Incidence, country)) + geom_point() + theme_bw()
 IncC + ggtitle("Figure 3: Incidence Rate per Country") + theme(plot.title = element_text(lineheight=3, face="bold"))
 
 ggsave("fig3.png", width=8, height=10, dpi=100)
@@ -134,7 +133,7 @@ For this purpose, the dependent variable was lagged by one period and the differ
 
 ```{r, echo=FALSE, include=FALSE}
 # Look at difference in incidence rate per country between one year to the next
-IncClag <- ggplot2::ggplot(MergedOld, aes(IncidenceDif, country)) + geom_point() + theme_bw()
+IncClag <- ggplot2::ggplot(Merged, aes(IncidenceDif, country)) + geom_point() + theme_bw()
 IncClag + ggtitle("Figure 4: Change in Incidence Rate compared to Previous Years") + theme(plot.title = element_text(lineheight=3, face="bold"))
 
 ggsave("fig4.png", width=8, height=10, dpi=100)
