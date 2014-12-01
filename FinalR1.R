@@ -245,17 +245,7 @@ Merged <- Merged[, !(colnames(Merged) %in% c("iso3c", "region","capital", "longi
 ################## PREPARE THE DATABASE FOR THE REGRESSION #########################
 ####################################################################################
 
-# 7. Creating the variables required to perform the regressions
-
-# Lagging the dependent variable
-Merged <- slide(Merged, Var = "Incidence", GroupVar = "iso2c", slideBy = -1,
-                NewVar = "Incidence2")
-
-# Creating a file with the difference between t0 and t1
-Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidence2)
-
-# Creating a dummy variable for countries with IndicenceDif>0
-Merged$DDif <- as.numeric(Merged$IncidenceDif<=0)
+### 7. Imputing missing values with amelia package
 
 ### Check if all Variables are coded as numeric
 str(Merged)
@@ -263,19 +253,16 @@ str(Merged)
 Merged$Incidence <- as.numeric(Merged$Incidence)
 Merged$DPT <- as.numeric(Merged$DPT)
 Merged$Measles <- as.numeric(Merged$Measles)
-Merged$Incidence2 <- as.numeric(Merged$Measles)
 
-### 8. Imputing missing values with amelia package
+### Copy Merged Dataset
 MergedOld <- Merged
 
-# drop collinear variables
-Merged$Incidence2 <- NULL
-Merged$IncidenceDif <- NULL
-Merged$Incidence <- NULL
-
 # check for Variance Inflation
-collinear <- glm(DDif ~ GDPpc + Rural + CO2 + HCexpend + Water + Sanitation + Unemploym + HCexpendpc + FemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged, family = 'binomial')
-vif(collinear)
+collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + FemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
+vif(collinear1)
+
+collinear2 <- lm(Incidence ~ GDPpc + Rural + CO2 + HCexpend + Water + Sanitation + Unemploym + HCexpendpc + FemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
+vif(collinear2)
 
 # drop collinear variables
 Merged$GDP <- NULL
@@ -302,17 +289,31 @@ save(a.out, file = "imputations.RData")
 a.out$imputations[[1]]
 write.amelia(obj=a.out, file.stem = "outdata")
 
-jpeg('amelia.jpg')
-plot(a.out)
-dev.off()
-
 summary(a.out)
 plotamelia <- plot(a.out)
-save("plotamelia.png", width=4, height=5, dpi=100)
 save(plotamelia, file = "plotamelia.png")
 a.out1 <- read.csv(file="outdata1.csv")
 
 Merged <- a.out1
+
+# 8. Creating the variables required to perform the regressions
+
+# Lagging the dependent variable
+Merged <- slide(Merged, Var = "Incidence", GroupVar = "iso2c", slideBy = -1,
+                NewVar = "Incidence2")
+
+
+# Creating a file with the difference between t0 and t1
+Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidence2)
+
+# Creating a dummy variable for countries with IndicenceDif>0
+Merged$DDif <- as.numeric(Merged$IncidenceDif<=0)
+
+# 9. Dropping the year 2000
+
+Merged$DDif[Merged$year==2000] 
+Merged2 <- Merged[which (Merged$year>2000), ] 
+Merged3 <- Merged[which (Merged$IncidenceDif>0 | Merged$IncidenceDif<0), ] 
 
 # 9. Creating final .csv to speed up the loading of the data
 
