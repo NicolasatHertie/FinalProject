@@ -109,7 +109,7 @@ library(stargazer)
 ```
 
 ## Imputed missing values
-
+![](plotamelia.png)
 
 ## Figure 2
 ![](fig2.png)

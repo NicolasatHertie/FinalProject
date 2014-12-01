@@ -161,22 +161,7 @@ Scatterplots were used for each category of Dahlgrehn's model in order to see wh
 
 As can be seen from the Scatterplots in the descriptive statistics most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
 
-```{r, echo=FALSE, include=FALSE}
-# Logging the independent variables for better comparability
-Merged$lGDPpc <- log(Merged$GDPpc)
-Merged$lRural <- log(Merged$Rural)
-Merged$lCO2 <- log(Merged$CO2)
-Merged$lHCexpend <- log(Merged$HCexpend)
-Merged$lWater <- log(Merged$Water)
-Merged$lSanitation <- log(Merged$Sanitation)
-Merged$lUnemploym <- log(Merged$Unemploym)
-Merged$lHCexpendpc <- log(Merged$HCexpendpc)
-Merged$lFemUnempl <- log(Merged$FemUnempl)
-Merged$lFemSchool <- log(Merged$FemSchool)
-Merged$lLifeExpect <- log(Merged$LifeExpect)
-Merged$lDPT <- log(Merged$DPT)
-Merged$lMeasles <- log(Merged$Measles)
-```
+
 
 
 ```{r, echo=FALSE, include=FALSE}
