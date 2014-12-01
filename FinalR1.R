@@ -2,8 +2,8 @@
 ########## SETTING THE WORKING DIRECTORY AND LOADING REQUIRED PACKAGES #############
 ####################################################################################
 
-setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
-# setwd("/Users/Nico/Documents/Hertie/Social science data analysis/CollaborativeResearchProject/Research-Project-Assignment-3")
+# setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
+setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # 1. Loading Required Packages
 
