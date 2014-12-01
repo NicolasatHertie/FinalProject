@@ -1,6 +1,6 @@
 ---
 title: "Determinants of HIV"
-
+author: M. Moellenkamp and N. Rosemberg
 number_sections: yes
 highlight: zenburn
 date: December 4th, 2014
@@ -37,6 +37,8 @@ Source: http://www.mdgmonitor.org/goal6.cfm
 
 ## Literature Review
 
+![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
+
 ## The Model
 
 To answer our research question we will estimate the following equation:
@@ -61,8 +63,8 @@ Where I stands for HIV/AIDS incidence, SE stands for socioeconomic factors, WLC 
 
 ### 1. Setting Working Directory & Loading the data
 # Setting the Working Directory
-setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
-# setwd("/Users/Nico/Documents/Hertie/Social science data analysis/CollaborativeResearchProject")
+# setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
+setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # Loading the merged files from the Working directory
 Merged <- read.csv(file="MergedData")
@@ -109,13 +111,16 @@ library(stargazer)
 ```
 
 ## Imputed missing values
-![](plotamelia.png)
 
-## Figure 2
+##
+### 
 ![](fig2.png)
 
-## Figure 3
+##
+###
 ![](fig3.png)
 
 
 ## Conclusions and Limitation
+
+
