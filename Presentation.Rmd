@@ -16,20 +16,45 @@ output:
 - Motivation
 - Research Question
 - Methodology and Datasets
+- Literature Review
 - Findings
 - Conclusion and Limitations
 
-## Motivation
+## Motivation and Research Question
 
-## Research Question
+1. Understand why some countries failed to achieve MDG 6A
 
-This paper aims to provide evidence to assess why some countries struggle to achieve MDG 6A. We believe that one possible explanation for the failure of some interventions in reducing HIV/AIDS may lie in the lack of a full understanding of the determinants of the disease, which can in turn lead to ill-specified interventions and wrongly targeted campaigns.
+- *MDG 6: Combat HIV/AIDS, malaria and other diseases*
 
-The literature reviewed for this paper identifies a myriad of determinants of health. However, there is a gap in the literature when it comes to the determinants of specific diseases. The aim of this paper is to test the applicability of one of the most commonly used theories of determinants of health, to explain the evolution of HIV/AIDS rates. The first hypothesis of this paper is that all general determinants of health (as identified by our reference model) are determinants of HIV/AIDS. By identifying variables that help to explain HIV/AIDS incidence and prevalence, this paper will help move forward the discussion of the determinants of HIV/AIDS . 
+- *Target 6A: Have halted by 2015 and begun to reverse the spread of HIV/AIDS*
 
-Furthermore, given that the literature identifies interlinkages between the different determinants of health (see @Solar2010), this paper will evaluate to what extent those linkages are reflected on the micro level. The second hypothesis of this paper is that socioeconomic, environmental and cultural factors can be used to explain individual lifestyle factors.
+Source: http://www.mdgmonitor.org/goal6.cfm
+
+2. Explore disease-specific determinants of health
+
+**Research Question: Are community level factors significant determinants of HIV/AIDS incidence rates?**
+
+
+
+## Literature Review
+
+## The Model
+
+To answer our research question we will estimate the following equation:
+
+$$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{it} + {\beta}_4 ILF_{it} + {\epsilon}_{it}$$
+
+Where I stands for HIV/AIDS incidence, SE stands for socioeconomic factors, WLC stands for working and living conditions, SCN stands for social and community networks and ILF stands for individual lifestyle factors. 
 
 ## Methodology and Dataset
+
+**Methodology**
+
+- We will...
+
+**Datasets**
+
+- We will use the World Development Indicators (WDI) for the independent variables and a dataset from UNAIDS for the HIV/AIDS prevalence rate. 
 
 ## Findings
 
