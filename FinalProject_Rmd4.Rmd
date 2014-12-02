@@ -60,7 +60,21 @@ library(fmsb)
 library(car)
 # install.packages("stargazer")
 library(stargazer)
+```
 
+```{r, echo=FALSE, include=FALSE, error=FALSE}
+# 8. Creating the variables required to perform the regressions
+
+# Lagging the dependent variable
+Merged <- slide(Merged, Var = "Incidence", GroupVar = "iso2c", slideBy = -1,
+                NewVar = "Incidence2")
+
+
+# Creating a file with the difference between t0 and t1
+Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidence2)
+
+# Creating a dummy variable for countries with IndicenceDif>0
+Merged$DDif <- as.numeric(Merged$IncidenceDif<=0)
 ```
 
 # Data Gathering and Cleaning
@@ -101,18 +115,14 @@ Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence R
 axis(side=1, at=seq(0,5, 0.5), labels=seq(0,5,0.5))
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 
-
-Merged$Incidence3 <- Merged$IncidenceDif/Merged$Incidence2
-
 ```
 
 Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates decreased between the period of 2000 to 2015 (see Figure 2).
 ```{r, echo=FALSE, include=FALSE}
 # Look at incidence over time - seee the general trend
-#IncT <- ggplot(aes(x = year, y = Incidence, reorder(Incidence, value), value)), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
-#IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
-#IncT <- transform(IncT, variable=reorder(Incidence, -value) ) 
-#ggsave("fig2.png", width=4, height=5, dpi=100)
+IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
+IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
+ggsave("fig2.png", width=4, height=5, dpi=100)
 ```
 
 ![](fig2.png)
@@ -162,8 +172,8 @@ Scatterplots were used for each category of Dahlgrehn's model in order to see wh
 
 # Inferential Statistics
 
-
-### 7. Imputing missing values with amelia package
+```{r, echo=FALSE}
+###  Imputing missing values with amelia package
 
 ### Check if all Variables are coded as numeric
 str(Merged)
@@ -172,19 +182,43 @@ Merged$Incidence <- as.numeric(Merged$Incidence)
 Merged$DPT <- as.numeric(Merged$DPT)
 Merged$Measles <- as.numeric(Merged$Measles)
 
-### Copy Merged Dataset
-MergedOld <- Merged
-
 # check for Variance Inflation
 collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + FemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
-vif(collinear1)
+```
 
+```{r, echo=FALSE, type = 'latex', header = FALSE}
+# Testing for multicollinearity 1st time
+ collinear1 <- vif(collinear1)
+
+knitr::kable(collinear1, align = 'c', digits = 2,
+      caption = 'Variance Inflation Factors 1')
+
+```
+
+```{r, echo=FALSE}
 collinear2 <- lm(Incidence ~ GDPpc + Rural + CO2 + HCexpend + Water + Sanitation + Unemploym + HCexpendpc + FemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
 vif(collinear2)
+```
 
+
+```{r, echo=FALSE, type = 'latex', header = FALSE}
+# Testing for multicollinearity
+collinear2 <- vif(collinear2)
+
+knitr::kable(collinear2, align = 'c', digits = 2,
+      caption = 'Variance Inflation Factors 2')
+
+```
+
+As can be seen from the Scatterplots (see appendix) most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
+
+```{r, echo=FALSE, include=FALSE}
+
+### Preparing the datset for Imputations
 # drop collinear variables
 Merged$GDP <- NULL
 Merged$Primary <- NULL
+Merged$IncidenceDif <- NULL
 
 # Logging the independent variables for better comparability and imputations
 Merged$lGDPpc <- log(Merged$GDPpc)
@@ -201,95 +235,6 @@ Merged$lLifeExpect <- log(Merged$LifeExpect)
 Merged$lDPT <- log(Merged$DPT)
 Merged$lMeasles <- log(Merged$Measles)
 
-# Impute missings
-a.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country")
-save(a.out, file = "imputations.RData")
-a.out$imputations[[1]]
-write.amelia(obj=a.out, file.stem = "outdata")
-
-zelig package
-
-summary(a.out)
-plotamelia <- plot(a.out)
-save(plotamelia, file = "plotamelia.png")
-a.out1 <- read.csv(file="outdata1.csv")
-
-Merged <- a.out1
-
-# 8. Creating the variables required to perform the regressions
-
-# Lagging the dependent variable
-Merged <- slide(Merged, Var = "Incidence", GroupVar = "iso2c", slideBy = -1,
-                NewVar = "Incidence2")
-
-
-# Creating a file with the difference between t0 and t1
-Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidence2)
-
-# Creating a dummy variable for countries with IndicenceDif>0
-Merged$DDif <- as.numeric(Merged$IncidenceDif<=0)
-
-# 9. Dropping the year 2000
-
-Merged$DDif[Merged$year==2000] 
-Merged2 <- Merged[which (Merged$year>2000), ] 
-Merged3 <- Merged[which (Merged$IncidenceDif>0 | Merged$IncidenceDif<0), ] 
-As can be seen from the Scatterplots in the descriptive statistics most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
-
-
-
-
-```{r, echo=FALSE, include=FALSE}
-# Creating a variable with the inverse from FemUnempl
-Merged$Inverse <- 1/Merged$FemUnempl
-Merged$Inverse <- log(Merged$Inverse)
-```
-
-As the dependent variable is coded as a dummy, being 1 if MDG 6.A is reached and 0 for countries that are not reaching MDG 6.A logistic regressions are used for the inferential statistics part. As Odds and Odds ratios are difficult to present to a broad audience predicted probabilities are calculated after running the logistic regressions. The interpretation of the results will mainly focus on the predicted probabilities.
-
-```{r, echo=FALSE, include=FALSE}
-# MODEL 1 - Running a general logistic regression using all independent variables
-L1 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lUnemploym + lHCexpendpc + Inverse + lFemSchool + lLifeExpect + lDPT + lMeasles,
-          data=Merged, family = 'binomial')
-summary(L1)
-```
-
-The test for variance inflation factors showed that in our first logistic regression model six variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital, Unemployment and Female unemployment, Primary education and female schooling. Therefore, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, namely unemployment, primary education and GDP.
-
-\pagebreak
-
-```{r, echo=FALSE, type = 'latex', header = FALSE}
-# Testing for multicollinearity
- vif1 <- vif(L1)
-
-knitr::kable(vif1, align = 'c', digits = 2,
-      caption = 'Variance Inflation Factors 1')
-
-```
-
-
-We tested the variance inflation factors of the new logistic regression model and all remaining variables passed the test.
-
-
-```{r, echo=FALSE, include=FALSE} 
-# MODEL 3 - GDPpc
-L3 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lFemUnempl + lFemSchool + lLifeExpect + lDPT + lMeasles,
-          data=Merged, family = 'binomial')
-summary(L3)
-```
-
-```{r, echo=FALSE, type = 'latex', header = FALSE}
-# Testing for multicollinearity
-vif3 <- vif(L3)
-
-knitr::kable(vif3, align = 'c', digits = 2,
-      caption = 'Variance Inflation Factors 3')
-
-```
-
-
-```{r, echo=FALSE, include=FALSE}
-# MODEL 4 - Including a new variable with FemSchool by quintiles
 
 # Creating a new variable with FemSchool by quintiles
 Merged$QFemSchool <- Merged$lFemSchool
@@ -298,182 +243,8 @@ Merged$QFemSchool[Merged$lFemSchool>4.53 & Merged$lFemSchool<=4.622] <-2
 Merged$QFemSchool[Merged$lFemSchool>4.622 & Merged$lFemSchool<=4.697] <-3
 Merged$QFemSchool[Merged$lFemSchool>4.697] <-4
 
-# LOGISTIC REGRESSION - Regressing the model with FemSchool quintiles
-L4 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + Inverse + as.factor(QFemSchool) + lLifeExpect + lDPT + lMeasles,
-            data=Merged, family = 'binomial')
-summary(L4)
-```
-\pagebreak
 
-
-```{r, echo=FALSE}
-# Look at Residual vs. Fitted Plot
-plot(L4, which = 1)
-```
-
-**Confidence Intervals**
-
-```{r, echo=FALSE, type = 'latex', header = FALSE, error=FALSE}
-# Looking at confidence intervals
-confidence <- confint(L3)
-
-knitr::kable(confidence, align = 'c', digits = 2,
-      caption = 'Confidence Intervals 1')
-```
-
-```{r, echo=FALSE, include=FALSE}
-# PREDICTED PROBABILITIES:
-#Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
-
-# Looking at Uganda's average values
-Uganda <- subset(Merged,(country=="Uganda"))
-summary(Uganda)
-summary(Merged)
-```
-
-```{r, echo=FALSE, include=FALSE}
-
-# Create labels
-Quintiles <- c('1st Quintile', '2nd Quintile', '3rd Quintile', '4th Quintile')
-
-# Regressing the model on QFemSchool fixing the other indendent variables at Uganda's mean
-Predicted_1 <- with(Merged,
-                  data.frame(lGDPpc = 7.003,
-                             lRural = 4.461,
-                             lCO2 = -2.52,
-                             lHCexpend = 2.125,
-                             lLifeExpect = 3.98,
-                             lWater = 4.18,
-                             lSanitation = 3.46,
-                             lDPT = 4.199,
-                             lMeasles = 4.235,
-                             Inverse = -1.2576,
-                             QFemSchool = factor(1:4)))
-Predicted_1
-
-
-# Calculating the predicted probabilities
-Predicted_1 <- predict(L4, newdata = Predicted_1,
-                           type = 'response')
-
-# Combine
-Predicted_1 <- data.frame(Quintiles, Predicted_1)
-
-# Change Name
-colnames(Predicted_1) <- c("Quintiles", "Predicted Probabilities for Female Schooling")
-
-# MODEL 5 - with the new independent variable without the interaction
-
-# Creating a new variable with Inverse by quintiles
-Merged$QInverse <- Merged$Inverse
-Merged$QInverse[Merged$Inverse<=-2.534] <-1
-Merged$QInverse[Merged$Inverse>-2.534 & Merged$Inverse<=-2.092] <-2
-Merged$QInverse[Merged$Inverse>-2.092 & Merged$Inverse<=-1.459] <-3
-Merged$QInverse[Merged$Inverse>-1.459] <-4
-
-# Regressing the model with Inverse quintiles
-L5 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + as.factor(QInverse) + lFemSchool + lLifeExpect + lDPT + lMeasles,
-          data=Merged, family = 'binomial')
-summary(L5)
-```
-
-```{r, echo=FALSE, include=FALSE}
-# Regressing the model on QInverse fixing the other indendent variables at Uganda's mean
-Predicted_2 <- with(Merged,
-                  data.frame(lGDPpc = 7.003,
-                             lRural = 4.461,
-                             lCO2 = -2.52,
-                             lHCexpend = 2.125,
-                             lLifeExpect = 3.98,
-                             lWater = 4.18,
-                             lSanitation = 3.46,
-                             lDPT = 4.199,
-                             lMeasles = 4.235,
-                             lFemSchool = 4.808,
-                             QInverse = factor(1:4)))
-Predicted_2
-
-# Calculating the predicted probabilities
-Predicted_2 <- predict(L5, newdata = Predicted_2,
-                           type = 'response')
-
-# Combine
-Predicted_2 <- data.frame(Quintiles, Predicted_2)
-
-colnames(Predicted_2) <- c("Quintiles", "Predicted Probabilities of Female Employment")
-
-# MODEL 6 - Regressing the model with an interaction of femUnemployment and femSchool
-
-# Creating a new variable with the interaction between FemSchool and Inverse
-Merged$Interaction <- Merged$lFemSchool * Merged$Inverse
-summary(Merged)
-as.numeric(Merged$Interaction)
-
-# Creating a new variable with the interaction by quintiles
-Merged$QInteraction <- Merged$Interaction
-Merged$QInteraction[Merged$Interaction<=-11.469] <-1
-Merged$QInteraction[Merged$Interaction>-11.469 & Merged$Interaction<=-9.508] <-2
-Merged$QInteraction[Merged$Interaction>-9.508 & Merged$Interaction<=-6.82] <-3
-Merged$QInteraction[Merged$Interaction>-6.82] <-4
-
-# LOGISTIC REGRESSION:
-L6 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + as.factor(QInteraction) + Inverse + lFemSchool,
-          data=Merged, family = 'binomial')
-summary(L6)
-
-
-# Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
-Predicted_3 <- with(Merged,
-                  data.frame(lGDPpc = 7.003,
-                             lRural = 4.461,
-                             lCO2 = -2.52,
-                             lHCexpend = 2.125,
-                             lLifeExpect = 3.98,
-                             lWater = 4.18,
-                             lSanitation = 3.46,
-                             lDPT = 4.199,
-                             lMeasles = 4.235,
-                             Inverse = -1.2576,
-                             lFemSchool = 4.808,
-                             QInteraction = factor(1:4)))
-Predicted_3
-
-
-# Calculating the predicted probabilities
-Predicted_3 <- predict(L6, newdata = Predicted_3,
-                            type = 'response')
-# Combine
-Predicted_3 <- data.frame(Quintiles, Predicted_3)
-
-colnames(Predicted_3) <- c("Quintiles", "Predicted Probabilities of the Interaction Term")
-
-```
-
-**Logistic Regression**
-
-The rest of this section focuses on logistic regressions using only those variables where no clear multicollinearity was observed.
-The results of the logistic regressions were exported with Stargazer. Table 2 shows the logistic regression results. The results show that out of all the tested variables in the model only the variable Sanitation has a significant impact on changes in HIV/Aids incidence rates.
-
-```{r, echo=FALSE, results="asis", error=FALSE}
-#### SAVING THE REGRESSION OUTPUTS WITH STARGAZER
-# Regression Results of Logistic Regression
-stargazer(L4, L5, L6, title="Logistic Regression Results", type="latex",  font.size = "scriptsize")
-
-### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
-            #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
-            #'FemSchool3', 'FemSchool4', 'Inverse2', 'Inverse3', 'Inverse4', 'FemSchool',
-            #'Life expectancy', 'DPT', 'Measles', 'Interaction2', 'Interaction3', 'Interaction4', 
-            #'Constant')
-
-```
-
-
-```{r, echo=FALSE, results="asis", error=FALSE}
-#### Trying to get significant results ;)
-
-L9 <- lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data=Merged)
-
-
+# Creating dependent variable as Dummy (0 if above the mean, 1 if below the mean)
 mean(Merged$Incidence)
 
 Merged$Dummy[Merged$Incidence %in% 0.3493199:1] <- 0
@@ -485,32 +256,86 @@ Merged$Dummy <- as.numeric(Merged$Incidence<=0.3493198)
 hist(Merged$Dummy)
 
 
-summary(L9)
+# Creating a variable with the inverse from FemUnempl
+Merged$Inverse <- 1/Merged$FemUnempl
+Merged$Inverse <- log(Merged$Inverse)
+Merged$FemUnempl <- NULL
+Merged$lFemUnempl <- NULL
+```
 
-L10 <- glm(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + as.factor(QFemSchool), data=Merged, family='binomial')
+```{r, echo=FALSE, include=FALSE}
+### Imputing the missing values
+Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country")
+#save(Imputed.out, file = "imputations.RData")
+#write.amelia(obj=Imputed.out, file.stem = "outdata")
+
+summary(Imputed.out)
+plotamelia <- plot(Imputed.out)
+save(plotamelia, file = "plotamelia.jpg")
+#Imputed <- read.csv(file="outdata1.csv")
+```
+
+```{r, echo=FALSE, include=FALSE}
+# 9. Dropping the year 2000???
+
+#Imputed$DDif[Imputed$year==2000] 
+```
+
+As the dependent variable is coded as a dummy, being 1 if MDG 6.A is reached and 0 for countries that are not reaching MDG 6.A logistic regressions are used for the inferential statistics part. As Odds and Odds ratios are difficult to present to a broad audience predicted probabilities are calculated after running the logistic regressions. The interpretation of the results will mainly focus on the predicted probabilities.
+
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+#### MODEL - Running a general logistic regression using all independent variables
+
+#install.packages("Zelig")
+library(Zelig)
+L1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed.out, model = "logit")
+
+summary(L1.out)
+
+
+a.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + as.factor(QFemSchool), data = Imputed.out, model = "logit")
 
 
 # Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
-Predicted_10 <- with(Merged,
-                  data.frame(lGDPpc = 7.003,
-                             lRural = 4.461,
-                             lCO2 = -2.52,
-                             lHCexpend = 2.125,
-                             lLifeExpect = 3.98,
-                             lWater = 4.18,
-                             lSanitation = 3.46,
-                             lDPT = 4.199,
-                             lMeasles = 4.235,
-                             Inverse = -1.2576,
-                             QFemSchool = factor(1:4)))
-Predicted_10
+x.out <-  setx(a.out, lGDPpc = 7.003, 
+              lRural = 4.461,
+              lCO2 = -2.52,
+              lHCexpend = 2.125,
+              lLifeExpect = 3.98,
+              lWater = 4.18,
+              lSanitation = 3.46,
+              lDPT = 4.199,
+              lMeasles = 4.235,
+              Inverse = -1.2576,
+              QFemSchool = factor(1:4))
 
+s.out <- sim(a.out, x = x.out)
+
+?sim
 
 # Calculating the predicted probabilities
-Predicted_10 <- predict(L10, newdata = Predicted_10,
-                            type = 'response')
+z.out <- sim(L1.out, x = x.out)
 
-Predicted_10
+
+   > data(turnout)
+     > z.out <- zelig(vote ~ race + age, model = "logit", data = turnout)
+     > x.out <- setx(z.out, race = "white")
+     > s.out <- sim(z.out, x = x.out)
+     > summary(s.out)
+
+
+Predicted_1
+
+x.out1 <- setx(L1.out, country = 36, race = "white")
+
+setx(L1.out)
+sim(L1.out, x = L1.out, x1 = NULL)
+L1.results <- lapply(L1.out, function(x) x$result)
+
+summary(L1)
+
+
 
 ### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
             #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
@@ -520,74 +345,5 @@ Predicted_10
 
 ```
 
-\pagebreak
 
-**Predicted Probabilities**
-
-All three predicted probability models fix the values of all independent variables except one to the mean values of Uganda, an interesting case given the failure of this country to contain the spread of HIV/AIDS. The first regression looks at the impact of female school enrolment on the dependent variable.
-
-As it can be observed, the probability of successfully halting or reversing the spread of HIV/AIDS does not change substantially when female school enrolment increases. In fact, the probability of being successful at combating the disease falls between the first and the second quintile and between the third and the forth. 
-
-```{r, echo=FALSE, type = 'latex', header = FALSE}
-
-knitr::kable(Predicted_1, align = 'c', digits = 2,
-      caption = 'Predicted Probabilities Model 1')
-
-```
-
-The second regression (Predicted Probabilities Model 2) focuses on the single impact of female unemployment in halting and reversing the spread of HIV/AIDS.  The predicted probabilities of this model show a similar pattern as in the first model, although the discrepancy in the probabilities of being successfully are larger in this model. 
-
-```{r, echo=FALSE, type = 'latex', header = FALSE}
-# Predicted Probabilities Model 2
-knitr::kable(Predicted_2, align = 'c', digits = 2,
-      caption = 'Predicted Probabilities Model 2')
-
-```
-
-Finally, the third model (Predicted Probabilities Model 3) integrates the interaction between both variables. As with model 2 and 3, there is a discontinuous reduction in the probability of successfully halting and reversing the spread of HIV/AIDS and the probability decreases between quintile one and two and between quintile three and four. 
-```{r, echo=FALSE, type = 'latex', header = FALSE}
-# Predicted Probabilities Model 3
-knitr::kable(Predicted_3, align = 'c', digits = 2,
-      caption = 'Predicted Probabilities Model 3')
-```
-
-All three models show inconsistent results with the predictions of this paper. The disproportionate number of cases of successful halt and reverse of HIV/AIDS in the sample might be responsible for the inconsistency of the results.
-
-# Limitations
-
-The paper had to make some compromises regarding its original aim as outlined in the first research proposal. Due to the significant amount of missing values and the presence of multicollinearity, a considerable number of variables had to be dropped and could ultimately not be integrated in the logistic regression models. 
- 
-The selection of these variables was not arbitrary but followed instead the theoretical framework guiding this research, i.e. Dahlgren's model. Two levels of Dahlgren's model (Social and Community Networks and Individual Lifestyle Factors) ended up underrepresented after dropping these variables. To deal with this limitation, the research will only use the theoretical framework as an instrument to guide the selection of variables but will not utilise the findings to test the validity of the model. 
- 
-In terms of the data used to run the regressions, the relative high number of countries that have already halted or reversed the spread of HIV/AIDS in our sample can lead to biased results. In the next stage of the research, the effect of excluding those countries that only halted the spread will be explored. 
- 
-Another shortcoming faced at this stage was the integration of figures from the descriptive statistics into the final report. A transitory solution was to save those pictures in a subfolder of the repository.
-
-# Appendix
-
-**Scatterplot of variables for socio-economic, cultural and environmental conditions**
-
-```{r, echo=FALSE}
-# Scatterplot of variables for socio-economic, cultural and environmental conditions
-#scatterplotMatrix(~ Incidence + GDPpc + Rural + CO2 + LifeExpect + Population, 
-                  #transform=TRUE, data=Merged)
-```
-
-
-\pagebreak
-**Scatterplot of variables for living and working conditions**
-
-```{r, echo=FALSE}
-# Scatterplot of variables for living and working conditions 
-#scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpendpc,
-                  #transform=TRUE, data=Merged)
-```
-
-
-**Scatterplot of variables for individual lifestyle factors**
-
-```{r, echo=FALSE}
-# Scatterplot of variables for individual lifestyle factors
-#scatterplotMatrix(~ Incidence + DPT + Measles, transform=TRUE, data=Merged)
-
-```
+The test for variance inflation factors showed that in our first logistic regression model six variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital, Unemployment and Female unemployment, Primary education and female schooling. Therefore, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, namely unemployment, primary education and GDP.
