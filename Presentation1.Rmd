@@ -58,8 +58,14 @@ setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
 # setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 ```
 
+
+##
+### 
 ![Figure2](fig2.png)
 
+##
+###
+![Figure3](fig3.png)
 
 ## The Model
 
@@ -125,13 +131,6 @@ library(stargazer)
 
 ## Imputed missing values
 
-##
-### 
-![](fig2.png)
-
-##
-###
-![](fig3.png)
 
 
 ## Conclusions and Limitation
