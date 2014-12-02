@@ -1,14 +1,13 @@
 ---
 title: "Collaborative Research Project - Assignment 3"
-
+bibliography: RpackageCitations.bib
 date: "14 November 2014"
-output: html_document
-number_sections: yes
+output: 
+  pdf_document:
+    number_sections: yes
 highlight: zenburn
 authors: Meilin Moellenkamp and Nicolas Rosemberg
-toc: yes
 ---
-
 
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
 ### 1. Setting Working Directory & Loading the data
@@ -22,7 +21,6 @@ repmis::LoadandCite(pkgs, file = 'RpackageCitations.bib')
 
 # Loading the merged files from the Working directory
 Merged <- read.csv(file="MergedData")
-MergedOld <- read.csv(file="MergedOld")
 ```
 
 
@@ -65,6 +63,37 @@ library(stargazer)
 
 ```
 
+```{r, echo=FALSE, results="asis", error=FALSE, include=FALSE}
+
+# Logging the independent variables for better comparability and imputations
+Merged$lGDPpc <- log(Merged$GDPpc)
+Merged$lRural <- log(Merged$Rural)
+Merged$lCO2 <- log(Merged$CO2)
+Merged$lHCexpend <- log(Merged$HCexpend)
+Merged$lWater <- log(Merged$Water)
+Merged$lSanitation <- log(Merged$Sanitation)
+Merged$lUnemploym <- log(Merged$Unemploym)
+Merged$lHCexpendpc <- log(Merged$HCexpendpc)
+Merged$lFemUnempl <- log(Merged$FemUnempl)
+Merged$lFemSchool <- log(Merged$FemSchool)
+Merged$lLifeExpect <- log(Merged$LifeExpect)
+Merged$lDPT <- log(Merged$DPT)
+Merged$lMeasles <- log(Merged$Measles)
+
+# Lagging the dependent variable
+Merged <- slide(Merged, Var = "Incidence", GroupVar = "iso2c", slideBy = -1,
+                NewVar = "Incidence2")
+
+
+# Creating a file with the difference between t0 and t1
+Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidence2)
+
+# Creating a dummy variable for countries with IndicenceDif>0
+Merged$DDif <- as.numeric(Merged$IncidenceDif<=0)
+
+```
+
+
 # Data Gathering and Cleaning
 
 This section focuses on the process of gathering the data and cleaning the databases to prepare the variables for the data analysis. 
@@ -99,18 +128,21 @@ The histogram of the dependent variable (Figure 1) shows that the incidence rate
 ### 1. Plotting the dependent variable
 
 # Histogram of dependent variable
-Histdep <- hist(MergedOld$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", main="Figure 1: Incidence Rate")
+Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", main="Figure 1: Incidence Rate")
 axis(side=1, at=seq(0,5, 0.5), labels=seq(0,5,0.5))
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
+
+
 
 ```
 
 Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates decreased between the period of 2000 to 2015 (see Figure 2).
 ```{r, echo=FALSE, include=FALSE}
 # Look at incidence over time - seee the general trend
-IncT <- ggplot(aes(x = year, y = Incidence), data = MergedOld) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
-IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig2.png", width=4, height=5, dpi=100)
+#IncT <- ggplot(aes(x = year, y = Incidence, reorder(Incidence, value), value)), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
+#IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
+#IncT <- transform(IncT, variable=reorder(Incidence, -value) ) 
+#ggsave("fig2.png", width=4, height=5, dpi=100)
 ```
 
 ![](fig2.png)
@@ -118,7 +150,7 @@ ggsave("fig2.png", width=4, height=5, dpi=100)
 When plotting the incidence rates per country (Figure 3 in repository) the range of observations per country is shown and the outliers (countries with high incidence rates) can be identified.
 ``` {r, echo=FALSE, include=FALSE}
 # Look at incidence rate per country
-IncC <- ggplot2::ggplot(MergedOld, aes(Incidence, country)) + geom_point() + theme_bw()
+IncC <- ggplot2::ggplot(Merged, aes(Incidence, country)) + geom_point() + theme_bw()
 IncC + ggtitle("Figure 3: Incidence Rate per Country") + theme(plot.title = element_text(lineheight=3, face="bold"))
 
 ggsave("fig3.png", width=8, height=10, dpi=100)
@@ -162,22 +194,7 @@ Scatterplots were used for each category of Dahlgrehn's model in order to see wh
 
 As can be seen from the Scatterplots in the descriptive statistics most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
 
-```{r, echo=FALSE, include=FALSE}
-# Logging the independent variables for better comparability
-Merged$lGDPpc <- log(Merged$GDPpc)
-Merged$lRural <- log(Merged$Rural)
-Merged$lCO2 <- log(Merged$CO2)
-Merged$lHCexpend <- log(Merged$HCexpend)
-Merged$lWater <- log(Merged$Water)
-Merged$lSanitation <- log(Merged$Sanitation)
-Merged$lUnemploym <- log(Merged$Unemploym)
-Merged$lHCexpendpc <- log(Merged$HCexpendpc)
-Merged$lFemUnempl <- log(Merged$FemUnempl)
-Merged$lFemSchool <- log(Merged$FemSchool)
-Merged$lLifeExpect <- log(Merged$LifeExpect)
-Merged$lDPT <- log(Merged$DPT)
-Merged$lMeasles <- log(Merged$Measles)
-```
+
 
 
 ```{r, echo=FALSE, include=FALSE}
@@ -199,9 +216,9 @@ The test for variance inflation factors showed that in our first logistic regres
 
 \pagebreak
 
-```{r, echo=FALSE, results='asis', header = FALSE}
+```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Testing for multicollinearity
-vif1 <- vif(L1)
+ vif1 <- vif(L1)
 
 knitr::kable(vif1, align = 'c', digits = 2,
       caption = 'Variance Inflation Factors 1')
@@ -210,24 +227,6 @@ knitr::kable(vif1, align = 'c', digits = 2,
 
 
 We tested the variance inflation factors of the new logistic regression model and all remaining variables passed the test.
-
-```{r, echo=FALSE, include=FALSE}
-# MODEL 2 - GDP
-# Running the regression without multicollinear variables
-L2 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lFemUnempl + lFemSchool + lLifeExpect + lDPT + lMeasles,
-          data=Merged, family = 'binomial')
-
-summary(L2)
-```
-
-```{r, echo=FALSE, type = 'latex', header = FALSE}
-# Testing for multicollinearity
-# vif2 <- vif(L2)
-
-# knitr::kable(vif2, align = 'c', digits = 2, 
-             # caption = "Variance Inflation Factors 2")
-
-```
 
 
 ```{r, echo=FALSE, include=FALSE} 
@@ -241,8 +240,8 @@ summary(L3)
 # Testing for multicollinearity
 vif3 <- vif(L3)
 
-# knitr::kable(vif3, align = 'c', digits = 2,
-      # caption = 'Variance Inflation Factors 3')
+knitr::kable(vif3, align = 'c', digits = 2,
+      caption = 'Variance Inflation Factors 3')
 
 ```
 
@@ -276,8 +275,8 @@ plot(L4, which = 1)
 # Looking at confidence intervals
 confidence <- confint(L3)
 
-# knitr::kable(confidence, align = 'c', digits = 2,
-      # caption = 'Confidence Intervals 1')
+knitr::kable(confidence, align = 'c', digits = 2,
+      caption = 'Confidence Intervals 1')
 ```
 
 ```{r, echo=FALSE, include=FALSE}
@@ -426,6 +425,59 @@ stargazer(L4, L5, L6, title="Logistic Regression Results", type="latex",  font.s
 
 ```
 
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+#### Trying to get significant results ;)
+
+L9 <- lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data=Merged)
+
+
+mean(Merged$Incidence)
+
+Merged$Dummy[Merged$Incidence %in% 0.3493199:1] <- 0
+Merged$Dummy[Merged$Incidence %in% 0:0.3493198] <- 1
+summary(Merged$Dummy)
+
+Merged$Dummy <- as.numeric(Merged$Incidence<=0.3493198)
+
+hist(Merged$Dummy)
+
+
+summary(L9)
+
+L10 <- glm(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + as.factor(QFemSchool), data=Merged, family='binomial')
+
+
+# Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
+Predicted_10 <- with(Merged,
+                  data.frame(lGDPpc = 7.003,
+                             lRural = 4.461,
+                             lCO2 = -2.52,
+                             lHCexpend = 2.125,
+                             lLifeExpect = 3.98,
+                             lWater = 4.18,
+                             lSanitation = 3.46,
+                             lDPT = 4.199,
+                             lMeasles = 4.235,
+                             Inverse = -1.2576,
+                             QFemSchool = factor(1:4)))
+Predicted_10
+
+
+# Calculating the predicted probabilities
+Predicted_10 <- predict(L10, newdata = Predicted_10,
+                            type = 'response')
+
+Predicted_10
+
+### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
+            #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
+            #'FemSchool3', 'FemSchool4', 'Inverse2', 'Inverse3', 'Inverse4', 'FemSchool',
+            #'Life expectancy', 'DPT', 'Measles', 'Interaction2', 'Interaction3', 'Interaction4', 
+            #'Constant')
+
+```
+
 \pagebreak
 
 **Predicted Probabilities**
@@ -436,8 +488,8 @@ As it can be observed, the probability of successfully halting or reversing the 
 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
 
-# knitr::kable(Predicted_1, align = 'c', digits = 2,
-      # caption = 'Predicted Probabilities Model 1')
+knitr::kable(Predicted_1, align = 'c', digits = 2,
+      caption = 'Predicted Probabilities Model 1')
 
 ```
 
@@ -445,16 +497,16 @@ The second regression (Predicted Probabilities Model 2) focuses on the single im
 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Predicted Probabilities Model 2
-# knitr::kable(Predicted_2, align = 'c', digits = 2,
-      # caption = 'Predicted Probabilities Model 2')
+knitr::kable(Predicted_2, align = 'c', digits = 2,
+      caption = 'Predicted Probabilities Model 2')
 
 ```
 
 Finally, the third model (Predicted Probabilities Model 3) integrates the interaction between both variables. As with model 2 and 3, there is a discontinuous reduction in the probability of successfully halting and reversing the spread of HIV/AIDS and the probability decreases between quintile one and two and between quintile three and four. 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Predicted Probabilities Model 3
-# knitr::kable(Predicted_3, align = 'c', digits = 2,
-      # caption = 'Predicted Probabilities Model 3')
+knitr::kable(Predicted_3, align = 'c', digits = 2,
+      caption = 'Predicted Probabilities Model 3')
 ```
 
 All three models show inconsistent results with the predictions of this paper. The disproportionate number of cases of successful halt and reverse of HIV/AIDS in the sample might be responsible for the inconsistency of the results.
@@ -475,8 +527,8 @@ Another shortcoming faced at this stage was the integration of figures from the 
 
 ```{r, echo=FALSE}
 # Scatterplot of variables for socio-economic, cultural and environmental conditions
-# scatterplotMatrix(~ Incidence + GDPpc + Rural + CO2 + LifeExpect + Population, 
-                  # transform=TRUE, data=Merged)
+scatterplotMatrix(~ Incidence + GDPpc + Rural + CO2 + LifeExpect + Population, 
+                  transform=TRUE, data=Merged)
 ```
 
 
@@ -485,8 +537,8 @@ Another shortcoming faced at this stage was the integration of figures from the 
 
 ```{r, echo=FALSE}
 # Scatterplot of variables for living and working conditions 
-# scatterplotMatrix(~ Incidence + Water + Sanitation + Primary + Unemploym + HCexpendpc,
-                  # transform=TRUE, data=Merged)
+scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpendpc,
+                  transform=TRUE, data=Merged)
 ```
 
 
@@ -494,63 +546,40 @@ Another shortcoming faced at this stage was the integration of figures from the 
 
 ```{r, echo=FALSE}
 # Scatterplot of variables for individual lifestyle factors
-# scatterplotMatrix(~ Incidence + DPT + Measles, transform=TRUE, data=Merged)
-
-```
-
-# Rural population
-```{r, results='asis', echo=FALSE}
-suppressPackageStartupMessages(library(googleVis))
-RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
-                        colorvar = 'Rural',
-                        options = list(
-                          colors = "['#fff7bc', '#d95f0e']"
-                        ))
-
-print(RuralMap, tag = 'chart')
-```
-
-
-# Female School Enrollment
-```{r, results='asis', echo=FALSE}
-RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
-                        colorvar = 'FemSchool',
-                        options = list(
-                          colors = "['#fff7bc', '#d95f0e']"
-                        ))
-
-print(RuralMap, tag = 'chart')
-```
-
-# Demo
-```{r, results='asis', echo=FALSE}
-# DemoWB <- droplevels(subset(Merged, !region %in% "Aggregates"))
-
-M=gvisMotionChart(Merged, idvar='country', timevar="year", xvar="Sanitation", yvar="Incidence", sizevar="Population",  options=list(width=700, height=600), chartid="World Bank")
-
-plot(M)
-
-```
-
-# Leaflet
-```{r, results='asis', echo=FALSE}
-library(rMaps)
-# crosslet(
-#  x = "country", 
-#  y = c("Rural", "CO2", "Water"),
-#  data = web_index
-# )
+scatterplotMatrix(~ Incidence + DPT + Measles, transform=TRUE, data=Merged)
 
 ```
 
 
-```{r, results='asis', echo=FALSE}
-# x<-crosslet(
-  # id_field = "iso2c", 
-  # fields = c("web_index", "universal_access", "impact_empowerment", "freedom_openness"),
-  # data = Merged
-# )
-# print(x)
+
+```{r, echo=FALSE}
+# Creating subsets
+HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
+
+ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=country)) + geom_line() + geom_point()
+```
+
+
+```{r, echo=FALSE, results='asis', include=FALSE}
+# Creating subsets
+CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Uganda"), ] 
+
+ggplot(data=CaseStudies, aes(x=year, y=Water, group=country, color=country)) + geom_line() + geom_point()
+
+ggplot(data=CaseStudies, aes(x=year, y=Sanitation, group=country, color=country)) + geom_line() + geom_point()
+
+ggplot(data=CaseStudies, aes(x=year, y=GDPpc, group=country, color=country)) + geom_line() + geom_point()
+
+ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country)) + geom_line() + geom_point()
+
+ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
+
+ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
+
+ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country)) + geom_line() + geom_point()
+
+ggplot(data=CaseStudies, aes(x=year, y=HCexpendpc, group=country, color=country, shape=country)) + geom_line() + geom_point()
 
 ```
 
+DS <- Imputed.out
