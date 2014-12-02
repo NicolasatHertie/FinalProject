@@ -538,9 +538,9 @@ print(IncidenceM, tag = 'chart')
 ```{r, results='asis', echo=FALSE}
 # DemoWB <- droplevels(subset(Merged, !region %in% "Aggregates"))
 
-# M=gvisMotionChart(Merged, +idvar='country', timevar="year", + xvar="Sanitation", yvar="Incidence", sizevar="Population", + options=list(width=700, height=600), + chartid="World Bank")
+M=gvisMotionChart(Merged, idvar='country', timevar="year", xvar="Sanitation", yvar="Incidence", sizevar="Population", options=list(width=700, height=600), chartid="World Bank")
 
-# plot(M)
+plot(M)
 
 ```
 
