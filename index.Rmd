@@ -9,18 +9,20 @@ authors: Meilin Moellenkamp and Nicolas Rosemberg
 toc: yes
 ---
 
+
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
 ### 1. Setting Working Directory & Loading the data
 # Setting the Working Directory
-# setwd("/Users/Meilin/Desktop/Collaborative Social Data/Research-Project-Assignment-3")
-setwd("/Users/Nico/Documents/Hertie/Social science data analysis/CollaborativeResearchProject")
+# setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
+setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # Loading the Citations
 pkgs <- c("RJSONIO","WDI","dplyr","tidyr","knitr","DataCombine","lmtest","httr","XML","plyr","Amelia","XLConnect","countrycode","ggplot2","magrittr","fmsb","car","stargazer")
 repmis::LoadandCite(pkgs, file = 'RpackageCitations.bib')
 
-# Loading the merged file from the Working directory
+# Loading the merged files from the Working directory
 Merged <- read.csv(file="MergedData")
+MergedOld <- read.csv(file="MergedOld")
 ```
 
 
@@ -61,21 +63,13 @@ library(car)
 # install.packages("stargazer")
 library(stargazer)
 
-
-### 3. Check if Variables are coded as numeric
-str(Merged)
-# Code variables as numeric
-Merged$Incidence <- as.numeric(Merged$Incidence)
-Merged$DPT <- as.numeric(Merged$DPT)
-Merged$Measles <- as.numeric(Merged$Measles)
-
 ```
 
-# 1. Data Gathering and Cleaning
+# Data Gathering and Cleaning
 
 This section focuses on the process of gathering the data and cleaning the databases to prepare the variables for the data analysis. 
 
-The first step in this process was downloading the databases to R Studio. The first dataset consists of 29 World Development Indicators and it was downloaded from World Bank's website. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regional data was dropped. Further, 169 rows that contained only NA values were deleted.
+The first step in this process was uploading the databases to R Studio. The first dataset consists of 29 World Development Indicators and it was downloaded from World Bank's website. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regional data was dropped. Further, 169 rows that contained only NA values were deleted.
 
 After dropping empty rows, the data frame was alphabetically (ascending) ordered, rows were grouped by iso2c code and variables were renamed.
 
@@ -86,13 +80,13 @@ After renaming the variables, a unique identifier was created and missing values
 
 Once both databases were cleaned, the next step was to merge the datasets using the combination of iso2c and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing that UNAIDS' dataset included observations from 1990 to 2012 so all observation between 1990 and 1999 were dropped. Finally, unnecessary columns from the new database were eliminated.
 
-# 2. Descriptive Statistics
+# Descriptive Statistics
 
 The descriptive statistics part consists of the preparation of the variables for data analysis. Tables, plots and histograms are shown to understand the distribution of the variables. 
 Table 1 shows the main descriptive statistics of all the variables that can be found in the cleaned dataset (number of observations, mean, standard deviation, and min and max values).
 
-```{r, echo=FALSE, type = 'latex', header = FALSE}
-stargazer(Merged, type = "text", title="Table 1: Descriptive statistics", digits=1, out="table1.txt")
+```{r, echo=FALSE, results="asis", error=FALSE, include=FALSE}
+stargazer(Merged, type = "latex", title="Descriptive statistics", digits=1, out="table1.txt")
 ```
 
 \pagebreak
@@ -100,14 +94,12 @@ stargazer(Merged, type = "text", title="Table 1: Descriptive statistics", digits
 The histogram of the dependent variable (Figure 1) shows that the incidence rates are not normally distributed but strongly skewed to the left and only few incidence rates are higher than 1. 
 
 
-
-
 ```{r, echo=FALSE}
 
 ### 1. Plotting the dependent variable
 
 # Histogram of dependent variable
-Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", main="Figure 1: Incidence Rate")
+Histdep <- hist(MergedOld$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", main="Figure 1: Incidence Rate")
 axis(side=1, at=seq(0,5, 0.5), labels=seq(0,5,0.5))
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 
@@ -116,31 +108,42 @@ axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates decreased between the period of 2000 to 2015 (see Figure 2).
 ```{r, echo=FALSE, include=FALSE}
 # Look at incidence over time - seee the general trend
-IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
+IncT <- ggplot(aes(x = year, y = Incidence), data = MergedOld) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
 IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig2.png", width=5, height=5, dpi=100, device = pdf)
+ggsave("fig2.png", width=4, height=5, dpi=100)
 ```
+
+![](fig2.png)
 
 When plotting the incidence rates per country (Figure 3 in repository) the range of observations per country is shown and the outliers (countries with high incidence rates) can be identified.
 ``` {r, echo=FALSE, include=FALSE}
 # Look at incidence rate per country
-IncC <- ggplot2::ggplot(Merged, aes(Incidence, country)) + geom_point() + theme_bw()
+IncC <- ggplot2::ggplot(MergedOld, aes(Incidence, country)) + geom_point() + theme_bw()
 IncC + ggtitle("Figure 3: Incidence Rate per Country") + theme(plot.title = element_text(lineheight=3, face="bold"))
 
 ggsave("fig3.png", width=8, height=10, dpi=100)
 
 ```
 
+![](fig3.png)
+
 As the research question investigates why MDG 6.A is not being reached by some countries, the general HIV incidence rate is interesting, but also the decrease in the incidence rate from 2000 to 2015 is even more relevant. As stated in the research proposal Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [United Nations (2014)]. 
+
+\pagebreak
+
 For this purpose, the dependent variable was lagged by one period and the difference between the lag and the current year was calculated (see Figure 4 in repository).
 
 ```{r, echo=FALSE, include=FALSE}
 # Look at difference in incidence rate per country between one year to the next
 IncClag <- ggplot2::ggplot(Merged, aes(IncidenceDif, country)) + geom_point() + theme_bw()
-IncClag + ggtitle("Figure 4: Change in Incidence Rate compared to Previous Years by Country") + theme(plot.title = element_text(lineheight=3, face="bold"))
+IncClag + ggtitle("Figure 4: Change in Incidence Rate compared to Previous Years") + theme(plot.title = element_text(lineheight=3, face="bold"))
 
 ggsave("fig4.png", width=8, height=10, dpi=100)
 ```
+
+![](fig4.png)
+
+\pagebreak
 
 Further, a dummy variable was created assigning a value of zero for those observations where the incidence rate decreased compared to the previous year or stayed the same (countries reaching MDG 6.A) and a value of one was assigned to those observations where the incidence rate increased (countries not reaching MDG 6.A). Figure 4 shows the direction of the change in the incidence rate compared to the previous year by country.
 
@@ -155,35 +158,12 @@ axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 
 Scatterplots were used for each category of Dahlgrehn's model in order to see whether the variables are skewed or multicollinear (Figures 5, 6 & 7).
 
-```{r, echo=FALSE}
-### 2. Plotting the independent variables
-
-# Scatterplot of variables for socio-economic, cultural and environmental conditions
-scatterplotMatrix(~ Incidence + + GDP + GDPpc + Rural + CO2 + LifeExpect + Population, 
-                  transform=TRUE, data=Merged)
-```
-
-```{r, echo=FALSE}
-# Scatterplot of variables for living and working conditions 
-scatterplotMatrix(~ Incidence + Water + Sanitation + Primary + Unemploym + HCexpendpc,
-                  transform=TRUE, data=Merged)
-```
-
-```{r, echo=FALSE}
-# Scatterplot of variables for individual lifestyle factors
-scatterplotMatrix(~ Incidence + DPT + Measles, transform=TRUE, data=Merged)
-
-```
-
-\pagebreak
-
-# 3. Inferential Statistics
+# Inferential Statistics
 
 As can be seen from the Scatterplots in the descriptive statistics most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
 
 ```{r, echo=FALSE, include=FALSE}
 # Logging the independent variables for better comparability
-Merged$lGDP <- log(Merged$GDP)
 Merged$lGDPpc <- log(Merged$GDPpc)
 Merged$lRural <- log(Merged$Rural)
 Merged$lCO2 <- log(Merged$CO2)
@@ -191,7 +171,6 @@ Merged$lHCexpend <- log(Merged$HCexpend)
 Merged$lWater <- log(Merged$Water)
 Merged$lSanitation <- log(Merged$Sanitation)
 Merged$lUnemploym <- log(Merged$Unemploym)
-Merged$lPrimary <- log(Merged$Primary)
 Merged$lHCexpendpc <- log(Merged$HCexpendpc)
 Merged$lFemUnempl <- log(Merged$FemUnempl)
 Merged$lFemSchool <- log(Merged$FemSchool)
@@ -211,33 +190,45 @@ As the dependent variable is coded as a dummy, being 1 if MDG 6.A is reached and
 
 ```{r, echo=FALSE, include=FALSE}
 # MODEL 1 - Running a general logistic regression using all independent variables
-L1 <- glm(DDif ~ lGDP + lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lUnemploym + lPrimary + lHCexpendpc + Inverse + lFemSchool + lLifeExpect + lDPT + lMeasles,
+L1 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lUnemploym + lHCexpendpc + Inverse + lFemSchool + lLifeExpect + lDPT + lMeasles,
           data=Merged, family = 'binomial')
 summary(L1)
 ```
 
 The test for variance inflation factors showed that in our first logistic regression model six variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital, Unemployment and Female unemployment, Primary education and female schooling. Therefore, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, namely unemployment, primary education and GDP.
 
-```{r, echo=FALSE}
+\pagebreak
+
+```{r, echo=FALSE, results='asis', header = FALSE}
 # Testing for multicollinearity
-vif(L1)
+vif1 <- vif(L1)
+
+knitr::kable(vif1, align = 'c', digits = 2,
+      caption = 'Variance Inflation Factors 1')
+
 ```
+
 
 We tested the variance inflation factors of the new logistic regression model and all remaining variables passed the test.
 
 ```{r, echo=FALSE, include=FALSE}
 # MODEL 2 - GDP
 # Running the regression without multicollinear variables
-L2 <- glm(DDif ~ lGDP + lRural + lCO2 + lHCexpend + lWater + lSanitation + lFemUnempl + lFemSchool + lLifeExpect + lDPT + lMeasles,
+L2 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lFemUnempl + lFemSchool + lLifeExpect + lDPT + lMeasles,
           data=Merged, family = 'binomial')
 
 summary(L2)
 ```
 
-```{r, echo=FALSE} 
+```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Testing for multicollinearity
-vif(L2)
+# vif2 <- vif(L2)
+
+# knitr::kable(vif2, align = 'c', digits = 2, 
+             # caption = "Variance Inflation Factors 2")
+
 ```
+
 
 ```{r, echo=FALSE, include=FALSE} 
 # MODEL 3 - GDPpc
@@ -246,9 +237,13 @@ L3 <- glm(DDif ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lFe
 summary(L3)
 ```
 
-```{r, echo=FALSE} 
+```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Testing for multicollinearity
-vif(L3)
+vif3 <- vif(L3)
+
+# knitr::kable(vif3, align = 'c', digits = 2,
+      # caption = 'Variance Inflation Factors 3')
+
 ```
 
 
@@ -269,8 +264,6 @@ summary(L4)
 ```
 \pagebreak
 
-**Residual vs. Fitted Plot**
-
 
 ```{r, echo=FALSE}
 # Look at Residual vs. Fitted Plot
@@ -279,11 +272,12 @@ plot(L4, which = 1)
 
 **Confidence Intervals**
 
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, type = 'latex', header = FALSE, error=FALSE}
 # Looking at confidence intervals
-confint(L3)
+confidence <- confint(L3)
 
+# knitr::kable(confidence, align = 'c', digits = 2,
+      # caption = 'Confidence Intervals 1')
 ```
 
 ```{r, echo=FALSE, include=FALSE}
@@ -297,8 +291,12 @@ summary(Merged)
 ```
 
 ```{r, echo=FALSE, include=FALSE}
+
+# Create labels
+Quintiles <- c('1st Quintile', '2nd Quintile', '3rd Quintile', '4th Quintile')
+
 # Regressing the model on QFemSchool fixing the other indendent variables at Uganda's mean
-fitted_L4 <- with(Merged,
+Predicted_1 <- with(Merged,
                   data.frame(lGDPpc = 7.003,
                              lRural = 4.461,
                              lCO2 = -2.52,
@@ -310,13 +308,18 @@ fitted_L4 <- with(Merged,
                              lMeasles = 4.235,
                              Inverse = -1.2576,
                              QFemSchool = factor(1:4)))
-fitted_L4
+Predicted_1
 
 
 # Calculating the predicted probabilities
-fitted_L4_final <- predict(L4, newdata = fitted_L4,
+Predicted_1 <- predict(L4, newdata = Predicted_1,
                            type = 'response')
-fitted_L4_final
+
+# Combine
+Predicted_1 <- data.frame(Quintiles, Predicted_1)
+
+# Change Name
+colnames(Predicted_1) <- c("Quintiles", "Predicted Probabilities for Female Schooling")
 
 # MODEL 5 - with the new independent variable without the interaction
 
@@ -335,7 +338,7 @@ summary(L5)
 
 ```{r, echo=FALSE, include=FALSE}
 # Regressing the model on QInverse fixing the other indendent variables at Uganda's mean
-fitted_L5 <- with(Merged,
+Predicted_2 <- with(Merged,
                   data.frame(lGDPpc = 7.003,
                              lRural = 4.461,
                              lCO2 = -2.52,
@@ -347,13 +350,16 @@ fitted_L5 <- with(Merged,
                              lMeasles = 4.235,
                              lFemSchool = 4.808,
                              QInverse = factor(1:4)))
-fitted_L5
+Predicted_2
 
 # Calculating the predicted probabilities
-fitted_L5_final <- predict(L5, newdata = fitted_L5,
+Predicted_2 <- predict(L5, newdata = Predicted_2,
                            type = 'response')
-fitted_L5_final
 
+# Combine
+Predicted_2 <- data.frame(Quintiles, Predicted_2)
+
+colnames(Predicted_2) <- c("Quintiles", "Predicted Probabilities of Female Employment")
 
 # MODEL 6 - Regressing the model with an interaction of femUnemployment and femSchool
 
@@ -376,7 +382,7 @@ summary(L6)
 
 
 # Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
-fitted_L6 <- with(Merged,
+Predicted_3 <- with(Merged,
                   data.frame(lGDPpc = 7.003,
                              lRural = 4.461,
                              lCO2 = -2.52,
@@ -389,27 +395,38 @@ fitted_L6 <- with(Merged,
                              Inverse = -1.2576,
                              lFemSchool = 4.808,
                              QInteraction = factor(1:4)))
-fitted_L6
+Predicted_3
 
 
 # Calculating the predicted probabilities
-fitted_L6_final <- predict(L6, newdata = fitted_L6,
+Predicted_3 <- predict(L6, newdata = Predicted_3,
                             type = 'response')
-fitted_L6_final
+# Combine
+Predicted_3 <- data.frame(Quintiles, Predicted_3)
+
+colnames(Predicted_3) <- c("Quintiles", "Predicted Probabilities of the Interaction Term")
 
 ```
-\pagebreak
 
 **Logistic Regression**
 
 The rest of this section focuses on logistic regressions using only those variables where no clear multicollinearity was observed.
 The results of the logistic regressions were exported with Stargazer. Table 2 shows the logistic regression results. The results show that out of all the tested variables in the model only the variable Sanitation has a significant impact on changes in HIV/Aids incidence rates.
 
-```{r, echo=FALSE, type = 'latex', header = FALSE, fig.width=8, fig.height=6}
+```{r, echo=FALSE, results="asis", error=FALSE}
 #### SAVING THE REGRESSION OUTPUTS WITH STARGAZER
 # Regression Results of Logistic Regression
-stargazer(L4, L5, L6, title="Table 2: Logistic Regression Results", type="text",align=TRUE, out="OddsResults.txt")
+stargazer(L4, L5, L6, title="Logistic Regression Results", type="latex",  font.size = "scriptsize")
+
+### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
+            #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
+            #'FemSchool3', 'FemSchool4', 'Inverse2', 'Inverse3', 'Inverse4', 'FemSchool',
+            #'Life expectancy', 'DPT', 'Measles', 'Interaction2', 'Interaction3', 'Interaction4', 
+            #'Constant')
+
 ```
+
+\pagebreak
 
 **Predicted Probabilities**
 
@@ -418,24 +435,31 @@ All three predicted probability models fix the values of all independent variabl
 As it can be observed, the probability of successfully halting or reversing the spread of HIV/AIDS does not change substantially when female school enrolment increases. In fact, the probability of being successful at combating the disease falls between the first and the second quintile and between the third and the forth. 
 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
-# Predicted Probabilities Model 1
-stargazer(fitted_L4_final, title="Predicted Probabilities Model 1", type="text",align=TRUE, out="models.txt")
+
+# knitr::kable(Predicted_1, align = 'c', digits = 2,
+      # caption = 'Predicted Probabilities Model 1')
+
 ```
 
 The second regression (Predicted Probabilities Model 2) focuses on the single impact of female unemployment in halting and reversing the spread of HIV/AIDS.  The predicted probabilities of this model show a similar pattern as in the first model, although the discrepancy in the probabilities of being successfully are larger in this model. 
 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Predicted Probabilities Model 2
-stargazer(fitted_L5_final, title="Predicted Probabilities Model 2", type="text",align=TRUE, out="models.txt")
+# knitr::kable(Predicted_2, align = 'c', digits = 2,
+      # caption = 'Predicted Probabilities Model 2')
+
 ```
+
 Finally, the third model (Predicted Probabilities Model 3) integrates the interaction between both variables. As with model 2 and 3, there is a discontinuous reduction in the probability of successfully halting and reversing the spread of HIV/AIDS and the probability decreases between quintile one and two and between quintile three and four. 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Predicted Probabilities Model 3
-stargazer(fitted_L6_final, title="Predicted Probabilities Model 3", type="text",align=TRUE, out="models.txt")
+# knitr::kable(Predicted_3, align = 'c', digits = 2,
+      # caption = 'Predicted Probabilities Model 3')
 ```
+
 All three models show inconsistent results with the predictions of this paper. The disproportionate number of cases of successful halt and reverse of HIV/AIDS in the sample might be responsible for the inconsistency of the results.
 
-# 4. Limitations
+# Limitations
 
 The paper had to make some compromises regarding its original aim as outlined in the first research proposal. Due to the significant amount of missing values and the presence of multicollinearity, a considerable number of variables had to be dropped and could ultimately not be integrated in the logistic regression models. 
  
@@ -444,6 +468,35 @@ The selection of these variables was not arbitrary but followed instead the theo
 In terms of the data used to run the regressions, the relative high number of countries that have already halted or reversed the spread of HIV/AIDS in our sample can lead to biased results. In the next stage of the research, the effect of excluding those countries that only halted the spread will be explored. 
  
 Another shortcoming faced at this stage was the integration of figures from the descriptive statistics into the final report. A transitory solution was to save those pictures in a subfolder of the repository.
+
+# Appendix
+
+**Scatterplot of variables for socio-economic, cultural and environmental conditions**
+
+```{r, echo=FALSE}
+# Scatterplot of variables for socio-economic, cultural and environmental conditions
+# scatterplotMatrix(~ Incidence + GDPpc + Rural + CO2 + LifeExpect + Population, 
+                  # transform=TRUE, data=Merged)
+```
+
+
+\pagebreak
+**Scatterplot of variables for living and working conditions**
+
+```{r, echo=FALSE}
+# Scatterplot of variables for living and working conditions 
+# scatterplotMatrix(~ Incidence + Water + Sanitation + Primary + Unemploym + HCexpendpc,
+                  # transform=TRUE, data=Merged)
+```
+
+
+**Scatterplot of variables for individual lifestyle factors**
+
+```{r, echo=FALSE}
+# Scatterplot of variables for individual lifestyle factors
+# scatterplotMatrix(~ Incidence + DPT + Measles, transform=TRUE, data=Merged)
+
+```
 
 # Rural population
 ```{r, results='asis', echo=FALSE}
@@ -473,9 +526,9 @@ print(RuralMap, tag = 'chart')
 ```{r, results='asis', echo=FALSE}
 # DemoWB <- droplevels(subset(Merged, !region %in% "Aggregates"))
 
-# M=gvisMotionChart(Merged, +idvar='country', timevar="year", + xvar="Sanitation", yvar="Incidence", sizevar="Population", + options=list(width=700, height=600), + chartid="World Bank")
+M=gvisMotionChart(Merged, idvar='country', timevar="year", xvar="Sanitation", yvar="Incidence", sizevar="Population",  options=list(width=700, height=600), chartid="World Bank")
 
-# plot(M)
+plot(M)
 
 ```
 
@@ -490,13 +543,14 @@ library(rMaps)
 
 ```
 
+
 ```{r, results='asis', echo=FALSE}
-x<-crosslet(
-  id_field = "iso2c", 
-  fields = c("web_index", "universal_access", "impact_empowerment", "freedom_openness"),
-  data = Merged
-)
-print(x)
+# x<-crosslet(
+  # id_field = "iso2c", 
+  # fields = c("web_index", "universal_access", "impact_empowerment", "freedom_openness"),
+  # data = Merged
+# )
+# print(x)
 
 ```
 
