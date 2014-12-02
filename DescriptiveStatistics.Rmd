@@ -582,4 +582,19 @@ ggplot(data=CaseStudies, aes(x=year, y=HCexpendpc, group=country, color=country,
 
 ```
 
-DS <- Imputed.out
+Merged$Incidence <- as.numeric(Merged$Incidence)
+summary(Merged$Incidence)
+AboveMean <- Merged[which (Merged$Incidence>=0.3493), ] 
+
+
+hist(AboveMean$Incidence)
+AboveMean$lIncidence <- log(AboveMean$Incidence)
+hist(AboveMean$lIncidence)
+
+shapiro.test(AboveMean$lIncidence)
+summary(AboveMean$Incidence)
+
+N1 <- lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data=AboveMean)
+summary(N1)
+
+
