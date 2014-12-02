@@ -13,6 +13,6 @@ RuralMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
                           colors = "['#fff7bc', '#d95f0e']"
                         ))
 
-print(RuralMap, tag = 'chart')
+plot(RuralMap)
 ```
 
