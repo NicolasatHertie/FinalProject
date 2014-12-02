@@ -101,14 +101,18 @@ Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence R
 axis(side=1, at=seq(0,5, 0.5), labels=seq(0,5,0.5))
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 
+
+Merged$Incidence3 <- Merged$IncidenceDif/Merged$Incidence2
+
 ```
 
 Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates decreased between the period of 2000 to 2015 (see Figure 2).
 ```{r, echo=FALSE, include=FALSE}
 # Look at incidence over time - seee the general trend
-IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
-IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig2.png", width=4, height=5, dpi=100)
+#IncT <- ggplot(aes(x = year, y = Incidence, reorder(Incidence, value), value)), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
+#IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
+#IncT <- transform(IncT, variable=reorder(Incidence, -value) ) 
+#ggsave("fig2.png", width=4, height=5, dpi=100)
 ```
 
 ![](fig2.png)
@@ -158,6 +162,78 @@ Scatterplots were used for each category of Dahlgrehn's model in order to see wh
 
 # Inferential Statistics
 
+
+### 7. Imputing missing values with amelia package
+
+### Check if all Variables are coded as numeric
+str(Merged)
+# Code variables as numeric
+Merged$Incidence <- as.numeric(Merged$Incidence)
+Merged$DPT <- as.numeric(Merged$DPT)
+Merged$Measles <- as.numeric(Merged$Measles)
+
+### Copy Merged Dataset
+MergedOld <- Merged
+
+# check for Variance Inflation
+collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + FemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
+vif(collinear1)
+
+collinear2 <- lm(Incidence ~ GDPpc + Rural + CO2 + HCexpend + Water + Sanitation + Unemploym + HCexpendpc + FemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
+vif(collinear2)
+
+# drop collinear variables
+Merged$GDP <- NULL
+Merged$Primary <- NULL
+
+# Logging the independent variables for better comparability and imputations
+Merged$lGDPpc <- log(Merged$GDPpc)
+Merged$lRural <- log(Merged$Rural)
+Merged$lCO2 <- log(Merged$CO2)
+Merged$lHCexpend <- log(Merged$HCexpend)
+Merged$lWater <- log(Merged$Water)
+Merged$lSanitation <- log(Merged$Sanitation)
+Merged$lUnemploym <- log(Merged$Unemploym)
+Merged$lHCexpendpc <- log(Merged$HCexpendpc)
+Merged$lFemUnempl <- log(Merged$FemUnempl)
+Merged$lFemSchool <- log(Merged$FemSchool)
+Merged$lLifeExpect <- log(Merged$LifeExpect)
+Merged$lDPT <- log(Merged$DPT)
+Merged$lMeasles <- log(Merged$Measles)
+
+# Impute missings
+a.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country")
+save(a.out, file = "imputations.RData")
+a.out$imputations[[1]]
+write.amelia(obj=a.out, file.stem = "outdata")
+
+zelig package
+
+summary(a.out)
+plotamelia <- plot(a.out)
+save(plotamelia, file = "plotamelia.png")
+a.out1 <- read.csv(file="outdata1.csv")
+
+Merged <- a.out1
+
+# 8. Creating the variables required to perform the regressions
+
+# Lagging the dependent variable
+Merged <- slide(Merged, Var = "Incidence", GroupVar = "iso2c", slideBy = -1,
+                NewVar = "Incidence2")
+
+
+# Creating a file with the difference between t0 and t1
+Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidence2)
+
+# Creating a dummy variable for countries with IndicenceDif>0
+Merged$DDif <- as.numeric(Merged$IncidenceDif<=0)
+
+# 9. Dropping the year 2000
+
+Merged$DDif[Merged$year==2000] 
+Merged2 <- Merged[which (Merged$year>2000), ] 
+Merged3 <- Merged[which (Merged$IncidenceDif>0 | Merged$IncidenceDif<0), ] 
 As can be seen from the Scatterplots in the descriptive statistics most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
 
 
@@ -382,6 +458,59 @@ The results of the logistic regressions were exported with Stargazer. Table 2 sh
 #### SAVING THE REGRESSION OUTPUTS WITH STARGAZER
 # Regression Results of Logistic Regression
 stargazer(L4, L5, L6, title="Logistic Regression Results", type="latex",  font.size = "scriptsize")
+
+### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
+            #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
+            #'FemSchool3', 'FemSchool4', 'Inverse2', 'Inverse3', 'Inverse4', 'FemSchool',
+            #'Life expectancy', 'DPT', 'Measles', 'Interaction2', 'Interaction3', 'Interaction4', 
+            #'Constant')
+
+```
+
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+#### Trying to get significant results ;)
+
+L9 <- lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data=Merged)
+
+
+mean(Merged$Incidence)
+
+Merged$Dummy[Merged$Incidence %in% 0.3493199:1] <- 0
+Merged$Dummy[Merged$Incidence %in% 0:0.3493198] <- 1
+summary(Merged$Dummy)
+
+Merged$Dummy <- as.numeric(Merged$Incidence<=0.3493198)
+
+hist(Merged$Dummy)
+
+
+summary(L9)
+
+L10 <- glm(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + as.factor(QFemSchool), data=Merged, family='binomial')
+
+
+# Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
+Predicted_10 <- with(Merged,
+                  data.frame(lGDPpc = 7.003,
+                             lRural = 4.461,
+                             lCO2 = -2.52,
+                             lHCexpend = 2.125,
+                             lLifeExpect = 3.98,
+                             lWater = 4.18,
+                             lSanitation = 3.46,
+                             lDPT = 4.199,
+                             lMeasles = 4.235,
+                             Inverse = -1.2576,
+                             QFemSchool = factor(1:4)))
+Predicted_10
+
+
+# Calculating the predicted probabilities
+Predicted_10 <- predict(L10, newdata = Predicted_10,
+                            type = 'response')
+
+Predicted_10
 
 ### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
             #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
