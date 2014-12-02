@@ -541,6 +541,7 @@ print(IncidenceM, tag = 'chart')
 M=gvisMotionChart(Merged, idvar='country', timevar="year", xvar="Sanitation", yvar="Incidence", sizevar="Population", options=list(width=700, height=600), chartid="World Bank")
 
 print(M, tag = 'chart')
+plot(M)
 
 ```
 
