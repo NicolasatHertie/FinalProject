@@ -203,38 +203,38 @@ ggsave("fig5.png", width=7, height=8, dpi=100)
 # Creating subsets
 CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Uganda"), ] 
 
-Water <- ggplot(data=CaseStudies, aes(x=year, y=Water, group=country, color=country)) + geom_line() + geom_point()
-Water <- Water + ggtitle("Figure 7: Access to Water in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+Water <- ggplot(data=CaseStudies, aes(x=year, y=Water, group=country, color=country)) + geom_line() + geom_point()+ ylab( "Access to Water") + xlab("Year")
+# Water <- Water + ggtitle("Figure 7: Access to Water in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig7.png", width=7, height=5, dpi=100)
 
-Sanitation <- ggplot(data=CaseStudies, aes(x=year, y=Sanitation, group=country, color=country)) + geom_line() + geom_point()
-Sanitation <- Sanitation + ggtitle("Figure 8: Access to Sanitation in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+Sanitation <- ggplot(data=CaseStudies, aes(x=year, y=Sanitation, group=country, color=country)) + geom_line() + geom_point() + ylab( "Access to Sanitation") + xlab("Year")
+# Sanitation <- Sanitation + ggtitle("Figure 8: Access to Sanitation in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig8.png", width=7, height=4, dpi=100)
 
-GDPpc <- ggplot(data=CaseStudies, aes(x=year, y=GDPpc, group=country, color=country)) + geom_line() + geom_point()
-GDPpc <- GDPpc + ggtitle("Figure 9: GDP per capita in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+GDPpc <- ggplot(data=CaseStudies, aes(x=year, y=GDPpc, group=country, color=country)) + geom_line() + geom_point() + ylab( "GDP per capita") + xlab("Year")
+# GDPpc <- GDPpc + ggtitle("Figure 9: GDP per capita in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig9.png", width=7, height=4, dpi=100)
 
-FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()
-FemSchool <- FemSchool + ggtitle("Figure 10: Level of Female Schooling in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()+ ylab( "Gross Female School Enrollment") + xlab("Year")
+# FemSchool <- FemSchool + ggtitle("Figure 10: Level of Female Schooling in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig10.png", width=7, height=5, dpi=100)
 
 CaseStudies$FemUnempl <- as.numeric(CaseStudies$FemUnempl)
 
-FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
-FemUnempl <- FemUnempl + ggtitle("Figure 11: Level of Female Unemployment in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()+ ylab( "Female Unemployment") + xlab("Year")
+# FemUnempl <- FemUnempl + ggtitle("Figure 11: Level of Female Unemployment in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig11.png", width=7, height=5, dpi=100)
 
 HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
-HCE <- HCE + ggtitle("Figure 12: Health Care Expenditure (%GDP) in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+# HCE <- HCE + ggtitle("Figure 12: Health Care Expenditure (%GDP) in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig12.png", width=7, height=5, dpi=100)
 
-Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
-Rural <- Rural + ggtitle("Figure 13: Share of Rural Population in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab( "Rural Population (%)") + xlab("Year")
+# Rural <- Rural + ggtitle("Figure 13: Share of Rural Population in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig13.png", width=7, height=5, dpi=100)
 
-Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
-Incidence <- Incidence + ggtitle("Figure 14: Incidence Rate in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab( "HIV Incidence Rate)") + xlab("Year")
+# Incidence <- Incidence + ggtitle("Figure 14: Incidence Rate in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig14.png", width=7, height=5, dpi=100)
 
 ```
@@ -242,24 +242,22 @@ ggsave("fig14.png", width=7, height=5, dpi=100)
 
 ```{r, echo=FALSE, include=FALSE}
 # Putting graphs together
-Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
 
-HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
+HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point() + guides(fill=FALSE)
 
-Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
 
-FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
+FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
 ```
-
 
 ```{r, echo=FALSE}
-#svg("Both.svg")
-#predicted.combine <- grid.arrange(Incidence, HCE, ncol = 2, main = "Incidence and HCE")
-#dev.off()
+# Creating a joint plot with some descriptive statistics
+library(grid)
+grid.arrange(Incidence,FemUnempl, ncol=1)
 
-#pdf(file="fig15.pdf")
-#print(predicted.combine)
 ```
+
 
 # Inferential Statistics
 
