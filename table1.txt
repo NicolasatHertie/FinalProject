@@ -22,22 +22,6 @@ DPT          988       79.9             18.0             19               99
 Measles      988       79.4             17.5             16               99         
 Population   988   40,890,589.0     133,140,255.0     1,063,715      1,236,686,732   
 Incidence    988       0.3               0.7            0.01              4.4        
-<<<<<<< HEAD
-=======
-lGDPpc       945       8.1               1.0             6.1             10.3        
-lRural       988       4.0               0.4             2.2              4.5        
-lCO2         829       -0.6              1.6            -5.6              3.6        
-lHCexpend    962       1.7               0.4             0.6              2.9        
-lWater       982       4.3               0.3             3.2              4.6        
-lSanitation  983       3.7               0.8             1.9              4.6        
-lUnemploym   988       1.9               0.7            -0.5              3.7        
-lHCexpendpc  962       4.1               1.2             0.9              7.0        
-lFemUnempl   988       2.0               0.8            -1.2              4.0        
-lFemSchool   828       4.6               0.3             3.0              5.1        
-lLifeExpect  988       4.1               0.2             3.6              4.4        
-lDPT         988       4.3               0.3             2.9              4.6        
-lMeasles     988       4.3               0.3             2.8              4.6        
->>>>>>> FETCH_HEAD
 Incidence2   912       0.4               0.7            0.01              4.4        
 IncidenceDif 912      -0.02              0.1            -0.5              0.1        
 DDif         912       0.9               0.3              0                1         
