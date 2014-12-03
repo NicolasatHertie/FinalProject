@@ -250,7 +250,10 @@ Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, co
 
 FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
 
+svg("Both.svg")
 predicted.combine <- grid.arrange(Incidence, HCE, ncol = 2, main = "Incidence and HCE")
+dev.off()
+
 pdf(file="fig15.pdf")
 print(predicted.combine)
 ```
