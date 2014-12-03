@@ -406,9 +406,6 @@ s.out <- sim(a.out, x = x1.out)
 
 plot(s.out)
 
-
-
-
 ### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
             #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
             #'FemSchool3', 'FemSchool4', 'Inverse2', 'Inverse3', 'Inverse4', 'FemSchool',
@@ -456,6 +453,49 @@ e.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanita
 
 summary(e.out)
 
+# install.packages("mitools")
+library("mitools")
+# imp.data <- imputationList(Imputed2.out$imputations)
+# mitools.fit <- MIcombine(with(imp.data, lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + year))
+# summary(mitools.fit)                         
+# mitools.res <- summary(mitools.fit)
+# mitools.res <- cbind(mitools.res, df = mitools.fit$df)
+# mitools.res
+
+```
+
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+
+# Linear pooled OLS regression
+knitr::kable(as.data.frame(summary(b.out)$coef))
+
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+
+# Linear pooled OLS regression with robust standard errors
+knitr::kable(as.data.frame(summary(c.out)$coef))
+
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+
+# Fixed effects estimation 
+knitr::kable(as.data.frame(summary(d.out)$coef))
+
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+
+# Fixed effects estimation with robust standard errors
+knitr::kable(as.data.frame(summary(e.out)$coef))
+
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+
+knitr::kable(as.data.frame(summary(e.out)$coef))
 
 ```
 
@@ -489,7 +529,7 @@ scatterplotMatrix(~ Incidence + GDPpc + Rural + CO2 + LifeExpect + Population,
 scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpendpc,
                   transform=TRUE, data=Merged)
 ```
-
+?kable
 
 **Scatterplot of variables for individual lifestyle factors**
 
