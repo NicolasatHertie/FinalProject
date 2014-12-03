@@ -146,7 +146,131 @@ knitr::kable(as.data.frame(summary(Model1.out)$coef))
 
 ## Malawi
 
-![Malawi1](plotMalawi1.png)
+![Female Schooling](JointPlot.png)
+
+## Predicted Probabilities
+
+
+```{r, echo=FALSE, include = FALSE}
+
+#### MODEL 1.2.1 - Calculating predicted probabilities for Wuintiles of Female Schooling for the Scenario Uganda
+
+Model2.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + QFemSchool, data = Imputed.out, model = "logit")
+
+## Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
+ 
+# Combining multiple imputed datasets for calculating the means of selected countries
+finalimputed <- rbind(Imputed.out$imputations$imp1,Imputed.out$imputations$imp2,Imputed.out$imputations$imp3,Imputed.out$imputations$imp4,Imputed.out$imputations$imp5)
+
+# Creating a subset for calculating the means
+Uganda <- finalimputed[which (finalimputed$country=="Uganda"), ]
+
+# Calculating the means for Uganda
+summary(Uganda)
+
+# Fixing the Uganda Scenario, letting Quintiles of Female Schooling vary
+Uganda1.out <-  setx(Model2.out, 
+              lGDPpc = 7.00, 
+              lRural = 4.46,
+              lCO2 = -2.44,
+              lHCexpend = 2.12,
+              lLifeExpect = 3.98,
+              lWater = 4.18,
+              lSanitation = 3.46,
+              lDPT = 4.20,
+              lMeasles = 4.24,
+              Inverse = -1.258,
+             QFemSchool = 1:4)
+
+# Calculating the Predicted Probabilities
+Uganda1.out <- sim(Model2.out, x = Uganda1.out)
+
+```{r, echo=FALSE, include = FALSE}
+#### MODEL 1.2.2 - Calculating predicted probabilities for Quintiles of Female Schooling for the Scenario Lesotho
+
+# Creating a subset for calculating the means
+Lesotho <- finalimputed[which (finalimputed$country=="Lesotho"), ]
+
+# Calculating the means for Lesotho
+summary(Lesotho)
+
+# Fixing the Lesotho Scenario, letting Quintiles of Female Schooling vary
+Lesotho1.out <-  setx(Model2.out, 
+              lGDPpc = 7.56, 
+              lRural = 4.35,
+              lCO2 = -3.31,
+              lHCexpend = 2.11,
+              lLifeExpect = 3.82,
+              lWater = 4.38,
+              lSanitation = 3.29,
+              lDPT = 4.49,
+              lMeasles = 4.41,
+              Inverse = -3.58,
+              QFemSchool = 1:4)
+
+# Calculating the Predicted Probabilities
+Lesotho1.out <- sim(Model2.out, x = Lesotho1.out)
+
+#### MODEL 1.2.3 - Calculating predicted probabilities for Quintiles of Female Schooling for the Scenario Malawi
+
+# Creating a subset for calculating the means
+Malawi <- finalimputed[which (finalimputed$country=="Malawi"), ]
+
+# Calculating the means for Malawi
+summary(Malawi)
+
+# Fixing the Malawi Scenario, letting Quintiles of Female Schooling vary
+Malawi1.out <-  setx(Model2.out, 
+              lGDPpc = 6.47, 
+              lRural = 4.44,
+              lCO2 = -2.67,
+              lHCexpend = 1.99,
+              lLifeExpect = 3.91,
+              lWater = 4.30,
+              lSanitation = 2.33,
+              lDPT = 4.48,
+              lMeasles = 4.42,
+              Inverse = -2.17,
+              QFemSchool = 1:4)
+
+# Calculating the Predicted Probabilities
+Malawi1.out <- sim(Model2.out, x = Malawi1.out)
+
+#### MODEL 1.2.4 - Calculating predicted probabilities for Quintiles of Female Schooling for the Scenario Botswana
+
+# Creating a subset for calculating the means
+Botswana <- finalimputed[which (finalimputed$country=="Botswana"), ]
+
+# Calculating the means for Botswana
+summary(Botswana)
+
+# Fixing the Botswana Scenario, letting Quintiles of Female Schooling vary
+Botswana1.out <-  setx(Model2.out, 
+              lGDPpc = 9.39, 
+              lRural = 3.80,
+              lCO2 = 0.925,
+              lHCexpend = 1.65,
+              lLifeExpect = 3.86,
+              lWater = 4.56,
+              lSanitation = 4.07,
+              lDPT = 4.57,
+              lMeasles = 4.53,
+              Inverse = -3.16,
+              QFemSchool = 1:4)
+
+# Calculating the Predicted Probabilities
+Botswana1.out <- sim(Model2.out, x = Botswana1.out)
+```
+
+```{r, echo=FALSE, message=FALSE, error=FALSE, fig.width=19, fig.height=12, dpi=150}
+# Plot predicted probabilities
+par(mfrow=c(2,2))
+plot(Uganda1.out)
+plot(Lesotho1.out)
+plot(Botswana1.out)
+plot(Malawi1.out)
+```
+
 
 ## Malawi 2
 
@@ -225,25 +349,23 @@ knitr::kable(as.data.frame(summary(d.out)$coef))
 
 ## Conclusions and Limitations - Model 1
 
-1. Logistic Regression Results of Model 1 (all countries)
+1. ** Logistic Regression Results of Model 1 (all countries) **
 - Generally in line with hypothesis
 - Most of the variables are statistically significant
 - Only Immunisation Variables and GDP per capital are not significant
 
-2. Predicted Probabilities of Model 1 (selected countries)
+2. ** Predicted Probabilities of Model 1 (selected countries) **
 - Direction of effect of Female School Enrollment matches initial assumptions for all case studies
 - Direction of effect of Female Unemployment does not match initial assumptions for any case study
 
 ## Conclusions and Limitations - Model 2
 
-3. Linear Regression of Model 2 (countries with incidence above mean)
+3. ** Linear Regression of Model 2 (countries with incidence above mean) **
 - Significance of some variables changes
 - Female School Enrollment and Female Unemployment remain highly significant
 - Effect of Female Schooling becomes positive (!)
 
-4. Fixed Effects Regression of Model 2 (countries with incidence above mean)
+4. ** Fixed Effects Regression of Model 2 (countries with incidence above mean) **
 - Significance of some variables changes compared to simple linear model
 - Female School Enrollment and Female Unemployment become insignificant
 - Immunisation rates for DPT & Measles become highly significant (!)
-
-=> Variable that remains significant over both Models and all specifications is Life Expectancy
