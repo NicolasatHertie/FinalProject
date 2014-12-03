@@ -101,7 +101,7 @@ Merged <- read.csv(file="MergedData2")
 Merged$X <- NULL
 
 # Impute data
-Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country", ords= c("QFemSchool", "Dummy", "DDif"))
+Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country", ords= c("QFemSchool", "Dummy","QFemUnempl", "DDif"))
 ```
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, error=FALSE,fig.width=19, fig.height=12, dpi=150}
