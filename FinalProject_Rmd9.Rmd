@@ -122,7 +122,7 @@ The histogram of the dependent variable (Figure 1) shows that the incidence rate
 ### 1. Plotting the dependent variable
 
 # Histogram of dependent variable
-Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", main="Figure 1: Incidence Rate")
+Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", ylab="Year", main="Figure 1: Incidence Rate")
 axis(side=1, at=seq(0,5, 0.5), labels=seq(0,5,0.5))
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 
@@ -132,8 +132,8 @@ Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates de
 ```{r, echo=FALSE, include=FALSE}
 # Look at incidence over time - seee the general trend
 IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
-IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig2.png", width=4, height=5, dpi=100)
+#IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
+ggsave("fig2.png", width=5, height=4, dpi=100)
 ```
 
 
@@ -190,10 +190,10 @@ options(digits = 4)
 # Creating subsets
 HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
 
-Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=country)) + geom_line() + geom_point()
+Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=country)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year")
                                                                                                                           
 Cases <- Cases + ggtitle("Figure 6: Interesting Cases for HIV Incidence Rates") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig5.png", width=7, height=8, dpi=100)
+ggsave("fig6.png", width=7, height=5, dpi=100)
 ```
 
 # Case Studies - Botswana, Lesotho, Uganda & Malawi
@@ -205,7 +205,7 @@ CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesot
 
 Water <- ggplot(data=CaseStudies, aes(x=year, y=Water, group=country, color=country)) + geom_line() + geom_point()+ ylab( "Access to Water") + xlab("Year")
 # Water <- Water + ggtitle("Figure 7: Access to Water in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig7.png", width=7, height=5, dpi=100)
+ggsave("fig7.png", width=7, height=4, dpi=100)
 
 Sanitation <- ggplot(data=CaseStudies, aes(x=year, y=Sanitation, group=country, color=country)) + geom_line() + geom_point() + ylab( "Access to Sanitation") + xlab("Year")
 # Sanitation <- Sanitation + ggtitle("Figure 8: Access to Sanitation in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
@@ -217,25 +217,25 @@ ggsave("fig9.png", width=7, height=4, dpi=100)
 
 FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()+ ylab( "Gross Female School Enrollment") + xlab("Year")
 # FemSchool <- FemSchool + ggtitle("Figure 10: Level of Female Schooling in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig10.png", width=7, height=5, dpi=100)
+ggsave("fig10.png", width=7, height=4, dpi=100)
 
 CaseStudies$FemUnempl <- as.numeric(CaseStudies$FemUnempl)
 
 FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()+ ylab( "Female Unemployment") + xlab("Year")
 # FemUnempl <- FemUnempl + ggtitle("Figure 11: Level of Female Unemployment in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig11.png", width=7, height=5, dpi=100)
+ggsave("fig11.png", width=7, height=4, dpi=100)
 
 HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
 # HCE <- HCE + ggtitle("Figure 12: Health Care Expenditure (%GDP) in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig12.png", width=7, height=5, dpi=100)
+ggsave("fig12.png", width=7, height=4, dpi=100)
 
 Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab( "Rural Population (%)") + xlab("Year")
 # Rural <- Rural + ggtitle("Figure 13: Share of Rural Population in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig13.png", width=7, height=5, dpi=100)
+ggsave("fig13.png", width=7, height=4, dpi=100)
 
 Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab( "HIV Incidence Rate)") + xlab("Year")
 # Incidence <- Incidence + ggtitle("Figure 14: Incidence Rate in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig14.png", width=7, height=5, dpi=100)
+ggsave("fig14.png", width=7, height=4, dpi=100)
 
 ```
 
