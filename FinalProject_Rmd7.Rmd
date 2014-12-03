@@ -613,6 +613,8 @@ Malawi2.out <- sim(Model3.out, x = Malawi2.out)
 png(file="plotMalawi2.png")
 plot(Malawi2.out)
 dev.off()
+
+MalawiB <- plot(Malawi2.out)
 ```
 
 ```{r, echo=FALSE, include=FALSE}
@@ -646,13 +648,14 @@ Botswana2.out <- sim(Model3.out, x = Botswana2.out)
 png(file="plotBotswana2.png")
 plot(Botswana2.out)
 dev.off()
+BotswanaB <- plot(Botswana2.out)
 ```
 
 
 ```{r, echo=FALSE, include=FALSE}
 
-#### 
-#Grid arrange
+#### TRYING TO PUT GRAPHS TOGETHER
+# Grid arrange
 #install.packages("grid")
 #install.packages("gridExtra") 
 #library(gridExtra)
@@ -661,6 +664,27 @@ dev.off()
 
 #print(predicted.combine)
 
+# Putting graphs together
+# install.packages("bitops")
+#library(RCurl)
+#library(Zelig)
+#library(ggplot2)
+#library(reshape2)
+# install.packages("gridExtra")
+#library(gridExtra)
+ 
+#Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
+ 
+#HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
+ 
+#Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
+ 
+#FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
+ 
+#predicted.combine <- grid.arrange(BotswanaB, MalawiB, ncol = 2, main = "Incidence and HCE")
+#pdf(file="fig15.pdf")
+#print(predicted.combine)
+```
 
 ```
 
