@@ -62,6 +62,13 @@ library(car)
 library(stargazer)
 #install.packages("Zelig")
 library(Zelig)
+
+library(RCurl)
+library(Zelig)
+library(ggplot2)
+library(reshape2)
+#install.packages("gridExtra")
+library(gridExtra)
 ```
 
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
@@ -210,7 +217,6 @@ FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, co
 FemSchool <- FemSchool + ggtitle("Figure 10: Level of Female Schooling in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig10.png", width=7, height=5, dpi=100)
 
-summary(CaseStudies$FemSchool)
 CaseStudies$FemUnempl <- as.numeric(CaseStudies$FemUnempl)
 
 FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
@@ -232,15 +238,8 @@ ggsave("fig14.png", width=7, height=5, dpi=100)
 ```
 
 
-```{r, echo=FALSE, type = 'latex', header = FALSE}
+```{r, echo=FALSE, include=FALSE}
 # Putting graphs together
-library(RCurl)
-library(Zelig)
-library(ggplot2)
-library(reshape2)
-#install.packages("gridExtra")
-library(gridExtra)
-
 Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
 
 HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
@@ -248,13 +247,16 @@ HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=cou
 Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
 
 FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
+```
 
-svg("Both.svg")
-predicted.combine <- grid.arrange(Incidence, HCE, ncol = 2, main = "Incidence and HCE")
-dev.off()
 
-pdf(file="fig15.pdf")
-print(predicted.combine)
+```{r, echo=FALSE}
+#svg("Both.svg")
+#predicted.combine <- grid.arrange(Incidence, HCE, ncol = 2, main = "Incidence and HCE")
+#dev.off()
+
+#pdf(file="fig15.pdf")
+#print(predicted.combine)
 ```
 
 # Inferential Statistics
@@ -345,10 +347,8 @@ Merged$QInverse[Merged$Inverse>-1.459] <-4
 
 # Creating dependent variable as Dummy (0 if above the mean, 1 if below the mean of the Incidence variable)
 mean(Merged$Incidence)
-
 Merged$Dummy[Merged$Incidence %in% 0.3493199:1] <- 0
 Merged$Dummy[Merged$Incidence %in% 0:0.3493198] <- 1
-summary(Merged$Dummy)
 
 Merged$Dummy <- as.numeric(Merged$Incidence<=0.3493198)
 
@@ -373,7 +373,7 @@ dev.off()
 As the dependent variable is coded as a dummy, being 1 if MDG 6.A is reached and 0 for countries that are not reaching MDG 6.A logistic regressions are used for the inferential statistics part. As Odds and Odds ratios are difficult to present to a broad audience predicted probabilities are calculated after running the logistic regressions. The interpretation of the results will mainly focus on the predicted probabilities.
 
 
-```{r, echo=FALSE, results="asis", error=FALSE}
+```{r, echo=FALSE, include=FALSE}
 #### MODEL 1.1 - Running a general logistic regression using all independent variables
 
 
