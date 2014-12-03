@@ -126,7 +126,7 @@ plot(Imputed.out, which.vars=4:13)
 ?plot
 ```
 
-## Logistic Regression Results
+## Logistic Regression Results - Model 1
 
 ```{r, echo=FALSE, include=FALSE}
 #### MODEL 1.1 - Running a general logistic regression using all independent variables
@@ -176,6 +176,53 @@ knitr::kable(as.data.frame(summary(Model1.out)$coef))
 ## Uganda 2
 
 ![Uganda2](plotUganda2.png)
+
+
+
+## Simple Linear Regression Results - Model 2
+
+```{r, echo=FALSE, include=FALSE}
+### Creating a subset with the countries that have an incidence rate higher than the mean
+ 
+# Duplicating our imputations
+Imputed2.out <- Imputed.out
+ 
+# Creating the subset with countries above the mean with a loop for all 5 imputations
+for (i in 1:5){
+  Imputed2.out$imputations[[i]] <- Imputed2.out$imputations[[i]][which (Imputed.out$imputations[[i]]$Incidence>=0.3493), ]
+}
+ 
+### Running a linear pooled OLS regression
+
+b.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed2.out, model = "ls")
+ 
+summary(b.out)
+ 
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Linear pooled OLS regression
+knitr::kable(as.data.frame(summary(b.out)$coef))
+ 
+```
+ 
+## Fixed Effects Regression Results - Model 2
+
+```{r, echo=FALSE, include=FALSE}
+## Estimating the model with fixed effects
+ 
+d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls")
+ 
+summary(d.out)
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Fixed effects estimation 
+knitr::kable(as.data.frame(summary(d.out)$coef))
+ 
+```
 
 ## Conclusions and Limitation
 

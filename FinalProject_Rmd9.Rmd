@@ -283,7 +283,7 @@ collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Wa
 ```
 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
-knitr::kable(collinear1, align = 'c', digits = 2,
+knitr::kable(collinear1, align = 'c', digits = 2, col.names="vif",
       caption = 'Variance Inflation Factors 1')
 ```
 
@@ -296,7 +296,7 @@ collinear2 <- vif(collinear2)
 
 
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
-knitr::kable(collinear2, align = 'c', digits = 2,
+knitr::kable(collinear2, align = 'c', digits = 2, col.names="vif",
       caption = 'Variance Inflation Factors 2')
 ```
 
@@ -324,6 +324,7 @@ Merged$lFemSchool <- log(Merged$FemSchool)
 Merged$lLifeExpect <- log(Merged$LifeExpect)
 Merged$lDPT <- log(Merged$DPT)
 Merged$lMeasles <- log(Merged$Measles)
+Merged$lIncidence <- log(Merged$Incidence)
 
 
 # Creating a new variable with FemSchool by quintiles
@@ -729,26 +730,26 @@ for (i in 1:5){
 }
  
 # Running a linear pooled OLS regression
- 
-b.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool, data = Imputed2.out, model = "ls")
+
+b.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed2.out, model = "ls")
  
 summary(b.out)
  
 # Estimating with robust standard errors
  
-c.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool, data = Imputed2.out, model = "ls")
+c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed2.out, model = "ls")
  
 summary(c.out)
  
 # Estimating the model with fixed effects
  
-d.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + as.factor(country), data = Imputed2.out, model = "ls")
+d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls")
  
 summary(d.out)
  
 # Estimating the model with fixed effects and robust standard errors
  
-e.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
+e.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
  
 summary(e.out)
  
