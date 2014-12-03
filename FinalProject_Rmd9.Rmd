@@ -242,24 +242,22 @@ ggsave("fig14.png", width=7, height=5, dpi=100)
 
 ```{r, echo=FALSE, include=FALSE}
 # Putting graphs together
-Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
 
-HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
+HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point() + guides(fill=FALSE)
 
-Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
 
-FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
+FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
 ```
-
 
 ```{r, echo=FALSE}
-#svg("Both.svg")
-#predicted.combine <- grid.arrange(Incidence, HCE, ncol = 2, main = "Incidence and HCE")
-#dev.off()
+# Creating a joint plot with some descriptive statistics
+library(grid)
+grid.arrange(Incidence,FemUnempl, ncol=1)
 
-#pdf(file="fig15.pdf")
-#print(predicted.combine)
 ```
+
 
 # Inferential Statistics
 
