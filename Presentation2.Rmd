@@ -51,7 +51,7 @@ output:
 
 
 
-## Distribution of HIV Incidence Rate Worldwide (2012)
+## Distribution of HIV Incidence Rate Worldwide
 ![Figure1](IncidenceRates.png)
 
 
@@ -88,7 +88,7 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 Where I stands for HIV/AIDS incidence, SE stands for socioeconomic factors, WLC stands for working and living conditions, SCN stands for social and community networks and ILF stands for individual lifestyle factors. 
  
 
-## Imputed missing values
+## Imputed Missing values
 
 ```{r, echo=FALSE, include=FALSE}
 
@@ -411,7 +411,7 @@ knitr::kable(as.data.frame(summary(d.out)$coef))
  
 ```
 
-## Conclusions and Limitations - Model 1
+## Conclusions - Model 1
 
 1. **Logistic Regression Results of Model 1 (all countries)**
 - Generally in line with hypothesis
@@ -422,7 +422,7 @@ knitr::kable(as.data.frame(summary(d.out)$coef))
 - Direction of effect of Female School Enrollment matches initial assumptions for all case studies
 - Direction of effect of Female Unemployment does not match initial assumptions for any case study
 
-## Conclusions and Limitations - Model 2
+## Conclusions - Model 2
 
 3. **Linear Regression of Model 2 (countries with incidence above mean)**
 - Significance of some variables changes
