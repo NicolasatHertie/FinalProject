@@ -8,7 +8,8 @@ output:
   beamer_presentation:
     theme: "CambridgeUS"
     fonttheme: "structurebold"
-   
+---
+
 ---
 
 ## Outline
@@ -98,10 +99,49 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 Where I stands for HIV/AIDS incidence, SE stands for socioeconomic factors, WLC stands for working and living conditions, SCN stands for social and community networks and ILF stands for individual lifestyle factors. 
  
 
-## Findings
-
-
 ## Imputed missing values
+
+```{r, echo=FALSE, include=FALSE}
+
+# Load packages
+# install.packages("Amelia")  
+library(Amelia) 
+#install.packages("Zelig")
+library(Zelig)
+#install.packages("knitr")
+library(knitr)
+
+# Load data
+Merged <- read.csv(file="MergedData2")
+
+Merged$X <- NULL
+
+# Impute data
+Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country", ords= c("QFemSchool", "Dummy", "DDif"))
+```
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, error=FALSE,fig.width=19, fig.height=12, dpi=150}
+# Plot imputed variables
+plot(Imputed.out, which.vars=4:13)
+?plot
+```
+
+## Logistic Regression Results
+
+```{r, echo=FALSE, include=FALSE}
+#### MODEL 1.1 - Running a general logistic regression using all independent variables
+
+Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed.out, model = "logit")
+
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+
+# Regression Results of Logistic Regression
+knitr::kable(as.data.frame(summary(Model1.out)$coef))
+#row.names=c("Intercept", "GDP per capital", "Rural Population", "CO2 Emissions", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female Unemployment Rate", "Female School Enrollment")
+```
+
 
 ## Predicted Probabilities
 

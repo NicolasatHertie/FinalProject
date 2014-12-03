@@ -49,7 +49,9 @@ library(Amelia)
 #install.packages("XLConnect")
 library(XLConnect)    
 # install.packages("countrycode")
-library("countrycode")
+library(countrycode)
+#install.packages("knitr")
+library(knitr)
 # install.packages ("ggplot2")
 library(ggplot2)
 # # install.packages ("magrittr")
@@ -354,13 +356,14 @@ Merged$Dummy <- as.numeric(Merged$Incidence<=0.3493198)
 
 hist(Merged$Dummy)
 
-
+write.csv(Merged, file="MergedData2")
 
 ```
 
 ```{r, echo=FALSE, include=FALSE}
 ### Imputing the missing values
 Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country", ords= c("QFemSchool", "Dummy", "DDif"))
+
 
 
 # Plot imputed variables
@@ -382,18 +385,9 @@ Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanit
 ```
 
 ```{r, echo=FALSE, results="asis", error=FALSE}
-#### SAVING THE REGRESSION OUTPUTS WITH KABLE
 # Regression Results of Logistic Regression
-#stargazer(L1.out, title="Model 1 - Logistic Regression Results including all independent variables", type="latex",  font#.size = "scriptsize")
-
-
 knitr::kable(as.data.frame(summary(Model1.out)$coef))
- 
-### labels <- c('(Intercept)', 'GDP per capita', 'Rural', 'CO2',
-            #'Healthcareexpenditure', 'lWater', 'Sanitation', 'Inverse', 'FemSchool2',
-            #'FemSchool3', 'FemSchool4', 'Inverse2', 'Inverse3', 'Inverse4', 'FemSchool',
-            #'Life expectancy', 'DPT', 'Measles', 'Interaction2', 'Interaction3', 'Interaction4', 
-            #'Constant')
+?kable 
 
 ```
 
@@ -722,43 +716,86 @@ BotswanaB <- plot(Botswana2.out)
 ```
 
 # Preparing the dataset for Model 2
-
+ 
 ```{r, echo=FALSE, include=FALSE}
 ### Creating a subset with the countries that have an incidence rate higher than the mean
-
+ 
 # Duplicating our imputations
 Imputed2.out <- Imputed.out
-
+ 
 # Creating the subset with countries above the mean with a loop for all 5 imputations
 for (i in 1:5){
   Imputed2.out$imputations[[i]] <- Imputed2.out$imputations[[i]][which (Imputed.out$imputations[[i]]$Incidence>=0.3493), ]
 }
-
+ 
 # Running a linear pooled OLS regression
-
+ 
 b.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool, data = Imputed2.out, model = "ls")
-
+ 
 summary(b.out)
-
+ 
 # Estimating with robust standard errors
-
+ 
 c.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool, data = Imputed2.out, model = "ls")
-
+ 
 summary(c.out)
-
+ 
 # Estimating the model with fixed effects
-
+ 
 d.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + as.factor(country), data = Imputed2.out, model = "ls")
-
+ 
 summary(d.out)
-
+ 
 # Estimating the model with fixed effects and robust standard errors
-
+ 
 e.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
-
+ 
 summary(e.out)
-
-
+ 
+#install.packages("mitools")
+#library("mitools")
+# imp.data <- imputationList(Imputed2.out$imputations)
+# mitools.fit <- MIcombine(with(imp.data, lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + year))
+# summary(mitools.fit)                         
+# mitools.res <- summary(mitools.fit)
+# mitools.res <- cbind(mitools.res, df = mitools.fit$df)
+# mitools.res
+ 
+```
+ 
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Linear pooled OLS regression
+knitr::kable(as.data.frame(summary(b.out)$coef))
+ 
+```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Linear pooled OLS regression with robust standard errors
+knitr::kable(as.data.frame(summary(c.out)$coef))
+ 
+```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Fixed effects estimation 
+knitr::kable(as.data.frame(summary(d.out)$coef))
+ 
+```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Fixed effects estimation with robust standard errors
+knitr::kable(as.data.frame(summary(e.out)$coef))
+ 
+```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+knitr::kable(as.data.frame(summary(e.out)$coef))
+ 
 ```
 
 The test for variance inflation factors showed that in our first logistic regression model six variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital, Unemployment and Female unemployment, Primary education and female schooling. Therefore, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, namely unemployment, primary education and GDP.
