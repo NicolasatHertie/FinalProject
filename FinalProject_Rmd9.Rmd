@@ -192,8 +192,8 @@ HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zam
 
 Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=country)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year")
                                                                                                                           
-Cases <- Cases + ggtitle("Figure 6: Interesting Cases for HIV Incidence Rates") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig6.png", width=7, height=5, dpi=100)
+#Cases <- Cases + ggtitle("Figure 6: Interesting Cases for HIV Incidence Rates") + theme(plot.title = element_text(lineheight=3, face="bold"))
+ggsave("fig6.png", width=7, height=4, dpi=100)
 ```
 
 # Case Studies - Botswana, Lesotho, Uganda & Malawi
@@ -223,7 +223,7 @@ CaseStudies$FemUnempl <- as.numeric(CaseStudies$FemUnempl)
 
 FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()+ ylab( "Female Unemployment") + xlab("Year")
 # FemUnempl <- FemUnempl + ggtitle("Figure 11: Level of Female Unemployment in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig11.png", width=7, height=4, dpi=100)
+ggsave("fig11.png", width=7, height=3, dpi=100)
 
 HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
 # HCE <- HCE + ggtitle("Figure 12: Health Care Expenditure (%GDP) in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
