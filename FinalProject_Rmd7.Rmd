@@ -326,7 +326,7 @@ for (i in 1:5){
 class(Imputed.out$imputations[[1]]$QFemSchool)
 
 # Plot imputed variables
-png(file="plotamelia.png", width=15, height=15)
+png(file="plotamelia.png")
 plot(Imputed.out)
 dev.off()
 
