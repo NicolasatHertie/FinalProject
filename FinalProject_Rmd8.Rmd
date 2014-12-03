@@ -449,7 +449,7 @@ summary(d.out)
 
 # Estimating the model with fixed effects and robust standard errors
 
-e.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
+e.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
 
 summary(e.out)
 
