@@ -265,7 +265,7 @@ plot(Botswana1.out)
 plot(Malawi1.out)
 ```
 
-## Predicted Probabilities Female Unemployment
+## Predicted Probabilities - Female Unemployment (in Quartiles)
 
 ```{r, echo=FALSE, include=FALSE}
 #### MODEL 1.3.1 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Uganda
