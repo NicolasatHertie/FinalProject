@@ -12,8 +12,8 @@ authors: Meilin Moellenkamp and Nicolas Rosemberg
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
 ### 1. Setting Working Directory & Loading the data
 # Setting the Working Directory
-setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
-# setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
+# setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
+setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # Loading the Citations
 pkgs <- c("RJSONIO","WDI","dplyr","tidyr","knitr","DataCombine","lmtest","httr","XML","plyr","Amelia","XLConnect","countrycode","ggplot2","magrittr","fmsb","car","stargazer")
@@ -460,6 +460,7 @@ Lesotho1.out <-  setx(Model2.out,
 
 # Calculating the Predicted Probabilities
 Lesotho1.out <- sim(Model2.out, x = Lesotho1.out)
+
 ```
 
 
@@ -469,6 +470,8 @@ png(file="plotLesotho1.png")
 plot(Lesotho1.out)
 dev.off()
 ```
+
+
 
 
 ```{r, echo=FALSE, include=FALSE}
@@ -540,15 +543,23 @@ Botswana1.out <- sim(Model2.out, x = Botswana1.out)
 ```{r, echo=FALSE}
 # Plotting the Predicted Probabilities
 png(file="plotBotswana1.png")
-plot(Botswana1.out)
+plot(Botswana1.out, xlab="Quartiles", ylab="Predicted Probabilities")
 dev.off()
 ```
 
+```{r, echo=FALSE}
+# Creating a joint plot with the predicted probabilities
+png(file="JointPlot.png")
+par(mfrow=c(2,2))
+plot(Uganda1.out)
+plot(Lesotho1.out)
+plot(Botswana1.out)
+plot(Malawi1.out)
+dev.off()
+```
 
 ```{r, echo=FALSE, include=FALSE}
 #### MODEL 1.3.1 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Uganda
-
-
 Model3.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + QInverse + FemSchool, data = Imputed.out, model = "logit")
 
 summary(Uganda)
@@ -574,7 +585,7 @@ Uganda2.out <- sim(Model3.out, x = Uganda2.out)
 ```{r, echo=FALSE}
 # Plotting the Predicted Probabilities
 png(file="plotUganda2.png")
-plot(Uganda2.out)
+plot(Uganda2.out, xlab=Quartiles, ylab="Predicted Probabilities")
 dev.off()
 ```
 
@@ -606,7 +617,7 @@ Lesotho2.out <- sim(Model3.out, x = Lesotho2.out)
 ```{r, echo=FALSE}
 # Plotting the Predicted Probabilities
 png(file="plotLesotho2.png")
-plot(Lesotho2.out)
+plot(Lesotho2.out, xlab="Quartiles", ylab="Predicted Probabilities")
 dev.off()
 ```
 
@@ -641,10 +652,8 @@ Malawi2.out <- sim(Model3.out, x = Malawi2.out)
 ```{r, echo=FALSE}
 # Plotting the Predicted Probabilities
 png(file="plotMalawi2.png")
-plot(Malawi2.out)
+plot(Malawi2.out, xlab="Quartiles", ylab="Predicted Probabilities")
 dev.off()
-
-MalawiB <- plot(Malawi2.out)
 ```
 
 ```{r, echo=FALSE, include=FALSE}
@@ -670,51 +679,28 @@ Botswana2.out <-  setx(Model3.out,
 
 # Calculating the Predicted Probabilities
 Botswana2.out <- sim(Model3.out, x = Botswana2.out)
+
 ```
 
 
 ```{r, echo=FALSE}
 # Plotting the Predicted Probabilities
 png(file="plotBotswana2.png")
-plot(Botswana2.out)
+plot(Botswana2.out, xlab="Quartiles", ylab="Predicted Probabilities")
 dev.off()
-BotswanaB <- plot(Botswana2.out)
 ```
 
-
-```{r, echo=FALSE, include=FALSE}
-
-#### TRYING TO PUT GRAPHS TOGETHER
-# Grid arrange
-#install.packages("grid")
-#install.packages("gridExtra") 
-#library(gridExtra)
-#predicted.combine <- grid.arrange(Malawi1.out, Lesotho1.out, Uganda1.out,Botswana1.out, ncol = 4, left = "Predicted Probability of High HIV Incidence")
-#predicted.combine <- grid.arrange(Lesotho1.out, Uganda1.out, ncol = 2, left = "Predicted Probability of High HIV Incidence")
-
-#print(predicted.combine)
-
-# Putting graphs together
-# install.packages("bitops")
-#library(RCurl)
-#library(Zelig)
-#library(ggplot2)
-#library(reshape2)
-# install.packages("gridExtra")
-#library(gridExtra)
- 
-#Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
- 
-#HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
- 
-#Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
- 
-#FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
- 
-#predicted.combine <- grid.arrange(BotswanaB, MalawiB, ncol = 2, main = "Incidence and HCE")
-#pdf(file="fig15.pdf")
-#print(predicted.combine)
+```{r, echo=FALSE}
+# Creating a joint plot with the predicted probabilities
+png(file="JoinPlot2.png")
+par(mfrow=c(2,2))
+plot(Uganda2.out, xlab="Quartiles", ylab="Predicted Probabilities")
+plot(Lesotho2.out)
+plot(Botswana2.out)
+plot(Malawi2.out)
+dev.off()
 ```
+
 
 # Preparing the dataset for Model 2
  
