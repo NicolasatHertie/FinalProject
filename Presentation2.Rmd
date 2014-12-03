@@ -27,7 +27,7 @@ output:
 
 1. Understand why some countries failed to achieve MDG 6A
 
-- *MDG 6: "Combat HIV/AIDS, malaria and other diseases"*
+- *MDG 6: "Combat HIV/AIDS, Malaria and other diseases"*
 
 - *Target 6A: "Have halted by 2015 and begun to reverse the spread of HIV/AIDS"*
 
@@ -35,12 +35,12 @@ output:
 
 
 
-## Theoretical Framework
+## Theoretical Framework - Determinants of Health
 
 ![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
 
 
-## Methodology and Dataset
+## Methodology
 
 **Model**
 $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{it} + {\beta}_4 ILF_{it} + {\epsilon}_{it}$$
@@ -76,14 +76,14 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 ![Figure12](fig12.png)
 
 
-## Level of Female Schooling in Selected Countries
+## Female Schooling in Selected Countries
 ![Figure10](fig10.png)
 
-## Level of Female Unemployment in Selected Countries
+## Female Unemployment in Selected Countries
 ![Figure11](fig11.png)
  
 
-## Imputed Missing values
+## Imputed Missing Values
 
 ```{r, echo=FALSE, include=FALSE}
 
