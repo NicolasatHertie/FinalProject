@@ -124,7 +124,7 @@ Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates de
 # Look at incidence over time - seee the general trend
 IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
 IncT <- IncT + ggtitle("Figure 2: Incidence Rate over Time") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig2.png", width=4, height=5, dpi=100)
+ggsave("fig2.png", width=4, height=4, dpi=100)
 ```
 
 
@@ -169,6 +169,7 @@ Further, a dummy variable was created assigning a value of zero for those observ
 # Histogram of new dependent variable
 Histdep <- hist(Merged$DDif, breaks= seq(0,1.5,by=0.1), xlab="Dummy Coding: Change in Incidence Rate", main="Figure 5: Dummy Variable")
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
+ggsave("fig5.png", width=7, height=8, dpi=100)
 ```
 
 Scatterplots were used for each category of Dahlgrehn's model in order to see whether the variables are skewed or multicollinear (Figures 5, 6 & 7).
@@ -184,7 +185,7 @@ HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zam
 Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=country)) + geom_line() + geom_point()
                                                                                                                           
 Cases <- Cases + ggtitle("Figure 6: Interesting Cases for HIV Incidence Rates") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig5.png", width=7, height=8, dpi=100)
+ggsave("fig6.png", width=7, height=5, dpi=100)
 ```
 
 # Case Studies - Botswana, Lesotho, Uganda & Malawi
@@ -196,31 +197,64 @@ CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesot
 
 Water <- ggplot(data=CaseStudies, aes(x=year, y=Water, group=country, color=country)) + geom_line() + geom_point()
 Water <- Water + ggtitle("Figure 7: Access to Water in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig7.png", width=7, height=8, dpi=100)
+ggsave("fig7.png", width=7, height=5, dpi=100)
 
 Sanitation <- ggplot(data=CaseStudies, aes(x=year, y=Sanitation, group=country, color=country)) + geom_line() + geom_point()
 Sanitation <- Sanitation + ggtitle("Figure 8: Access to Sanitation in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig8.png", width=7, height=8, dpi=100)
+ggsave("fig8.png", width=7, height=4, dpi=100)
 
-GDP <- ggplot(data=CaseStudies, aes(x=year, y=GDPpc, group=country, color=country)) + geom_line() + geom_point()
-GDP <- GDP + ggtitle("Figure 9: GDPpc in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig9.png", width=7, height=8, dpi=100)
+GDPpc <- ggplot(data=CaseStudies, aes(x=year, y=GDPpc, group=country, color=country)) + geom_line() + geom_point()
+GDPpc <- GDPpc + ggtitle("Figure 9: GDP per capita in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+ggsave("fig9.png", width=7, height=4, dpi=100)
 
 FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()
 FemSchool <- FemSchool + ggtitle("Figure 10: Level of Female Schooling in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig10.png", width=7, height=8, dpi=100)
+ggsave("fig10.png", width=7, height=5, dpi=100)
 
-FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point() + stat_smooth()
+summary(CaseStudies$FemSchool)
+CaseStudies$FemUnempl <- as.numeric(CaseStudies$FemUnempl)
+
+FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
 FemUnempl <- FemUnempl + ggtitle("Figure 11: Level of Female Unemployment in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig11.png", width=7, height=8, dpi=100)
+ggsave("fig11.png", width=7, height=5, dpi=100)
 
-ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
+HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
+HCE <- HCE + ggtitle("Figure 12: Health Care Expenditure (%GDP) in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+ggsave("fig12.png", width=7, height=5, dpi=100)
 
-ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Rural <- Rural + ggtitle("Figure 13: Share of Rural Population in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+ggsave("fig13.png", width=7, height=5, dpi=100)
 
-ggplot(data=CaseStudies, aes(x=year, y=HCexpendpc, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
+Incidence <- Incidence + ggtitle("Figure 14: Incidence Rate in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+ggsave("fig14.png", width=7, height=5, dpi=100)
 
 ```
+
+
+```{r, echo=FALSE, type = 'latex', header = FALSE}
+# Putting graphs together
+library(RCurl)
+library(Zelig)
+library(ggplot2)
+library(reshape2)
+install.packages("gridExtra")
+library(gridExtra)
+
+Rural <- ggplot(data=CaseStudies, aes(x=year, y=Rural, group=country, color=country, shape=country)) + geom_line() + geom_point()
+
+HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=country, shape=country,)) + ylab( "Health Care Expenditure (%GDP)") + xlab("Year") + geom_line() + geom_point()
+
+Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point()
+
+FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()
+
+predicted.combine <- grid.arrange(Incidence, HCE, ncol = 2, main = "Incidence and HCE")
+pdf(file="fig15.pdf")
+print(predicted.combine)
+```
+
 
 # Inferential Statistics
 
@@ -241,7 +275,6 @@ collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Wa
 ```{r, echo=FALSE, type = 'latex', header = FALSE}
 # Testing for multicollinearity 1st time
 collinear1 <- vif(collinear1)
-collinear1
 
 knitr::kable(collinear1, align = 'c', digits = 2, col.names="VIF",
              caption = 'Variance Inflation Factors 1')
@@ -382,6 +415,47 @@ plot(s.out)
 ```
 
 The test for variance inflation factors showed that in our first logistic regression model six variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital, Unemployment and Female unemployment, Primary education and female schooling. Therefore, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, namely unemployment, primary education and GDP.
+
+# Preparing the dataset for Model 2
+
+```{r, echo=FALSE, include=FALSE}
+### Creating a subset with the countries that have an incidence rate higher than the mean
+
+# Duplicating our imputations
+Imputed2.out <- Imputed.out
+
+# Creating the subset with countries above the mean with a loop for all 5 imputations
+for (i in 1:5){
+  Imputed2.out$imputations[[i]] <- Imputed2.out$imputations[[i]][which (Imputed.out$imputations[[i]]$Incidence>=0.3493), ]
+}
+
+# Running a linear pooled OLS regression
+
+b.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool, data = Imputed2.out, model = "ls")
+
+summary(b.out)
+
+# Estimating with robust standard errors
+
+c.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool, data = Imputed2.out, model = "ls")
+
+summary(c.out)
+
+# Estimating the model with fixed effects
+
+d.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + as.factor(country), data = Imputed2.out, model = "ls")
+
+summary(d.out)
+
+# Estimating the model with fixed effects and robust standard errors
+
+e.out <- zelig(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
+
+summary(e.out)
+
+
+```
+
 
 # Limitations
 
