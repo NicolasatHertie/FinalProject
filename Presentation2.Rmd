@@ -49,44 +49,34 @@ output:
 
 ![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
 
-## Descriptive Statistics
 
-##
-### 
+
+## Distribution of HIV Incidence Rate Worldwide (2012)
 ![Figure1](IncidenceRates.png)
 
 
-##
-### 
+## HIV Incidence Rates over Time
 ![Figure2](fig2.png)
 
-##
-###
+## Interesting Cases for HIV Incidence Rates
 ![Figure6](fig6.png)
 
 
-##
-###
+## GDP per capita in Selected Countries
 ![Figure9](fig9.png)
 
-##
-###
+## Access to Water in Selected Countries
 ![Figure7](fig7.png)
 
-##
-###
+## Health Care Expenditure in Selected Countries
 ![Figure12](fig12.png)
 
 
-
-##
-###
+## Female School Enrollment in Selected Countries
 ![Figure10](fig10.png)
 
-##
-###
+## Female Unemployment in Selected Countries
 ![Figure11](fig11.png)
-
 
 
 ## The Model
@@ -142,7 +132,7 @@ knitr::kable(as.data.frame(summary(Model1.out)$coef))
 ```
 
 
-## Predicted Probabilities - Female School Enrollment (in Quartiles)
+## Predicted Probabilities - Female School Enrollment
 
 
 ```{r, echo=FALSE, include = FALSE}
@@ -265,7 +255,7 @@ plot(Botswana1.out)
 plot(Malawi1.out)
 ```
 
-## Predicted Probabilities - Female Unemployment (in Quartiles)
+## Predicted Probabilities - Female Unemployment
 
 ```{r, echo=FALSE, include=FALSE}
 #### MODEL 1.3.1 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Uganda
@@ -423,23 +413,23 @@ knitr::kable(as.data.frame(summary(d.out)$coef))
 
 ## Conclusions and Limitations - Model 1
 
-1. ** Logistic Regression Results of Model 1 (all countries) **
+1. **Logistic Regression Results of Model 1 (all countries)**
 - Generally in line with hypothesis
 - Most of the variables are statistically significant
 - Only Immunisation Variables and GDP per capital are not significant
 
-2. ** Predicted Probabilities of Model 1 (selected countries) **
+2. **Predicted Probabilities of Model 1 (selected countries)**
 - Direction of effect of Female School Enrollment matches initial assumptions for all case studies
 - Direction of effect of Female Unemployment does not match initial assumptions for any case study
 
 ## Conclusions and Limitations - Model 2
 
-3. ** Linear Regression of Model 2 (countries with incidence above mean) **
+3. **Linear Regression of Model 2 (countries with incidence above mean)**
 - Significance of some variables changes
 - Female School Enrollment and Female Unemployment remain highly significant
 - Effect of Female Schooling becomes positive (!)
 
-4. ** Fixed Effects Regression of Model 2 (countries with incidence above mean) **
+4. **Fixed Effects Regression of Model 2 (countries with incidence above mean)**
 - Significance of some variables changes compared to simple linear model
 - Female School Enrollment and Female Unemployment become insignificant
 - Immunisation rates for DPT & Measles become highly significant (!)
