@@ -12,16 +12,16 @@ output:
 
 ---
 
-## Outline
+## Presentation Outline
 
-- Research Question and Motivation
+- Research Question & Motivation
 - Theoretical Framework
 - Methodology
 - Descriptive Statistics 
 - Findings
-- Conclusion and Limitations
+- Conclusion & Limitations
 
-## Research Question and Motivation
+## Research Question & Motivation
 
 **Research Question: Are community level factors significant determinants of HIV/AIDS incidence rates?**
 
@@ -83,7 +83,7 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 ![Figure11](fig11.png)
  
 
-## Imputed missing values
+## Imputed Missing values
 
 ```{r, echo=FALSE, include=FALSE}
 
@@ -389,25 +389,25 @@ knitr::kable(as.data.frame(summary(b.out)$coef))
 ```
 
 
-## Conclusions and Limitations - Model 1
+## Conclusions & Limitations - Model 1
 
-1. ** Logistic Regression Results of Model 1 (all countries) **
+1. **Logistic Regression Results of Model 1 (all countries)**
 - Generally in line with hypothesis
 - Most of the variables are statistically significant
 - Only Immunisation Variables and GDP per capital are not significant
 
-2. ** Predicted Probabilities of Model 1 (selected countries) **
+2. **Predicted Probabilities of Model 1 (selected countries)**
 - Direction of effect of Female School Enrollment matches initial assumptions for all case studies
 - Direction of effect of Female Unemployment does not match initial assumptions for any case study
 
-## Conclusions and Limitations - Model 2
+## Conclusions & Limitations - Model 2
 
-3. ** Linear Regression of Model 2 (countries with incidence above mean) **
+3. **Linear Regression of Model 2 (countries with incidence above mean)**
 - Significance of some variables changes
 - Female School Enrollment and Female Unemployment remain highly significant
 - Effect of Female Schooling becomes positive (!)
 
-4. ** Fixed Effects Regression of Model 2 (countries with incidence above mean) **
+4. **Fixed Effects Regression of Model 2 (countries with incidence above mean)**
 - Significance of some variables changes compared to simple linear model
 - Female School Enrollment and Female Unemployment become insignificant
 - Immunisation rates for DPT & Measles become highly significant (!)
