@@ -1,86 +1,101 @@
 ---
-title: "Determinants of HIV"
+title: "Untitled"
 author: M. Moellenkamp and N. Rosemberg
+output: 
+  ioslides_presentation:
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+    template: quarterly_report.html
 number_sections: yes
 highlight: zenburn
 date: December 4th, 2014
-output:
-  beamer_presentation:
-    theme: "CambridgeUS"
-    fonttheme: "structurebold"
----
-
 ---
 
 ## Outline
 
-- Research Question and Motivation
-- Theoretical Framework
+- Motivation
+- Research Question
 - Methodology
+- Theoretical Framework
 - Descriptive Statistics 
 - Findings
-- Conclusion and Limitations
+- Conclusion
+- Limitations
 
-## Research Question and Motivation
-
-**Research Question: Are community level factors significant determinants of HIV/AIDS incidence rates?**
+## Motivation and Research Question
 
 1. Understand why some countries failed to achieve MDG 6A
 
-- *MDG 6: "Combat HIV/AIDS, malaria and other diseases"*
+- *MDG 6: Combat HIV/AIDS, malaria and other diseases*
 
-- *Target 6A: "Have halted by 2015 and begun to reverse the spread of HIV/AIDS"*
+- *Target 6A: Have halted by 2015 and begun to reverse the spread of HIV/AIDS*
 
 2. Explore disease-specific determinants of health
 
-
-
-## Theoretical Framework
-
-![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
-
+**Research Question: Are community level factors significant determinants of HIV/AIDS incidence rates?**
 
 ## Methodology and Dataset
 
-**Model**
-$$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{it} + {\beta}_4 ILF_{it} + {\epsilon}_{it}$$
+**Methodology**
+
+- We will...
 
 **Datasets**
 
 - We will use the World Development Indicators (WDI) for the independent variables and a dataset from UNAIDS for the HIV/AIDS prevalence rate.
 
-**Methodology**
+## Theoretical Framework
 
-- Model 1: Logistic Regression & Predicted Probabilities
-- Model 2: Pooled OLS Regression & Fixed Effects
+![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
 
+## Descriptive Statistics
 
-## Distribution of HIV Incidence Rates
+##
+### 
 ![Figure1](IncidenceRates.png)
 
 
-## HIV Incidence Rates over Time 
+##
+### 
 ![Figure2](fig2.png)
 
-## Interesting Cases for HIV Incidence Rates
+##
+###
 ![Figure6](fig6.png)
 
 
-## GDP per capita in Selected Countries
+##
+###
 ![Figure9](fig9.png)
 
-## Access to Water in Selected Countries
+##
+###
 ![Figure7](fig7.png)
 
-## Health Care Expenditure in Selected Countries
+##
+###
 ![Figure12](fig12.png)
 
 
-## Level of Female Schooling in Selected Countries
+
+##
+###
 ![Figure10](fig10.png)
 
-## Level of Female Unemployment in Selected Countries
+##
+###
 ![Figure11](fig11.png)
+
+
+
+## The Model
+
+To answer our research question we will estimate the following equation:
+
+$$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{it} + {\beta}_4 ILF_{it} + {\epsilon}_{it}$$
+
+Where I stands for HIV/AIDS incidence, SE stands for socioeconomic factors, WLC stands for working and living conditions, SCN stands for social and community networks and ILF stands for individual lifestyle factors. 
  
 
 ## Imputed missing values
@@ -127,7 +142,8 @@ knitr::kable(as.data.frame(summary(Model1.out)$coef))
 ```
 
 
-## Predicted Probabilities - Female School Enrollment
+## Predicted Probabilities - Female School Enrollment (in Quartiles)
+
 
 ```{r, echo=FALSE, include = FALSE}
 
@@ -249,7 +265,7 @@ plot(Botswana1.out)
 plot(Malawi1.out)
 ```
 
-## Predicted Probabilities - Female Unemployment
+## Predicted Probabilities - Female Unemployment (in Quartiles)
 
 ```{r, echo=FALSE, include=FALSE}
 #### MODEL 1.3.1 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Uganda
@@ -387,7 +403,23 @@ summary(b.out)
 knitr::kable(as.data.frame(summary(b.out)$coef))
  
 ```
+ 
+## Fixed Effects Regression Results - Model 2
 
+```{r, echo=FALSE, include=FALSE}
+## Estimating the model with fixed effects
+ 
+d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls")
+ 
+summary(d.out)
+```
+
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Fixed effects estimation 
+knitr::kable(as.data.frame(summary(d.out)$coef))
+ 
+```
 
 ## Conclusions and Limitations - Model 1
 
@@ -411,3 +443,6 @@ knitr::kable(as.data.frame(summary(b.out)$coef))
 - Significance of some variables changes compared to simple linear model
 - Female School Enrollment and Female Unemployment become insignificant
 - Immunisation rates for DPT & Measles become highly significant (!)
+
+
+
