@@ -59,13 +59,22 @@ setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
 ```
 
 
+```{r, echo=FALSE}
+<div style="text-align:center" markdown="1">
+
+![Figure2](fig2.png)
+
+</div>
+```
+
 ##
 ### 
 ![Figure2](fig2.png)
 
+
 ##
 ###
-![Figure3](fig3.png)
+**![Figure3](fig3.png)**
 
 ## The Model
 
