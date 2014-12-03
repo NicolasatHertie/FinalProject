@@ -113,6 +113,30 @@ Where I stands for HIV/AIDS incidence, SE stands for socioeconomic factors, WLC 
 
 ![Malawi2](plotMalawi2.png)
 
+## Botswana
+
+![Botswana1](plotBotswana1.png)
+
+## Botswana 2
+
+![Botswana2](plotBotswana2.png)
+
+## Lesotho
+
+![Lesotho1](plotLesotho1.png)
+
+## Lesotho 2
+
+![Lesotho2](plotLesotho2.png)
+
+## Uganda
+
+![Uganda1](plotUganda1.png)
+
+## Uganda 2
+
+![Uganda2](plotUganda2.png)
+
 ## Conclusions and Limitation
 
 
