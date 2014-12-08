@@ -1,7 +1,7 @@
 ---
-title: "Collaborative Research Project - Assignment 3"
+title: "Healthy communities - Understanding determinants of HIV"
 bibliography: RpackageCitations.bib
-date: "14 November 2014"
+date: "12 December 2014"
 output: 
   pdf_document:
     number_sections: yes
@@ -194,7 +194,17 @@ Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, colo
                                                                                                                           
 #Cases <- Cases + ggtitle("Figure 6: Interesting Cases for HIV Incidence Rates") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig6.png", width=7, height=4, dpi=100)
+
+
+CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Uganda"), ]
+Cases <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year")
+ggsave("figa.png", width=7, height=4, dpi=100)
+
 ```
+
+
+ 
+
 
 # Case Studies - Botswana, Lesotho, Uganda & Malawi
 
@@ -307,6 +317,7 @@ As can be seen from the Scatterplots (see appendix) most of the variables are no
 Merged$GDP <- NULL
 Merged$Primary <- NULL
 Merged$IncidenceDif <- NULL
+# Merged$FemUnempl <- NULL
 
 # Logging the independent variables for better comparability and imputations
 Merged$lGDPpc <- log(Merged$GDPpc)
@@ -324,6 +335,7 @@ Merged$lDPT <- log(Merged$DPT)
 Merged$lMeasles <- log(Merged$Measles)
 Merged$lIncidence <- log(Merged$Incidence)
 
+# Merged$lFemUnempl <- NULL
 
 # Creating a new variable with FemSchool by quintiles
 Merged$QFemSchool <- Merged$lFemSchool
@@ -333,25 +345,25 @@ Merged$QFemSchool[Merged$lFemSchool>4.622 & Merged$lFemSchool<=4.697] <-3
 Merged$QFemSchool[Merged$lFemSchool>4.697] <-4
 
 # Creating a variable with the inverse from FemUnempl
-Merged$Inverse <- 1/Merged$FemUnempl
-Merged$Inverse <- log(Merged$Inverse)
+# Merged$Inverse <- 1/Merged$FemUnempl
+# Merged$Inverse <- log(Merged$Inverse)
 # Drop Female Unemployment because of collinearity with inverse
-Merged$FemUnempl <- NULL
-Merged$lFemUnempl <- NULL
+# Merged$FemUnempl <- NULL
+# Merged$lFemUnempl <- NULL
 
 # Creating a new variable with Female Employment (Inverse of Female Unemployment) by quintiles
-Merged$QInverse <- Merged$Inverse
-Merged$QInverse[Merged$Inverse<=-2.534] <-1
-Merged$QInverse[Merged$Inverse>-2.534 & Merged$Inverse<=-2.092] <-2
-Merged$QInverse[Merged$Inverse>-2.092 & Merged$Inverse<=-1.459] <-3
-Merged$QInverse[Merged$Inverse>-1.459] <-4
+# Merged$QInverse <- Merged$Inverse
+# Merged$QInverse[Merged$Inverse<=-2.534] <-1
+# Merged$QInverse[Merged$Inverse>-2.534 & Merged$Inverse<=-2.092] <-2
+# Merged$QInverse[Merged$Inverse>-2.092 & Merged$Inverse<=-1.459] <-3
+# Merged$QInverse[Merged$Inverse>-1.459] <-4
 
 # Creating dependent variable as Dummy (0 if above the mean, 1 if below the mean of the Incidence variable)
-mean(Merged$Incidence)
-Merged$Dummy[Merged$Incidence %in% 0.3493199:1] <- 0
-Merged$Dummy[Merged$Incidence %in% 0:0.3493198] <- 1
+median(Merged$Incidence)
+# Merged$Dummy[Merged$Incidence %in% 0.3493199:1] <- 0
+# Merged$Dummy[Merged$Incidence %in% 0:0.3493198] <- 1
 
-Merged$Dummy <- as.numeric(Merged$Incidence<=0.3493198)
+Merged$Dummy <- as.numeric(Merged$Incidence<=0.07)
 
 hist(Merged$Dummy)
 
@@ -361,9 +373,9 @@ write.csv(Merged, file="MergedData2")
 
 ```{r, echo=FALSE, include=FALSE}
 ### Imputing the missing values
-Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country", ords= c("QFemSchool", "Dummy", "DDif"))
+Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "country", ords= c("QFemSchool", "Dummy"))
 
-
+names(Imputed.out$imputations$imp5)
 
 # Plot imputed variables
 png(file="plotamelia.png")
@@ -379,14 +391,13 @@ As the dependent variable is coded as a dummy, being 1 if MDG 6.A is reached and
 #### MODEL 1.1 - Running a general logistic regression using all independent variables
 
 
-Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed.out, model = "logit")
+Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool, data = Imputed.out, model = "logit")
 
 ```
 
 ```{r, echo=FALSE, results="asis", error=FALSE}
 # Regression Results of Logistic Regression
 knitr::kable(as.data.frame(summary(Model1.out)$coef))
-?kable 
 
 ```
 
@@ -394,7 +405,7 @@ knitr::kable(as.data.frame(summary(Model1.out)$coef))
 
 #### MODEL 1.2.1 - Calculating predicted probabilities for Wuintiles of Female Schooling for the Scenario Uganda
 
-Model2.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + QFemSchool, data = Imputed.out, model = "logit")
+Model2.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + QFemSchool, data = Imputed.out, model = "logit")
 
 
 ## Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
@@ -403,10 +414,10 @@ Model2.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanit
 finalimputed <- rbind(Imputed.out$imputations$imp1,Imputed.out$imputations$imp2,Imputed.out$imputations$imp3,Imputed.out$imputations$imp4,Imputed.out$imputations$imp5)
 
 # Creating a subset for calculating the means
-Uganda <- finalimputed[which (finalimputed$country=="Uganda"), ]
+# Uganda <- finalimputed[which (finalimputed$country=="Uganda"), ]
 
 # Calculating the means for Uganda
-summary(Uganda)
+# summary(Uganda)
 
 # Fixing the Uganda Scenario, letting Quintiles of Female Schooling vary
 Uganda1.out <-  setx(Model2.out, 
@@ -419,7 +430,6 @@ Uganda1.out <-  setx(Model2.out,
               lSanitation = 3.46,
               lDPT = 4.20,
               lMeasles = 4.24,
-              Inverse = -1.258,
              QFemSchool = 1:4)
 
 # Calculating the Predicted Probabilities
@@ -453,7 +463,6 @@ Lesotho1.out <-  setx(Model2.out,
               lSanitation = 3.29,
               lDPT = 4.49,
               lMeasles = 4.41,
-              Inverse = -3.58,
               QFemSchool = 1:4)
 
 # Calculating the Predicted Probabilities
@@ -493,7 +502,6 @@ Malawi1.out <-  setx(Model2.out,
               lSanitation = 2.33,
               lDPT = 4.48,
               lMeasles = 4.42,
-              Inverse = -2.17,
               QFemSchool = 1:4)
 
 # Calculating the Predicted Probabilities
@@ -530,7 +538,6 @@ Botswana1.out <-  setx(Model2.out,
               lSanitation = 4.07,
               lDPT = 4.57,
               lMeasles = 4.53,
-              Inverse = -3.16,
               QFemSchool = 1:4)
 
 # Calculating the Predicted Probabilities
@@ -556,149 +563,6 @@ plot(Malawi1.out)
 dev.off()
 ```
 
-```{r, echo=FALSE, include=FALSE}
-#### MODEL 1.3.1 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Uganda
-Model3.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + QInverse + FemSchool, data = Imputed.out, model = "logit")
-
-summary(Uganda)
-
-# Fixing the Uganda Scenario, letting Quintiles of Female Employment vary
-Uganda2.out <-  setx(Model3.out, 
-              lGDPpc = 7.00, 
-              lRural = 4.46,
-              lCO2 = -2.44,
-              lHCexpend = 2.12,
-              lLifeExpect = 3.98,
-              lWater = 4.18,
-              lSanitation = 3.46,
-              lDPT = 4.20,
-              lMeasles = 4.24,
-              lFemSchool = 4.81,
-             QInverse = 1:4)
-
-# Calculating the Predicted Probabilities
-Uganda2.out <- sim(Model3.out, x = Uganda2.out)
-```
-
-```{r, echo=FALSE}
-# Plotting the Predicted Probabilities
-png(file="plotUganda2.png")
-plot(Uganda2.out, xlab=Quartiles, ylab="Predicted Probabilities")
-dev.off()
-```
-
-```{r, echo=FALSE, include = FALSE}
-#### MODEL 1.2.2 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Lesotho
-
-# Calculating the means for Lesotho
-summary(Lesotho)
-
-# Fixing the Lesotho Scenario, letting Quintiles of Female Employment vary
-Lesotho2.out <-  setx(Model3.out, 
-              lGDPpc = 7.56, 
-              lRural = 4.35,
-              lCO2 = -3.31,
-              lHCexpend = 2.11,
-              lLifeExpect = 3.82,
-              lWater = 4.38,
-              lSanitation = 3.29,
-              lDPT = 4.49,
-              lMeasles = 4.41,
-              lFemSchool = 4.75,
-              QInverse = 1:4)
-
-# Calculating the Predicted Probabilities
-Lesotho2.out <- sim(Model3.out, x = Lesotho2.out)
-```
-
-
-```{r, echo=FALSE}
-# Plotting the Predicted Probabilities
-png(file="plotLesotho2.png")
-plot(Lesotho2.out, xlab="Quartiles", ylab="Predicted Probabilities")
-dev.off()
-```
-
-
-```{r, echo=FALSE, include=FALSE}
-
-#### MODEL 1.3.3 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Malawi
-
-# Calculating the means for Malawi
-summary(Malawi)
-
-# Fixing the Malawi Scenario, letting Quintiles of Female Employment vary
-Malawi2.out <-  setx(Model3.out, 
-              lGDPpc = 6.47, 
-              lRural = 4.44,
-              lCO2 = -2.67,
-              lHCexpend = 1.99,
-              lLifeExpect = 3.91,
-              lWater = 4.30,
-              lSanitation = 2.33,
-              lDPT = 4.48,
-              lMeasles = 4.42,
-              lFemSchool = 4.86,
-              QInverse = 1:4)
-
-# Calculating the Predicted Probabilities
-Malawi2.out <- sim(Model3.out, x = Malawi2.out)
-
-```
-
-
-```{r, echo=FALSE}
-# Plotting the Predicted Probabilities
-png(file="plotMalawi2.png")
-plot(Malawi2.out, xlab="Quartiles", ylab="Predicted Probabilities")
-dev.off()
-```
-
-```{r, echo=FALSE, include=FALSE}
-
-#### MODEL 1.3.4 - Calculating predicted probabilities for Quintiles of Female Employment for the Scenario Botswana
-
-# Calculating the means for Botswana
-summary(Botswana)
-
-# Fixing the Botswana Scenario, letting Quintiles of Female Employment vary
-Botswana2.out <-  setx(Model3.out, 
-              lGDPpc = 9.39, 
-              lRural = 3.80,
-              lCO2 = 0.925,
-              lHCexpend = 1.65,
-              lLifeExpect = 3.86,
-              lWater = 4.56,
-              lSanitation = 4.07,
-              lDPT = 4.57,
-              lMeasles = 4.53,
-              lFemSchool = 4.59,
-              QInverse = 1:4)
-
-# Calculating the Predicted Probabilities
-Botswana2.out <- sim(Model3.out, x = Botswana2.out)
-
-```
-
-
-```{r, echo=FALSE}
-# Plotting the Predicted Probabilities
-png(file="plotBotswana2.png")
-plot(Botswana2.out, xlab="Quartiles", ylab="Predicted Probabilities")
-dev.off()
-```
-
-```{r, echo=FALSE}
-# Creating a joint plot with the predicted probabilities
-png(file="JoinPlot2.png")
-par(mfrow=c(2,2))
-plot(Uganda2.out, xlab="Quartiles", ylab="Predicted Probabilities")
-plot(Lesotho2.out)
-plot(Botswana2.out)
-plot(Malawi2.out)
-dev.off()
-```
-
 
 # Preparing the dataset for Model 2
  
@@ -715,25 +579,25 @@ for (i in 1:5){
  
 # Running a linear pooled OLS regression
 
-b.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed2.out, model = "ls")
+b.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool, data = Imputed2.out, model = "ls")
  
 summary(b.out)
  
 # Estimating with robust standard errors
  
-c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool, data = Imputed2.out, model = "ls")
+c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool, data = Imputed2.out, model = "ls")
  
 summary(c.out)
  
 # Estimating the model with fixed effects
  
-d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls")
+d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls")
  
 summary(d.out)
  
 # Estimating the model with fixed effects and robust standard errors
  
-e.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
+e.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
  
 summary(e.out)
  
