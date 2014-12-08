@@ -307,8 +307,6 @@ As can be seen from the Scatterplots (see appendix) most of the variables are no
 Merged$GDP <- NULL
 Merged$Primary <- NULL
 Merged$IncidenceDif <- NULL
-Merged$X <- NULL
-Merged$X.1 <- NULL
 
 # Logging the independent variables for better comparability and imputations
 Merged$lGDPpc <- log(Merged$GDPpc)
