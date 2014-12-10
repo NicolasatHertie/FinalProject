@@ -76,7 +76,8 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 
 ```{r, echo=FALSE, include=FALSE}
 
-setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
+#setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
+setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
 
 # Load packages
 # install.packages("Amelia")  
