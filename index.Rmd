@@ -118,30 +118,57 @@ The first part of the research explored the existing literature on determinants 
 
 To fill this gap, we started by identifiying a model of general determinants of health that we could use to test for disease-specific determinants of health. We chose Dahlgren and Whitehead's model because it provides a simple yet comprehensive framework to identify variables. According to this model, there are a wide range of factors that influence our health, such as general socioeconomic factors, working and living conditions, social and community networks and individual factors (like smoking or drinking alcohol).
 
+**Dahlgren and Whitehead's model**
+
 ![Dahlgren and Whitehead](Dahlgren.png)
 
 *Source: Dahlgren and Whitehead (1991)*
 
 While the (limited) literature on specific determinants of HIV mostly focused on socioeconomic factors and individual factors, there are not so many papers looking at the influence of social and community networks. This is why we decided to explore social and community factors and see whether they are significant to explain the incidence of HIV at the country level.
 
+# CASE STUDY SELECTION
 
-# DID IT WORK?
+We were particularly interested in looking at some case studies to take a closer look at the relation between our selected variables. To choose the case studies we looked at the evolution of HIV incidence across time and selected the countries where incidence either strongly increased or strongly decreased or countries where incidence showed an erratic behaovior. From these sampled countries, we took 2 best practices (Botswana and Malawi, green lines) and two bad practices (Lesotho and Uganda, red lines).
+
+**Case Studies**
+
+```{r, results='asis', echo=FALSE}
+
+HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
+
+HighIncidence$CaseStudy <- HighIncidence$Incidence
+HighIncidence$CaseStudy[HighIncidence$country=="Zimbabwe" | HighIncidence$country=="Zambia"| HighIncidence$country=="Swaziland" | HighIncidence$country=="South Africa" | HighIncidence$country=="Namibia" | HighIncidence$country=="Mozambique" | HighIncidence$country=="Sierra Leone"  | HighIncidence$country=="Papua New Guinea"] <-0
+HighIncidence$CaseStudy[HighIncidence$country=="Lesotho" | HighIncidence$country=="Uganda"] <-2
+HighIncidence$CaseStudy[HighIncidence$country=="Malawi" | HighIncidence$country=="Botswana"] <-1
+
+Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=CaseStudy)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year") + scale_color_gradient2(midpoint=1, low="grey", mid="darkgreen", high="darkred") + theme(legend.position="none")                                                                                                                                                      
+                                                                                                                          
+Cases <- Cases + theme(plot.title = element_text(lineheight=3, face="bold"))
+
+print(Cases)
+```
+
+
+# WHAT DID WE FIND?
 
 - We were interested in looking at the impact of two variables on HIV incidence rates. The first variable was female schooling. Early education represents an excellent opportunity to conduct HIV preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female schooling on HIV incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female schooling would reduce HIV incidence. The data supported this hypothesis.
 
+**Female School Enrollment - Case Studies**
+
+```{r, results='asis', echo=FALSE}
+
+CaseStudies <-HighIncidence
+CaseStudies <- CaseStudies[which (CaseStudies$country=="Lesotho" | CaseStudies$country=="Malawi" | CaseStudies$country=="Botswana"  | CaseStudies$country=="Uganda"), ] 
+
+
+FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()+ ylab( "Gross Female School Enrollment") + xlab("Year")
+
+print(FemSchool)
+```
+
 - The second variable that we explore was the difference between female unemployment and total unemployment. We expected that a high rate of female employment to total unemployment would describe a society where women have relatively less power than men and this would mean that men could more easily bargain for unprotected sex. As a consequence, one would expect that a higher difference in female to total unemployment would be associated with higher HIV incidence rates. This hypothesis was not supported by out findings, according to which the difference between female and total unemployment has no impact on HIV incidence rates.
 
-# SO... WHY IS THIS RELEVANT?
-
-We believe that these findings can lead to interesting policy recommendations. 
-
-1. **INVEST IN GIRLS EDUCATION:** If female schooling is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
-
-2. **FURTHER EXPLORE THE LINK BETWEEN FEMALE LABOUR PARTICIPATION AND HIV INCIDENCE:** When looking at the difference between female and total unemployment, we realised that this indicator is not exactly portraying the variable that we wanted to analyze, namely female labour participation. It would be therefore interesting to test whether this variable is a good determinant of HIV before reaching any conclusion.
-
-3. **LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES:** We realised that there is a gap in the literature exploring disease specific determinants of health regarding the impact of social and community level factors. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV.
-
-
+For a better understanding of the dynamics of our datasets, feel free to play with the following interactive tool: 
 
 ```{r, results='asis', echo=FALSE}
 
@@ -160,13 +187,34 @@ Demo <- plyr::rename(Demo, c("LifeExpect" = "Life Expectancy"))
 Demo <- plyr::rename(Demo, c("DPT" = "Immunization against DPT"))
 Demo <- plyr::rename(Demo, c("Measles" = "Immunization against Measles"))
 Demo <- plyr::rename(Demo, c("FemUnempl" = "Female Unemployment Rate"))
+Demo <- plyr::rename(Demo, c("Incidence" = "HIV Incidence Rate"))
 
 
 M <- gvisMotionChart(Demo, "country", "year",
-                     options=list(width=400, height=280))
+                     options=list(width=400, height=380))
 
 
 print(M)
 ```
+
+Choose from the dropdown list the variables that you will like to see in the x and y axis. If you want to change the color coding or make the size of the bubbles change according to the values of a specific variable, you can select that on the upper-right corner. If you are interested in the behavior of a particular country, you can select that on the lower-right corner. Also note that you can create bar and line charts by choosing the respective tab on the upper side of the tool.
+
+We were particularly interested in looking at the evolution of HIV incidence rates (y axis) in relation to the evolution of female schooling (x axis). As you can see, while female schooling increases, HIV incidence rates decrease.
+
+
+
+
+
+
+# SO... WHY IS THIS RELEVANT?
+
+We believe that these findings can lead to interesting policy recommendations. 
+
+1. **INVEST IN GIRLS EDUCATION:** If female schooling is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
+
+2. **FURTHER EXPLORE THE LINK BETWEEN FEMALE LABOUR PARTICIPATION AND HIV INCIDENCE:** When looking at the difference between female and total unemployment, we realised that this indicator is not exactly portraying the variable that we wanted to analyze, namely female labour participation. It would be therefore interesting to test whether this variable is a good determinant of HIV before reaching any conclusion.
+
+3. **LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES:** We realised that there is a gap in the literature exploring disease specific determinants of health regarding the impact of social and community level factors. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV.
+
 
 Thank you for visiting our website. If you have any questions, please contact us at m.moellenkamp@mpp.hertie-school.org or n.rosemberg@mpp.hertie-school.org
