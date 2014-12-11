@@ -205,96 +205,93 @@ Merged$Dummy <- as.numeric(Merged$Incidence<=0.07)
 
 ```
 
-The descriptive statistics part consists of the preparation of the variables for data analysis. Tables, plots and histograms are shown to understand the distribution of the variables. 
+The descriptive statistics part consists of analysing the main variables of interest and preparing them for the data analysis. Tables, plots and histograms are shown to understand the distribution of the variables. 
 
+Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates decreased between the period of 2000 to 2015 (see Figure 2). The blue line of Figure 2 is however only representing the general downwards sloping trend of HIV/AIDS incidence over time in our sample. The black dots in the above the blue line show that there are still some outliers to this trend.
 
-\pagebreak
-
-The histogram of the dependent variable (Figure 1) shows that the incidence rates are not normally distributed but strongly skewed to the left and only few incidence rates are higher than 1. 
-
-
-Figure 2 shows that in most countries of our dataset HIV/AIDS incidence rates decreased between the period of 2000 to 2015 (see Figure 2).
+**Figure 2: HIV/AIDS Incidence Rate over Time**
 
 ```{r, echo=FALSE, include=FALSE}
 # Looking at incidence over time to seee the general trend
 IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
 #IncT <- IncT + theme(plot.title = element_text(lineheight=3, face="bold"))
-ggsave("fig2.png", width=5, height=4, dpi=100)
+ggsave("fig2.png", width=4, height=3, dpi=90)
 dev.off()
 ```
 
 ![Figure2](fig2.png)
 
-When plotting the incidence rates per country (Figure 3 in appendix) the range of observations per country is shown and the outliers (countries with high incidence rates) can be identified.
+From Figures 3 and 4 (see Appendix) it can be seen which countries are not following this general downward sloping trend. Figure 3 plots the range of observations on HIV/AIDS incidence per country. The figure shows that most countries have low HIV/AIDS incidence rates slightly above 0, but some outliers (countries with high incidence rates) can be identified.
 
-As the research question investigates why MDG 6.A is not being reached by some countries, the general HIV incidence rate is interesting, but also the decrease in the incidence rate from 2000 to 2015 is even more relevant. As stated in the research proposal Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [United Nations (2014)]. 
+Figure 4 is showing the direction of the change of the HIV/AIDS incidence rate compared to the previous year by country. To analyse the change of the incidence rate from one year to the following year the incidence variable was lagged by one year and a new variable, calculating the difference between the lagged and the original incidence variable was created. 
 
-For this purpose, the dependent variable was lagged by one period and the difference between the lag and the current year was calculated (see Figure 4 in Appendix).
-Further, a dummy variable was created assigning a value of zero for those observations where the incidence rate decreased compared to the previous year or stayed the same (countries reaching MDG 6.A) and a value of one was assigned to those observations where the incidence rate increased (countries not reaching MDG 6.A). Figure 4 shows the direction of the change in the incidence rate compared to the previous year by country.
+When looking at the distribution of the HIV/AIDS incidence variable in a histogram it becomes apparent that the incidence variable is indeed highly skewed to the left and only few incidence rates are higher than 1.
+  
+  
+**Figure 5: Distribution of HIV/AIDS Incidence Rate**
 
-
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.height=4, fig.width=6}
 
 ### 1. Plotting the original dependent variable
 
 # Histogram of dependent variable
-Histdep <- hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", ylab="Year", main="Figure 1: Incidence Rate")
+hist(Merged$Incidence, breaks= seq(0,5,by=0.1), xlab="HIV Incidence Rate", ylab="Year", main=NULL)
 axis(side=1, at=seq(0,5, 0.5), labels=seq(0,5,0.5))
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 
 ```
 
 
-```{r, echo=FALSE}
+In order to deal with the skewness of this variable, a dummy variable, differentiating between countries with a high HIV incidence and countries with a low HIV incidence is created for the first empirical model. 
+The most accurate measure of the central tendency of a skewed distribution is the median. Therefore, the dependent variable was coded as 1 if the HIV incidence rate is below the median and a value of 0 was assigned to countries with an HIV incidence rate above the median. 
+
+\pagebreak
+
+**Figure 6: Dummy Variable for High and Low HIV/AIDS Incidence**
+  
+  
+
+```{r, echo=FALSE, fig.height=4, fig.width=4}
 
 ### 1. Plotting the new dependent variables
 
 # Histogram of new dependent variable - Model 1
-Histdep <- hist(Merged$Dummy, breaks= seq(0,1.5,by=0.1), xlab="Dummy Coding: Incidence above or below the Median", main="Figure 5: Dummy Variable")
+Histdep <- hist(Merged$Dummy, breaks= seq(0,1.5,by=0.1), xlab="HIV/AIDS Incidence above & below the Median", main=NULL)
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
-
 ```
 
- 
-```{r, echo=FALSE}
+For the second empirical model the sample was reduced and focuses only on countries with a high HIV/AIDS incidence in order to explore, whether the determinants identified in Model 1 hold true when zooming in on the more problematic cases.
+As the dependent variable was still skewed to the left after restricting the sample to those countries above the mean a log transformation was necessary to approach a normal distribution.
+
+```{r, echo=FALSE, include=FALSE}
 
 # Histogram of new dependent variable not logged - Model 2
 HighInc <- Merged[which (Merged$Dummy==0), ]
-hist(HighInc$Incidence, xlab="Incidence Distribution above the Median")
+hist(HighInc$Incidence, xlab="HIV/AIDS Incidence Rate", main=NULL)
 ```
- 
- 
-```{r, echo=FALSE}
+  
+**Figure 6: Logged HIV/AIDS Incidence Rate for Countries lying above the Median**
+  
+  
+```{r, echo=FALSE, fig.height=4, fig.width=4}
 
 # Histogram of new dependent variable logged - Model 2
 HighInc$lIncidence <- log(HighInc$Incidence)
-hist(HighInc$lIncidence, xlab="Logged Incidence Distribution above the Median", main="Dependent Variable Model 2")
+hist(HighInc$lIncidence, xlab="HIV/AIDS Incidence Rate", main=NULL)
 ```
 
-```{r, echo=FALSE}
-hist(Merged$ShFemUnempl)                
-```
+Scatterplots were created for all independent variables by the categories of Dahlgrehn's model in order to see whether further relevant variables are skewed (see Appendix). Due to a high skewness in most of the variables and to ensure a better comparability of the variable units all but one of the independent variables in the sample were logged.
+
+The only variable that was not logged is a variable comparing the share of female unemployment to total unemployment. The distribution of this variable comes already close to a normal distribution, so a log transformation is not urgently necessary. Further, it has some values of zero, which would make it difficult to log the variable.
 
 
+# Case Studies - Botswana, Lesotho, Uganda and Malawi
 
-``` {r, echo=FALSE, include=FALSE}
-# Creating figure to look at incidence rate per country (shows up in Appendix)
-IncC <- ggplot2::ggplot(Merged, aes(Incidence, country)) + geom_point() + theme_bw()
-IncC + ggtitle("Figure 3: Incidence Rate per Country") + theme(plot.title = element_text(lineheight=3, face="bold"))
+In the following, four case studies are presented to develop a better understanding of best practices and bad practices among countries with high changes in Incidence rates between 2000 and 2012. The cases were selected by the "extreme case selection method" on the basis of peculiar positive or negative changes in incidence rates over time (see Figure 4 in Appendix) [@Gerring2008].
 
-ggsave("fig3.png", width=8, height=10, dpi=100)
+Figure 8 shows the two best practices (green colour), namely Botswana and Malawi and the two bad practices (red colour), Uganda and Lesotho that were selected. In Figure 9 it
 
-```
 
-```{r, echo=FALSE, include=FALSE}
-# Look at difference in incidence rate per country between one year to the next (shows up in Appendix)
-IncClag <- ggplot2::ggplot(Merged, aes(IncidenceDif, country)) + geom_point() + theme_bw()
-IncClag + theme(plot.title = element_text(lineheight=3, face="bold"))
-
-ggsave("fig4.png", width=8, height=10, dpi=100)
-```
-
-# Case Studies - Botswana, Lesotho, Uganda & Malawi
 
 
 ```{r, echo=FALSE}
@@ -316,11 +313,29 @@ ggsave("figa.png", width=7, height=4, dpi=100)
 
 ```
 
+**Figure 8: Interesting Cases for Change in HIV Incidence Rates**
+  
+  
+```{r, results='asis', echo=FALSE}
+ 
+HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
+ 
+HighIncidence$CaseStudy <- HighIncidence$Incidence
+HighIncidence$CaseStudy[HighIncidence$country=="Zimbabwe" | HighIncidence$country=="Zambia"| HighIncidence$country=="Swaziland" | HighIncidence$country=="South Africa" | HighIncidence$country=="Namibia" | HighIncidence$country=="Mozambique" | HighIncidence$country=="Sierra Leone"  | HighIncidence$country=="Papua New Guinea"] <-0
+HighIncidence$CaseStudy[HighIncidence$country=="Lesotho" | HighIncidence$country=="Uganda"] <-2
+HighIncidence$CaseStudy[HighIncidence$country=="Malawi" | HighIncidence$country=="Botswana"] <-1
+ 
+Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=CaseStudy)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year") + scale_color_gradient2(midpoint=1, low="grey", mid="darkgreen", high="darkred") + theme(legend.position="none")                                                                                                                                                      
+                                                                                                                          
+Cases <- Cases + theme(plot.title = element_text(lineheight=3, face="bold"))
+print(Cases)
+```
 
 ```{r, echo=FALSE, results='asis', include=FALSE}
 
 # Creating subsets
 CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Uganda"), ] 
+
 
 Water <- ggplot(data=CaseStudies, aes(x=year, y=Water, group=country, color=country)) + geom_line() + geom_point()+ ylab( "Access to Water") + xlab("Year")
 # Water <- Water + ggtitle("Figure 7: Access to Water in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
@@ -381,6 +396,7 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 
 ```
 
+
 ## Case Studies
 ![Figurea](figa.png)
 
@@ -394,11 +410,14 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 ![Figure11a](fig11a.png)
 
 
-Scatterplots were used for each category of Dahlgrehn's model in order to see whether the variables are skewed or multicollinear (see Figures 5, 6 & 7 in Appendix).
-
 
 # Inferential Statistics
 
+## Data Imputation
+
+The data loaded from the Worldbank contained a lot of missing data because some countries do not report information on specific variables on a yearly basis. A high fraction of missing values produces a variety of problems and limitations to the data analysis. The paper imputed the missing data by using the "Amelia" package to solve this problem. "Amelia"  generates by default five multiple, complete datasets that contain estimations of missing data points.
+
+Before the data imputation highly collinear variables had to be dropped. The level of the Variance Inflation Factors 
 
 ```{r, echo=FALSE, include=FALSE}
 ###  Imputing missing values with amelia package
@@ -406,6 +425,7 @@ Scatterplots were used for each category of Dahlgrehn's model in order to see wh
 # check for Variance Inflation
 collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + ShFemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
 ```
+
 
 ```{r, echo=FALSE, include=FALSE}
 # Testing for multicollinearity 1st time
@@ -420,7 +440,7 @@ collinear2 <- vif(collinear2)
 ```
 
 
-As can be seen from the Scatterplots (see appendix) most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
+As can be seen from the Scatterplots (see Appendix) most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
 
 ```{r, echo=FALSE, include=FALSE}
 
@@ -628,54 +648,74 @@ title(main="Scenario of Malawi", cex.main = 2)
 ```
 
 
+
+## Model 2 - Focusing on Countries with an HIV Incidence Rate above the Median
+ 
 ```{r, echo=FALSE, include=FALSE}
-#### MODEL 1.3.1 - Calculating predicted probabilities for Quintiles of Female Unemployment for the Scenario Uganda
-Model3.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + ShFemUnempl + lFemSchool, data = Imputed.out, model = "logit")
+### Creating a subset with the countries that have an incidence rate higher than the mean
+ 
+# Checking for Heteroscedasticity in Model 2 (see plot )
+Model2 <- lm(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = HighInc)
 
-# Fixing the Uganda Scenario, letting Quintiles of Female Unemployment vary
-Uganda2.out <-  setx(Model3.out, 
-              lGDPpc = 7.00, 
-              lRural = 4.46,
-              lCO2 = -2.44,
-              lHCexpend = 2.12,
-              lLifeExpect = 3.98,
-              lWater = 4.18,
-              lSanitation = 3.46,
-              lDPT = 4.20,
-              lMeasles = 4.24,
-              lFemSchool = 4.81,
-             ShFemUnempl = -2:10)
 
-# Calculating the Predicted Probabilities
-Uganda2.out <- sim(Model3.out, x = Uganda2.out)
+# Duplicating our imputations
+Imputed2.out <- Imputed.out
+
+# Creating the subset with countries above the mean with a loop for all 5 imputations
+for (i in 1:5){
+  Imputed2.out$imputations[[i]] <- Imputed2.out$imputations[[i]][which(Imputed.out$imputations[[i]]$Incidence>=0.07), ]
+}
+ 
+# Running a linear pooled OLS regression
+
+b.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls")
+ 
+summary(b.out)
+
+#plot(b.out)
+ 
+# Estimating with robust standard errors
+ 
+c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls", robust= "weave")
+
+
+summary(c.out)
+ 
+# Estimating the model with fixed effects
+ 
+d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl + as.factor(country), data = Imputed2.out, model = "ls")
+ 
+summary(d.out)
+ 
+# Estimating the model with fixed effects and robust standard errors
+ 
+e.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
+ 
+summary(e.out)
+ 
+#install.packages("mitools")
+#library("mitools")
+# imp.data <- imputationList(Imputed2.out$imputations)
+# mitools.fit <- MIcombine(with(imp.data, lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + year))
+# summary(mitools.fit)                         
+# mitools.res <- summary(mitools.fit)
+# mitools.res <- cbind(mitools.res, df = mitools.fit$df)
+# mitools.res
+ 
 ```
-
-
-```{r, echo=FALSE, include = FALSE}
-#### MODEL 1.2.2 - Calculating predicted probabilities for Quintiles of Female Unemployment for the Scenario Lesotho
-
-# Calculating the means for Lesotho
-summary(Lesotho)
-
-# Fixing the Lesotho Scenario, letting Quintiles of FemaleUnemployment vary
-Lesotho2.out <-  setx(Model3.out, 
-              lGDPpc = 7.56, 
-              lRural = 4.35,
-              lCO2 = -3.31,
-              lHCexpend = 2.11,
-              lLifeExpect = 3.82,
-              lWater = 4.38,
-              lSanitation = 3.29,
-              lDPT = 4.49,
-              lMeasles = 4.41,
-              lFemSchool = 4.75,
-              ShFemUnempl = -2:10)
-
-# Calculating the Predicted Probabilities
-Lesotho2.out <- sim(Model3.out, x = Lesotho2.out)
+ 
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Showing Linear pooled OLS regression in output table with nice labels
+Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+labels_2 <- as.data.frame(summary(b.out)$coef)
+labels_2$Variables <- Variables
+labels_2 <- MoveFront(labels_2, "Variables")
+names(labels_2) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
+knitr::kable(labels_2, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2")
+ 
 ```
-
-
  
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
@@ -701,8 +741,8 @@ knitr::kable(as.data.frame(summary(d.out)$coef), caption = "Fixed Effects Regres
 #names(labels_4) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
 #knitr::kable(labels_4, output.lines=1:11, digits = 2, row.names = FALSE)
 
+
 ```
- 
  
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
@@ -723,6 +763,12 @@ The test for variance inflation factors showed that in our first logistic regres
 
 [@Sachs2002]
 [@Dupas2009]
+
+
+The IncidenceDif variable would actually be the most accurate variable in terms of measuring whether Target 6.A of the MDGs ("have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014] was fulfilled until 2012. A dummy variable on whether MDG6a was fulfilled or not is however not very suitable for identifying the specific determinants of HIV/AIDS at country level as it is not differentiating between the relative size of the effect (an increase from 0,001 to 0,002 would be as bad as a change from 0,1 to 0,3).
+
+Model 2 - variable is not perfect normal distribution - better beta regression
+
 
 # Limitations
 
@@ -787,6 +833,14 @@ scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpendpc,
 # Scatterplot of variables for individual lifestyle factors
 scatterplotMatrix(~ Incidence + DPT + Measles, transform=TRUE, data=Merged)
 
+```
+
+\pagebreak
+
+**Histogram of Female Unemployment compared to Total Unemployment (not logged)**
+
+```{r, echo=FALSE}
+hist(Merged$ShFemUnempl)                
 ```
 
 
