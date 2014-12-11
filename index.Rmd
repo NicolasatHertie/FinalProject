@@ -1,7 +1,8 @@
 ---
-output: html_document
+output: html_document 
 number_sections: yes
 highlight: zenburn
+
 authors: Meilin Moellenkamp and Nicolas Rosemberg
 toc: yes
 ---
