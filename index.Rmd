@@ -145,8 +145,22 @@ We believe that these findings can lead to interesting policy recommendations.
 
 ```{r, results='asis', echo=FALSE}
 
+Demo <- Merged
+Demo <- Demo[,c(4:20)]
+Demo <- plyr::rename(Demo, c("GDPpc" = "GDP per capita"))
+Demo <- plyr::rename(Demo, c("Rural" = "Rural Population (%)"))
+Demo <- plyr::rename(Demo, c("CO2" = "CO2 Emissions"))
+Demo <- plyr::rename(Demo, c("HCexpend" = "Health Care Expenditure"))
+Demo <- plyr::rename(Demo, c("Water" = "Access to Water"))
+Demo <- plyr::rename(Demo, c("Sanitation" = "Access to Sanitation"))
+Demo <- plyr::rename(Demo, c("Unemploym" = "Unemployment Rate"))
+Demo <- plyr::rename(Demo, c("HCexpendpc" = "Health Care Expenditure per capita"))
+Demo <- plyr::rename(Demo, c("FemSchool" = "Female School Enrollment"))
+Demo <- plyr::rename(Demo, c("LifeExpect" = "Life Expectancy"))
 
-M <- gvisMotionChart(Merged, "country", "year",
+
+
+M <- gvisMotionChart(Demo, "country", "year",
                      options=list(width=400, height=280))
 
 
