@@ -101,11 +101,36 @@ Besides making people healthier and happier, reducing HIV helps to fight poverty
 
 *PROGRESS REPORT*
 
-**CENTER FOR GLOBAL DEVELOPMEN*T*: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
+**CENTER FOR GLOBAL DEVELOPMENT**: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
 
 Inspired by the puzzling question of why some countries failed to reach the HIV-related MDG we embarked this research.
 
 # SO WHAT DID WE DO?
+
+We can summarize our research process in the following step:
+
+1. *Literature review*: The first part of the research consisted in exploring the existing literature on determinants of health. We found an interesting model developed by Dahlgren and Whitehead (REF) that explains that a wide range of factors influence our health, suchs as general socioeconomic factors, working and living conditions, social and community networks and individual factor (like smoking or drinking alcohol).
+
+The literature on specific determinants of HIV was not so abundant and mostly focused on socioeconomic factors and individual factors. There are many papers looking, for exmaple, at the effectiveness of condom use campaigns in reducing HIV. But not so many papers look at the influence of the social and community factors. This is why we decided to explore these factors and see whether they are significant variables to explain the incidence of HIV.
+
+2. *Data collection and descriptive statistics*: The next step in our research was collecting the data and trying to make sense out of it. We used data from World Bank and UNAIDS. After analysing the data, we opted for the statistical model that fitted our data the best.
+
+# DID IT WORK?
+
+We were interested in looking at the impact of two variables on HIV incidence rates. The first variable was female schooling. Early education represents an excellent opportunity to conduct HIV preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female schooling on HIV incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female schooling would reduce HIV incidence. The data supported this hypothesis.
+
+The second variable that we explore was the difference between female unemployment and total unemployment. We expected that a high rate of female employment to total unemployment would describe a society where women have relatively less power than men and this would mean that men could more easily bargain for unprotected sex. As a consequence, one would expect that a higher difference in female to total unemployment would be associated with higher HIV incidence rates. This hypothesis was not supported by out findings, according to which the difference between female and total unemployment has no impact on HIV incidence rates.
+
+# SO... WHY IS THIS RELEVANT?
+
+We believe that these findings can lead to interesting policy recommendations. 
+
+1. **INVEST IN GIRLS EDUCATION:** If female schooling is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
+
+2. **FURTHER EXPLORE FEMALE LABOUR PARTICIPATION:** When looking at the difference between female and total unemployment, we realised that this indicator is not exactly portraying the variable that we wanted to analyze, namely female labour participation. It would be therefore interesting to test whether this variable is a good determinant of HIV before reaching any conclusion.
+
+3. **LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES:** We realised that there is a gap in the literature regarding determinants of specific diseases. It would be interesting to evaluate the determinants of other diseases and see whether these are the same than the determinants of HIV.
+
 
 
 Thank you for visiting our website. If you have any questions, please contact us at m.moellenkamp@mpp.hertie-school.org or n.rosemberg@mpp.hertie-school.org
