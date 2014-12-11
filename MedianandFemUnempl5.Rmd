@@ -417,13 +417,13 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 
 The data loaded from the Worldbank contained a lot of missing data because some countries do not report information on specific variables on a yearly basis. A high fraction of missing values produces a variety of problems and limitations to the data analysis. The paper imputed the missing data by using the "Amelia" package to solve this problem. "Amelia"  generates by default five multiple, complete datasets that contain estimations of missing data points.
 
-Before the data imputation highly collinear variables had to be dropped. The level of the Variance Inflation Factors 
+To enable the data imputation highly collinear variables had to be dropped. The test for variance inflation factors showed that in a simple OLS regression model integrating all independent variables, three variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital and between Primary Education and Female School Enrollment. In a first step, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, Primary Education and GDP. After having further problems of multicollinearity with GDPpc we also excluded Healthcare Expenditure and two variables that were created for the descriptive statistics part only, when showing the difference of HIV/AIDS Incidence over time (Incidence2 and IncidenceDif).
 
 ```{r, echo=FALSE, include=FALSE}
 ###  Imputing missing values with amelia package
 
 # check for Variance Inflation
-collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + ShFemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
+collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + ShFemUnempl + FemSchool + LifeExpect + DPT + Measles + Population + Incidence2 + IncidenceDif, data=Merged)
 ```
 
 
@@ -440,7 +440,6 @@ collinear2 <- vif(collinear2)
 ```
 
 
-As can be seen from the Scatterplots (see Appendix) most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
 
 ```{r, echo=FALSE, include=FALSE}
 
@@ -473,13 +472,11 @@ dev.off()
 
 ## Model 1 - Comparison of countries with an HIV Incidence Rate below and above the Median
 
-For Model 1 logistic regressions are used for predicting the likelihood that a country has a low HIV incidence rate (the dependent variable Y is equal to 1, rather than 0) given certain values of the HIV determinants (values of X) being hypothetically assumed. 
+For Model 1 logistic regressions are used for predicting the likelihood that a country has a low HIV incidence rate (the dependent variable Y is equal to 1, rather than 0) given certain values of the HIV determinants (values of X) being hypothetically assumed. As explained in the descriptive statistics part, the dependent variable of Model 1 is a dummy variable, being 1 if the HIV incidence rate is below the median and 0 for countries with an HIV incidence rate above the median. 
 
-As the incidence variable is highly skewed to the left, the most accurate measure of the central tendency of the distribution is the median. Therefore, the dependent variable is coded as a dummy variable, being 1 if the HIV incidence rate is below the median and 0 for countries with an HIV incidence rate above the median. 
+As Odds and Odds ratios are difficult to interpret and do not allow to make direct statements about predictors in our model, predicted probabilities are calculated after running the logistic regressions. The interpretation of the logistic regression results presented in table 1 will thus focus only on the significance of the variables. 
 
-As Odds and Odds ratios are difficult to interpret and to present to a broad audience predicted probabilities are calculated after running the logistic regressions. The interpretation of the logistic regression results presented in table 1 will focus only on the significance of the variables. 
-
-A more detailed analysis of the predicted probabilities will be given for the main variables of interest Female School Enrollment and Share of Female Unemployment. Predicted probability scenarios are calculated for the four case studies that were introduced in the descriptive statistics part.
+A detailed analysis of the predicted probabilities will be given for the main variable of interest Female School Enrollment. For the predicted probability scenarios quintiles of Female School Enrollment are computed for the four case studies that were introduced in the descriptive statistics part.
 
 
 ```{r, echo=FALSE, include=FALSE}
@@ -500,7 +497,7 @@ Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanit
 # Regression Results of Logistic Regression
 
 # create table with nice labels
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
 labels_1 <- as.data.frame(summary(Model1.out)$coef)
 labels_1$Variables <- Variables
 labels_1 <- MoveFront(labels_1, "Variables")
@@ -508,7 +505,10 @@ names(labels_1) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "
 knitr::kable(labels_1, digits = 2, row.names = FALSE, caption = "Logistic Regression Results of Model 1")
 ```
 
+From the logistic regression results presented in Table 1 it can be seen that the variables GDP per capita, Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are showing statistically significant results on the 95% confidence level. 
+The variables Immunisation against DPT, Immunisation against Measles, Access to Water, Access to Sanitation and Healthcare Expenditure 
 
+most of the hypothetically assumed variables
 
 ```{r, echo=FALSE, include = FALSE}
 
@@ -708,7 +708,7 @@ summary(e.out)
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
 # Showing Linear pooled OLS regression in output table with nice labels
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
 labels_2 <- as.data.frame(summary(b.out)$coef)
 labels_2$Variables <- Variables
 labels_2 <- MoveFront(labels_2, "Variables")
@@ -720,7 +720,7 @@ knitr::kable(labels_2, digits = 2, row.names = FALSE, caption = "OLS Regression 
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
 # Linear pooled OLS regression with robust standard errors
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
 labels_3 <- as.data.frame(summary(c.out)$coef)
 labels_3$Variables <- Variables
 labels_3 <- MoveFront(labels_3, "Variables")
@@ -734,7 +734,7 @@ knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression 
 # Fixed effects estimation 
 knitr::kable(as.data.frame(summary(d.out)$coef), caption = "Fixed Effects Regression Results of Model 2")
 
-#Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+#Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
 #labels_4 <- as.data.frame(summary(d.out)$coef)
 #labels_4$Variables <- Variables
 #labels_4 <- MoveFront(labels_4, "Variables")
@@ -757,7 +757,6 @@ knitr::kable(as.data.frame(summary(d.out)$coef), caption = "Fixed Effects Regres
  
 ```
 
-The test for variance inflation factors showed that in our first logistic regression model six variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital, Unemployment and Female unemployment, Primary education and female schooling. Therefore, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, namely unemployment, primary education and GDP.
 
 # Conclusions
 
@@ -769,6 +768,7 @@ The IncidenceDif variable would actually be the most accurate variable in terms 
 
 Model 2 - variable is not perfect normal distribution - better beta regression
 
+Famale Labour Market Participation
 
 # Limitations
 
