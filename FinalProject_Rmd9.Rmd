@@ -88,7 +88,64 @@ Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidenc
 Merged$DDif <- as.numeric(Merged$IncidenceDif<=0)
 ```
 
-# Data Gathering and Cleaning
+## 1.   Introduction
+
+The expiry date of the Millennium Development Goals ([MDGs](http://www.un.org/millenniumgoals/aids.shtml)) is just around the corner, meanwhile the post-2015 agenda is being discussed intensively. In this context, it is important to assess the achievement of the MDGs and try to understand why some goals have not been reached. 
+
+Reducing HIV prevalence is an important aim of the MDGs. Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014]. In most regions of the world this goal has been fulfilled: new HIV infections declined and the overall number of new HIV/AIDS infections per 100 adults (15-49 years old) decreased by 44 per cent between 2001 and 2012 (@UN2014). However, this trend cannot be observed in all 189 member states of the United Nations. On the contrary, HIV/AIDS prevalence has even increased in some countries. 
+
+--- 
+
+## 2. Aim, Research Question and Hypotheses
+
+This paper aims to provide evidence to assess why some countries struggle to achieve MDG 6A. We believe that one possible explanation for the failure of some interventions in reducing HIV/AIDS may lie in the lack of a full understanding of the determinants of the disease, which can in turn lead to ill-specified interventions and wrongly targeted campaigns.
+
+The literature reviewed for this paper identifies a myriad of determinants of health. However, there is a gap in the literature when it comes to the determinants of specific diseases. The aim of this paper is to test the applicability of one of the most commonly used theories of determinants of health, to explain the evolution of HIV/AIDS rates. The first hypothesis of this paper is that all general determinants of health (as identified by our reference model) are determinants of HIV/AIDS. By identifying variables that help to explain HIV/AIDS incidence and prevalence, this paper will help move forward the discussion of the determinants of HIV/AIDS . 
+
+Furthermore, given that the literature identifies interlinkages between the different determinants of health (see @Solar2010), this paper will evaluate to what extent those linkages are reflected on the micro level. The second hypothesis of this paper is that socioeconomic, environmental and cultural factors can be used to explain individual lifestyle factors.
+
+---
+
+## 3. Literature Review
+
+Hurrelmann (@Hurrelmann1989, p.76) advocates an interdisciplinary framework for analysing what determines health outcomes. He considers it necessary to use a model that integrates all the aspects of the organism, individual and the environment.
+
+One framework that shows the interaction between individual and environmental factors over time is the salutogenic model developed by Antonovsky in 1979. According to Hurrelmann, Antonovsky's model is a great contribution to interdisciplinary theory, but the downside is its complexity (@Hurrelmann1989). 
+
+A simpler and more common model on the main determinants of health is the "rainbow model", developed by Dahlgren and Whitehead (@Dahlgren1991, p.11). This model gives an overview of the main health determinants, reflecting the relationship between the individual, its environment and different health outcomes. Individuals are at the centre of the model with a set of fixed biological and genetical preconditions. Building upon these, four layers of influence on health can be identified: individual lifestyle factors, social and community networks, living and working conditions and general socio-economic, cultural and environmental conditions.
+
+![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
+
+*Figure 1: Dahlgren and Whitehead (@Dahlgren1991, p.11). Main health determinants.*
+
+---
+
+
+## 4. Data Sources
+
+For this research, two main sources of data were explored. Firstly, databases comprising information for several countries were examined in order to increase comparability of the data. Among the most commonly used databases in the field of this research, it is worth mentioning those from UNAIDS, World Bank, Global Fund for AIDS, Tuberculosis and Malaria, WHO, the Institute for Health Metrics and Evaluation, PEPFA and the AIDS Data Hub. Secondly, country-specific data was used to check the trends of some of the most important variables of this research and to enable micro level analysis. These databases include those from the National Bureau of Statistics (from each country under analysis), Demographic Health Surveys (DHS) and the AIDS Indicator Survey (AIS), obtained from the United States Agency for International Development (USAID).  
+
+
+  **4.1.World Development Indicators (WDI)**
+
+The WDI database comprises 1342 indicators clustered in 10 thematic areas that range from health and education to infrastructure and public sector data. Information is available for 214 countries and dates back to 1960. All indicators are available for free at the [World Bank website](http://databank.worldbank.org/data/views/variableselection/selectvariables.aspx?source=world-development-indicators) and can be downloaded as an Excel sheet, CSV, tabbed TXT or SDMX. In addition, there is a special R package [WDI](http://cran.r-project.org/web/packages/WDI/WDI.pdf) designed to download and use the data. 
+
+WDI have been used in a wide range of fields and HIV/AIDS research is not an exception. For examples of relevant literature that also make use of WDI please see @Haacker2002, @Talbott2007 and @Kalemli2011. A list of all WDI indicators used for this research can be found in the Appendix.
+
+
+  **4.2. Demographic Health Surveys (DHS) and AIDS Indicator Survey (AIS)**
+
+DHS have a high reputation for collecting accurate and nationally representative household data (@WB2014). Relevant HIV/AIDS literature used the DHS data like @Haacker2002 and @WSS2014. 
+For the case of Vietnam three datasets for the years 2005, 2002 and 1997 are available in USAID's DHS database. The most recent available DHS dataset will be used for the micro level analysis of this research. The DHS was conducted by the General Statistical Office National Institute for Hygiene and Epidemiology between September and December 2005. There are three core questionnaires in DHS surveys: a household, a women's and a men's questionnaire. The DHS sample for Vietnam counts 6337 households, including 7289 observations for female respondents (women aged 15 to 49) and 6707 observations for male respondents (men aged 15 to 49).
+
+As an extension of the DHS data, the micro analysis also integrates the AIDS Indicator Survey (AIS) for Vietnam, again being conducted in 2005. The AIS provides nationally representative estimates of HIV rates, by collecting blood from representative samples of the population of both men and women in a country. The AIS for Vietnam includes 1675 households. In all households, women and men aged 15-49 are eligible to participate in the survey. The linkage of DHS' HIV test results to the full DHS survey record (without personal identifiers) allows for an in-depth analysis of the socio-demographic and behavioural factors associated with HIV prevalence.
+ 
+Both datasets can be downloaded as Stata System File, Flat Data, SAS System File and SPSS System File. Individual and AIS datasets can also be downloaded as a hierarchical file format.   
+
+It is worth mentioning that special permission was granted in downloading the DHS and AIS databases, representing a potential challenge for the reproducibility of our research. 
+ 
+
+# 5. Data Gathering and Cleaning
 
 This section focuses on the process of gathering the data and cleaning the databases to prepare the variables for the data analysis. 
 
