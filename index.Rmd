@@ -141,6 +141,14 @@ We believe that these findings can lead to interesting policy recommendations.
 
 3. **LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES:** We realised that there is a gap in the literature exploring disease specific determinants of health regarding the impact of social and community level factors. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV.
 
+```{r, results='asis', echo=FALSE}
+library(rMaps)
+M=gvisMotionChart(Merged, idvar='country', timevar="year", xvar="Sanitation", yvar="Incidence", sizevar="Population",  options=list(width=700, height=600), chartid="World Bank")
+
+plot(M)
+```
+
+
 
 
 Thank you for visiting our website. If you have any questions, please contact us at m.moellenkamp@mpp.hertie-school.org or n.rosemberg@mpp.hertie-school.org
