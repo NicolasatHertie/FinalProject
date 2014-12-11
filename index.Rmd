@@ -157,7 +157,9 @@ Demo <- plyr::rename(Demo, c("Unemploym" = "Unemployment Rate"))
 Demo <- plyr::rename(Demo, c("HCexpendpc" = "Health Care Expenditure per capita"))
 Demo <- plyr::rename(Demo, c("FemSchool" = "Female School Enrollment"))
 Demo <- plyr::rename(Demo, c("LifeExpect" = "Life Expectancy"))
-
+Demo <- plyr::rename(Demo, c("DPT" = "Immunization against DPT"))
+Demo <- plyr::rename(Demo, c("Measles" = "Immunization against Measles"))
+Demo <- plyr::rename(Demo, c("FemUnempl" = "Female Unemployment Rate"))
 
 
 M <- gvisMotionChart(Demo, "country", "year",
