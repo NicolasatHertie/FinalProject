@@ -8,6 +8,7 @@ toc: yes
 
 
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
+
 ### 1. Setting Working Directory & Loading the data
 # Setting the Working Directory
 # setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
@@ -66,15 +67,15 @@ library(stargazer)
 
 Welcome to our site and thank you for your interest in our research project!
 
-Our names are Meilin Moellenkamp and Nicolas Rosemberg and we are jointly conducting a study on the determinants of HIV/AIDS. 
+Our names are Meilin Moellenkamp and Nicolas Rosemberg and we are jointly conducting a study on  determinants of HIV/AIDS. In our research, we explore which variables are significant determinants of HIV/AIDS and test whether the data available support our hypothesis, namely that social and community networks are important determinants of HIV/AIDS.
 
 # WHY ARE WE INTERESTED IN THIS TOPIC?  
 
 That is a good question. We believe that understanding the determinants of HIV/AIDS is an important step before designing complex interventions that try to tackle this global problem. 
 
-Is it really a global problem? While HIV/AIDS incidence rates are highly concentrated in Southern Africa, we do observe that most countries in our sample (most low- and middle-income countries) suffer from this disease:
+Is it really a global problem? While HIV/AIDS incidence rates are highly concentrated in Southern Africa, we do observe that most countries in our sample consisting mostly of low- and middle-income countries suffer from this disease:
 
-**Global distribution of HIV/AIDS**
+**Distribution of HIV/AIDS in low- and middle-income countries**
 
 ```{r, results='asis', echo=FALSE}
 suppressPackageStartupMessages(library(googleVis))
@@ -86,12 +87,15 @@ IncidenceMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
 
 print(IncidenceMap, tag = 'chart')
 ```
+Source: UNAIDS 
 
-You are coming from one of the countries that are gray in the map and you might be wondering, *"Is HIV not a problem in my country?". Well, it might be! The gray countries are actually those countries for which we do not have sufficient data. 
+You are coming from one of the countries that are gray in the map and you might be wondering, *"Is HIV not a problem in my country?"* Well, it might be! The gray countries are actually those countries for which we do not have sufficient data. 
 
 # REDUCING HIV FIGHTS POVERTY
 
-Besides making people healthier and happier, reducing HIV helps to fight poverty. Experts in the field of povery reduction designed a list of strategies to reduce global poverty and set a list of 8 goals in order to combat poverty. These goals are called the Millenium Development Goals and the deadline to reach this goal is only some months away (September 2015). For more information on the MDGs please refer to the following links:
+Experts in the field of povery reduction designed a list of strategies to reduce global poverty and set a list of 8 goals in order to combat poverty. These goals are called the Millenium Development Goals (MDGs) and the deadline to reach this goal is only some months away (September 2015). Halting and reversing the spread of HIV is one of these goals (MGD 6 - Target b). The inclusing of HIV control as one of the MDGs reflects that besides making people healthier and happier, reducing HIV helps to fight poverty. 
+
+For more information on the MDGs please refer to the following links:
 
 *BACKGROUND INFORMATION*
 
@@ -103,23 +107,24 @@ Besides making people healthier and happier, reducing HIV helps to fight poverty
 
 **CENTER FOR GLOBAL DEVELOPMENT**: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
 
-Inspired by the puzzling question of why some countries failed to reach the HIV-related MDG we embarked this research.
+Inspired by the puzzling question of why some countries failed to reach MDG6, we embarked this research.
 
-# SO WHAT DID WE DO?
+# HOW DID WE CONTRIBUTE TO THE EXISTING RESEARCH?
 
-We can summarize our research process in the following step:
+The first part of the research explored the existing literature on determinants of health and found that there is a gap in the literature in the relevance of determinants of health in explaining the incidence and prevalence of specific diseases.
 
-1. *Literature review*: The first part of the research consisted in exploring the existing literature on determinants of health. We found an interesting model developed by Dahlgren and Whitehead (REF) that explains that a wide range of factors influence our health, suchs as general socioeconomic factors, working and living conditions, social and community networks and individual factor (like smoking or drinking alcohol).
+To fill this gap, we started by identifiying a model of general determinants of health that we could test for a specific disease. We chose Dahlgren and Whitehead's model because it provides a simple yet comprehensive framework to identify variables. According to this model, there are a wide range of factors that influence our health, such as general socioeconomic factors, working and living conditions, social and community networks and individual factors (like smoking or drinking alcohol).
 
-The literature on specific determinants of HIV was not so abundant and mostly focused on socioeconomic factors and individual factors. There are many papers looking, for exmaple, at the effectiveness of condom use campaigns in reducing HIV. But not so many papers look at the influence of the social and community factors. This is why we decided to explore these factors and see whether they are significant variables to explain the incidence of HIV.
+! [Dahlgren and Whitehead]("Dahlgren.png")
 
-2. *Data collection and descriptive statistics*: The next step in our research was collecting the data and trying to make sense out of it. We used data from World Bank and UNAIDS. After analysing the data, we opted for the statistical model that fitted our data the best.
+While the (limited) literature on specific determinants of HIV mostly focused on socioeconomic factors and individual factors. there are not so many papers looking at the influence of social and community networks. This is why we decided to explore social and community factors and see whether they are significant to explain the incidence of HIV.
+
 
 # DID IT WORK?
 
-We were interested in looking at the impact of two variables on HIV incidence rates. The first variable was female schooling. Early education represents an excellent opportunity to conduct HIV preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female schooling on HIV incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female schooling would reduce HIV incidence. The data supported this hypothesis.
+- We were interested in looking at the impact of two variables on HIV incidence rates. The first variable was female schooling. Early education represents an excellent opportunity to conduct HIV preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female schooling on HIV incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female schooling would reduce HIV incidence. The data supported this hypothesis.
 
-The second variable that we explore was the difference between female unemployment and total unemployment. We expected that a high rate of female employment to total unemployment would describe a society where women have relatively less power than men and this would mean that men could more easily bargain for unprotected sex. As a consequence, one would expect that a higher difference in female to total unemployment would be associated with higher HIV incidence rates. This hypothesis was not supported by out findings, according to which the difference between female and total unemployment has no impact on HIV incidence rates.
+- The second variable that we explore was the difference between female unemployment and total unemployment. We expected that a high rate of female employment to total unemployment would describe a society where women have relatively less power than men and this would mean that men could more easily bargain for unprotected sex. As a consequence, one would expect that a higher difference in female to total unemployment would be associated with higher HIV incidence rates. This hypothesis was not supported by out findings, according to which the difference between female and total unemployment has no impact on HIV incidence rates.
 
 # SO... WHY IS THIS RELEVANT?
 
