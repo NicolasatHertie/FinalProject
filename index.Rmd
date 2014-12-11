@@ -97,15 +97,17 @@ Experts in the field of povery reduction designed a list of strategies to reduce
 
 For more information on the MDGs please refer to the following links:
 
-*BACKGROUND INFORMATION*
+
+- *BACKGROUND INFORMATION*
 
 **UNITED NATIONS**: http://www.un.org/millenniumgoals/
 
 **ONE**: http://www.one.org/international/mdg/
 
-*PROGRESS REPORT*
+- *PROGRESS REPORT*
 
 **CENTER FOR GLOBAL DEVELOPMENT**: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
+
 
 Inspired by the puzzling question of why some countries failed to reach MDG6, we embarked this research.
 
@@ -115,7 +117,9 @@ The first part of the research explored the existing literature on determinants 
 
 To fill this gap, we started by identifiying a model of general determinants of health that we could test for a specific disease. We chose Dahlgren and Whitehead's model because it provides a simple yet comprehensive framework to identify variables. According to this model, there are a wide range of factors that influence our health, such as general socioeconomic factors, working and living conditions, social and community networks and individual factors (like smoking or drinking alcohol).
 
-! [Dahlgren and Whitehead]("Dahlgren.png")
+![Dahlgren and Whitehead](Dahlgren.png)
+
+*Source: Dahlgren and Whitehead (1991)*
 
 While the (limited) literature on specific determinants of HIV mostly focused on socioeconomic factors and individual factors. there are not so many papers looking at the influence of social and community networks. This is why we decided to explore social and community factors and see whether they are significant to explain the incidence of HIV.
 
