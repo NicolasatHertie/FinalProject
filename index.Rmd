@@ -1,5 +1,4 @@
 ---
-title: "Collaborative Research Project - Assignment 3"
 output: html_document
 number_sections: yes
 highlight: zenburn
@@ -88,9 +87,11 @@ IncidenceMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
 print(IncidenceMap, tag = 'chart')
 ```
 
+You are coming from one of the countries that are gray in the map and you might be wondering, *"Is HIV not a problem in my country?". Well, it might be! The gray countries are actually those countries for which we do not have sufficient data. 
 
+# REDUCING HIV FIGHTS POVERTY
 
-In fact, we are not the only ones looking at this issue. The global community has come together to tackle the world's most pressing issues and HIV/AIDS is one of them. These global challenges are under the umbrella of the Millenium Development Goals (MDGs). The MDGs represent the agenda for development agencies and policy makers in low- and middle- income countries and serve as a guideline for the prioritazion of interventions to fight poverty. For more information on the MDGs please refer to the following links:
+Besides making people healthier and happier, reducing HIV helps to fight poverty. Experts in the field of povery reduction designed a list of strategies to reduce global poverty and set a list of 8 goals in order to combat poverty. These goals are called the Millenium Development Goals and the deadline to reach this goal is only some months away (September 2015). For more information on the MDGs please refer to the following links:
 
 *BACKGROUND INFORMATION*
 
@@ -100,7 +101,11 @@ In fact, we are not the only ones looking at this issue. The global community ha
 
 *PROGRESS REPORT*
 
-*CENTER FOR GLOBAL DEVELOPMENT*: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
+**CENTER FOR GLOBAL DEVELOPMEN*T*: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
+
+Inspired by the puzzling question of why some countries failed to reach the HIV-related MDG we embarked this research.
+
+# SO WHAT DID WE DO?
 
 
 Thank you for visiting our website. If you have any questions, please contact us at m.moellenkamp@mpp.hertie-school.org or n.rosemberg@mpp.hertie-school.org
