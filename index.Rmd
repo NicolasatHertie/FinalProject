@@ -147,7 +147,7 @@ We believe that these findings can lead to interesting policy recommendations.
 
 
 M <- gvisMotionChart(Merged, "country", "year",
-                     options=list(width=250, height=280))
+                     options=list(width=400, height=280))
 
 
 print(M)
