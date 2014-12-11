@@ -150,7 +150,7 @@ M <- gvisMotionChart(Merged, "country", "year",
                      options=list(width=400, height=380))
 
 
-plot(M)
+print(M)
 ```
 
 Thank you for visiting our website. If you have any questions, please contact us at m.moellenkamp@mpp.hertie-school.org or n.rosemberg@mpp.hertie-school.org
