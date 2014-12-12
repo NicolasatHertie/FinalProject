@@ -130,21 +130,10 @@ knitr::kable(labels_1, digits = 2, row.names = FALSE, caption = "Logistic Regres
 ```{r, echo=FALSE, include=FALSE}
 ## Predicted Probabilities - Female School Enrollment
 
-#### MODEL 1.2.1 - Calculating predicted probabilities for Quintiles of Female School Enrollment for the Scenario Uganda
+#### MODEL 1 - Calculating predicted probabilities for Quintiles of Female School Enrollment for the Scenario Uganda
 
 Model2.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + QFemSchool + ShFemUnempl, data = Imputed.out, model = "logit")
 
-
-## Regressing the model on FemSchool fixing the other indendent variables at Uganda's mean
- 
-# Combining multiple imputed datasets for calculating the means of selected countries
-finalimputed <- rbind(Imputed.out$imputations$imp1,Imputed.out$imputations$imp2,Imputed.out$imputations$imp3,Imputed.out$imputations$imp4,Imputed.out$imputations$imp5)
-
-# Creating a subset for calculating the means
-# Uganda <- finalimputed[which (finalimputed$country=="Uganda"), ]
-
-# Calculating the means for Uganda
-# summary(Uganda)
 
 # Fixing the Uganda Scenario, letting Quintiles of Female School Enrollment vary
 Uganda1.out <-  setx(Model2.out, 
@@ -165,13 +154,8 @@ Uganda1.out <- sim(Model2.out, x = Uganda1.out)
 
 
 ```{r, echo=FALSE, include = FALSE}
-#### MODEL 2 - Calculating predicted probabilities for Quintiles of Female School Enrollment for the Scenario Lesotho
+#### MODEL 1 - Calculating predicted probabilities for Quintiles of Female School Enrollment for the Scenario Lesotho
 
-# Creating a subset  for calculating the means
-Lesotho <- finalimputed[which (finalimputed$country=="Lesotho"), ]
-
-# Calculating the means for Lesotho
-summary(Lesotho)
 
 # Fixing the Lesotho Scenario, letting Quintiles of Female School Enrollment vary
 Lesotho1.out <-  setx(Model2.out, 
@@ -194,13 +178,7 @@ Lesotho1.out <- sim(Model2.out, x = Lesotho1.out)
 
 ```{r, echo=FALSE, include=FALSE}
 
-#### MODEL 2.2 - Calculating predicted probabilities for Quintiles of Female School Enrollment for the Scenario Malawi
-
-# Creating a subset for calculating the means
-Malawi <- finalimputed[which (finalimputed$country=="Malawi"), ]
-
-# Calculating the means for Malawi
-summary(Malawi)
+#### MODEL 1 - Calculating predicted probabilities for Quintiles of Female School Enrollment for the Scenario Malawi
 
 # Fixing the Malawi Scenario, letting Quintiles of Female Female School Enrollment vary
 Malawi1.out <-  setx(Model2.out, 
@@ -256,8 +234,19 @@ title(main="Scenario of Botswana", cex.main = 2)
 plot(Malawi1.out)
 title(main="Scenario of Malawi", cex.main = 2)
 
+?kable
+
 ```
 
+
+```{r, echo=FALSE, message=FALSE, error=FALSE, fig.width=19, fig.height=12, dpi=150}
+# Plot predicted probabilities
+par(mfrow=c(2,2))
+plot(Uganda1.out)
+plot(Lesotho1.out)
+plot(Botswana1.out)
+plot(Malawi1.out)
+```
 
 ## Simple Linear Regression Results - Model 2
 
@@ -294,12 +283,12 @@ summary(c.out)
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
 # Linear pooled OLS regression with robust standard errors
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+Variables <- c("Constant", "GDP per capita", "Rural Population", "CO2 Emissions", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "DPT Immunisation", "Measles Immunisation", "Female School Enrollment", "Female Unemployment Share")
 labels_3 <- as.data.frame(summary(c.out)$coef)
 labels_3$Variables <- Variables
 labels_3 <- MoveFront(labels_3, "Variables")
 names(labels_3) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
-knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2 with robust standard errors")
+knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2 with robust standard errors", longtable=TRUE)
  
 ```
 
