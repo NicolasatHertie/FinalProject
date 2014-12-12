@@ -433,7 +433,7 @@ collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Wa
 ```
 
 ```{r, echo=FALSE, include=FALSE}
-collinear2 <- lm(Incidence ~ GDPpc + Rural + CO2 + Water + Sanitation + HCexpendpc + ShFemUnempl + Unemploym + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
+collinear2 <- lm(Incidence ~ GDPpc + Rural + CO2 + Water + Sanitation + HCexpend + ShFemUnempl + Unemploym + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
 vif(collinear2)
 # Testing for multicollinearity
 collinear2 <- vif(collinear2)
@@ -450,7 +450,7 @@ Merged$Primary <- NULL
 Merged$Incidence2 <- NULL
 Merged$IncidenceDif <- NULL
 Merged$FemUnempl <- NULL
-Merged$HCexpend <- NULL
+Merged$HCexpendpc <- NULL
 
 
 # save data for presentation
@@ -476,7 +476,9 @@ For Model 1 logistic regressions are used for predicting the likelihood that a c
 
 As Odds and Odds ratios are difficult to interpret and do not allow to make direct statements about predictors in our model, predicted probabilities are calculated after running the logistic regressions. The interpretation of the logistic regression results presented in table 1 will thus focus only on the significance of the variables. 
 
-A detailed analysis of the predicted probabilities will be given for the main variable of interest Female School Enrollment. For the predicted probability scenarios quintiles of Female School Enrollment are computed for the four case studies that were introduced in the descriptive statistics part.
+A detailed analysis of the predicted probabilities will be given for the main variable of interest Female School Enrollment. For the predicted probability quintiles of Female School Enrollment are computed and applied to four different scenarios, the case studies that were introduced in the descriptive statistics part.
+
+From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 1 faces problems of heteroscedasticity, as a smaller dispersion around the regression line can be observed for lower values of X compared to higher values of X.
 
 
 ```{r, echo=FALSE, include=FALSE}
@@ -505,10 +507,8 @@ names(labels_1) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "
 knitr::kable(labels_1, digits = 2, row.names = FALSE, caption = "Logistic Regression Results of Model 1")
 ```
 
-From the logistic regression results presented in Table 1 it can be seen that the variables GDP per capita, Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are showing statistically significant results on the 95% confidence level. 
-The variables Immunisation against DPT, Immunisation against Measles, Access to Water, Access to Sanitation and Healthcare Expenditure 
-
-most of the hypothetically assumed variables
+From the logistic regression results presented in Table 1 it can be seen that the variables GDP per capita, Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are showing statistically significant results at the 95 percent confidence level. 
+The variables Immunization against DPT, Immunization against Measles, Access to Water, Access to Sanitation and Healthcare Expenditure and Share of Female Unemployment are however not statistically significant.
 
 ```{r, echo=FALSE, include = FALSE}
 
@@ -627,8 +627,10 @@ Botswana1.out <-  setx(Model2.out,
 
 # Calculating the Predicted Probabilities
 Botswana1.out <- sim(Model2.out, x = Botswana1.out)
+
 ```
 
+The predicted probabilities were calculated by using the "Zelig"-package as Zelig has the option to handle multiply-imputed data frames. The predicted probabilities plots show that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the Scenario of Uganda the strongest effect can be observed effect.
 
 **Predicted Probabilities for Female School Enrollment**
 
@@ -650,7 +652,19 @@ title(main="Scenario of Malawi", cex.main = 2)
 
 
 ## Model 2 - Focusing on Countries with an HIV Incidence Rate above the Median
+
+As explained in the decriptive statistics part, the dependent variable for the second empirical model is only considering countries with a higher HIV/AIDS incidence than the median. Further, the dependent variable for this model was logged to better approach a normal distribution.
+
+From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 2 faces problems of heteroscedasticity, as a smaller dispersion around the regression line for lower and higher values of x can be observed. Therefore, in Model 2 it will be controlled for robust standard errors.
+It cannot be controlled for fixed effects of Model 2, because the degrees of freedom are too low. 
+
+From the OLS regression output presented in Table 2 it can be seen, that the variables Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are still statistically significant at the 95 percent confidence level (like the regression outputs in Model 1). Further, the variable share of Female Unemployment became significant in this even though it was insignificant in Model 1. GDP per capita is only significant at a 90 percent confidence level in this model.  
  
+Surprisingly, the sign of the coefficient for Female School Enrollment does not match our theoretical assumptions on the direction of the effect and the finding is also opposite to the effect that was initially found for the predicted probabilities of Model 1. According to the regression output, a one percent increase in Female School Enrollment triggers a 1.38 percent increase in HIV/AIDS incidence. 
+
+The sign of the coefficient for the variable share of Female Unemployment is confirming the hypothetically assumed effect. A one percent decrease in Female Unemployment compared to total unemployment is followed by a 0.13 percent decrease in the HIV/AIDS incidence rate. 
+
+
 ```{r, echo=FALSE, include=FALSE}
 ### Creating a subset with the countries that have an incidence rate higher than the mean
  
@@ -674,48 +688,15 @@ summary(b.out)
 
 #plot(b.out)
  
-# Estimating with robust standard errors
+# Linear pooled OLS regression with robust standard errors
  
 c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls", robust= "weave")
 
 
 summary(c.out)
  
-# Estimating the model with fixed effects
- 
-d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl + as.factor(country), data = Imputed2.out, model = "ls")
- 
-summary(d.out)
- 
-# Estimating the model with fixed effects and robust standard errors
- 
-e.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
- 
-summary(e.out)
- 
-#install.packages("mitools")
-#library("mitools")
-# imp.data <- imputationList(Imputed2.out$imputations)
-# mitools.fit <- MIcombine(with(imp.data, lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + year))
-# summary(mitools.fit)                         
-# mitools.res <- summary(mitools.fit)
-# mitools.res <- cbind(mitools.res, df = mitools.fit$df)
-# mitools.res
- 
 ```
  
- 
-```{r, echo=FALSE, results="asis", error=FALSE}
- 
-# Showing Linear pooled OLS regression in output table with nice labels
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
-labels_2 <- as.data.frame(summary(b.out)$coef)
-labels_2$Variables <- Variables
-labels_2 <- MoveFront(labels_2, "Variables")
-names(labels_2) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
-knitr::kable(labels_2, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2")
- 
-```
  
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
@@ -728,40 +709,28 @@ names(labels_3) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "
 knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2 with robust standard errors")
  
 ```
- 
-```{r, echo=FALSE, results="asis", error=FALSE}
- 
-# Fixed effects estimation 
-knitr::kable(as.data.frame(summary(d.out)$coef), caption = "Fixed Effects Regression Results of Model 2")
 
-#Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
-#labels_4 <- as.data.frame(summary(d.out)$coef)
-#labels_4$Variables <- Variables
-#labels_4 <- MoveFront(labels_4, "Variables")
-#names(labels_4) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
-#knitr::kable(labels_4, output.lines=1:11, digits = 2, row.names = FALSE)
-
-
-```
- 
-```{r, echo=FALSE, results="asis", error=FALSE}
- 
-# Fixed effects estimation with robust standard errors
-#knitr::kable(as.data.frame(summary(e.out)$coef))
- 
-```
- 
-```{r, echo=FALSE, results="asis", error=FALSE}
- 
-#knitr::kable(as.data.frame(summary(e.out)$coef))
- 
-```
 
 
 # Conclusions
 
+It can be concluded, that half of the variables that were assumed to be important determinants for the HIV/AIDS incidence rate - in line with the rainbow model of Dahlgren and Whitehead on the main determinants of health - were found to have statistically significant effects on HIV/AIDS incidence at the country level in both models. 
+
+The level "Social and Community Networks" of the rainbow model was of highest interest for this paper, as it considers less well established determinants of HIV/AIDS. The variables used for operationalizing this level were Female School Enrollment and Female Unemployment Rate compared to the total unemployment rate.   
+In Model 1 a highly significant effect for Female School Enrollment was found and the predicted probabilities showed that the effect was going in the assumed direction. In Model 2 however, the sign of the coefficient surprisingly changed and was found to be opposite of the direction of the effect found in Model 1. 
+The explanation this paper provides for the difference of the effects for Female Schooling lies in the different samples of the two models analysed.
+
+While in Model 1 the sample includes all countries that data was available for, Model 2 is using a restricted sample, focusing only on the countries with an HIV/AIDS incidence rate above the median. The countries considered in Model 2 are mostly poor African countries and Female School Enrollment might have a different effect in these countries compared to the countries in the unrestricted sample. Acoording to Dupas, sex education of teenagers in Kenya is not about explaining the risks of sexually transmitted diseases and promoting the use of condoms but rather exclusively focusing on abstinence promotion programmes [@Dupas2009]. This might not be as effective compared to  HIV/AIDS awareness raising and prevention programmes, as abstince is against the human nature. Therefore, Female School Enrollment might not have the same effect in poor African countries compared to other countries in our sample. 
+
+For Female Unemployment compared to total unemployment no statistically significant effect was found in Model 1. In Model 2 however the effect of Female Unemployment Share became significant and the direction of the effect was in line with the original assumptions for this variable.
+An explanation for the insignificant effects for Female Unemployment Share in Model 1 and the statistically significant effect in Model 2 is assumably lying in the problems of the coding of the variable. This paper used Female Unemployment Share as a proxy for female labour market participation because data on female labour market participation was not available. The proxy might however come with inaccuracies in the measurement.
+
 [@Sachs2002]
 [@Dupas2009]
+
+
+
+# Limitations
 
 
 The IncidenceDif variable would actually be the most accurate variable in terms of measuring whether Target 6.A of the MDGs ("have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014] was fulfilled until 2012. A dummy variable on whether MDG6a was fulfilled or not is however not very suitable for identifying the specific determinants of HIV/AIDS at country level as it is not differentiating between the relative size of the effect (an increase from 0,001 to 0,002 would be as bad as a change from 0,1 to 0,3).
@@ -769,8 +738,6 @@ The IncidenceDif variable would actually be the most accurate variable in terms 
 Model 2 - variable is not perfect normal distribution - better beta regression
 
 Famale Labour Market Participation
-
-# Limitations
 
 The paper had to make some compromises regarding its original aim as outlined in the first research proposal. Due to the significant amount of missing values and the presence of multicollinearity, a considerable number of variables had to be dropped and could ultimately not be integrated in the logistic regression models. 
  
@@ -821,7 +788,7 @@ scatterplotMatrix(~ Incidence + GDPpc + Rural + CO2 + LifeExpect + Population,
 
 ```{r, echo=FALSE}
 # Scatterplot of variables for living and working conditions 
-scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpendpc,
+scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpend,
                   transform=TRUE, data=Merged)
 ```
 
