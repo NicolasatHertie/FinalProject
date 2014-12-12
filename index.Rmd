@@ -101,8 +101,9 @@ HighIncidence$CaseStudy[HighIncidence$country=="Malawi" | HighIncidence$country=
 
 Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=CaseStudy)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year") + scale_color_gradient2(midpoint=1, low="grey", mid="darkgreen", high="darkred") + theme(legend.position="none")                                                                                                                                                      
                                                                                                                           
-Cases <- Cases + theme(plot.title = element_text(lineheight=3, face="bold"))
+Cases <- Cases + theme(plot.title = element_text(lineheight=3, face="bold"))  
 
+  
 print(Cases)
 ```
 
