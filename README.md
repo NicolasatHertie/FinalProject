@@ -21,9 +21,9 @@ Please report any bugs or suggestions at: https://github.com/NicolasatHertie/Fin
 
 ### Instructions to use this repository:
 
-Besides the Readme file, our repository "FinalProject" contains two BibTeX files, an R file, two RMD files, two PDF files, a
+Besides the Readme file, our repository "FinalProject" contains two BibTeX files, an R file, two RMD files, two PDF files,
 and an HTML file. The PDFs and the HTML were created using the knit function of R Studio. 
-The referenced literature can be found in the BibTeX file "Literature.bib". The R Packages used for the proposal are cited in
+The referenced literature can be found in the BibTeX file "Literature.bib". The R Packages used for this paper are cited in
 the BibTeX file "Packages.bib". As the BibTeX files and the RMD files are dynamically linked, it is important to save all three 
 files in the same directory when running the RMD files. Further, the R file creates a dataset that is then used by the RMD file called (XXX) to calculate the descriptive and inferential statistics. Even though these files are not dynamically linked, both files should be rooted at the same directory as the R file saves the final database in the directory where the RMD is loading the dataset from. Alternatively, if the R file is rooted in a sub-directory please specify the new relative path before running the RMD file. The other RMD file contains the code to knit the beamer presentation that summarizes our research and findings. This presentation is also available as PDF (XXX).
 
@@ -43,19 +43,19 @@ directly downloaded to R Studio using the WDI package. Further, an explanation o
 
 Our research is organized according to the following structure:
 
-1. Executive Summary
-2. Introduction
-3. Aim, Research Question and Hypotheses
-4. Literature Review
-5. Data Sources
-6. Methodology and Data Analysis
-7. Data Gathering and Cleaning
-8. Descriptive Statistics
+1. Introduction
+2. Aim, Research Question and Hypotheses
+3. Literature Review
+4. Data Sources
+5. Methodology and Data Analysis
+6. Data Gathering and Cleaning
+7. Descriptive Statistics
+8. Case Studies (Botswana, Lesotho, Uganda, Malawi)
 9. Inferential Statistics
-10. Conclusions
-11. Limitations
-12. Appendix
-13. Bibliography
+10. Findings
+11. Conclusions and Policy Recommendations
+12. Limitations
+13. Appendix
 
 # Task for the assignment
 
