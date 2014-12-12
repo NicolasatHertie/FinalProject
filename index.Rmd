@@ -61,13 +61,13 @@ Inspired by the puzzling question of why some countries failed to reach MDG 6, w
 For more information on the MDGs please refer to the following links:
 
 
-*BACKGROUND INFORMATION*
+- *BACKGROUND INFORMATION*
 
 **UNITED NATIONS**: http://www.un.org/millenniumgoals/
 
 **ONE**: http://www.one.org/international/mdg/
 
-*PROGRESS REPORT*
+- *PROGRESS REPORT*
 
 **CENTER FOR GLOBAL DEVELOPMENT**: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
 
