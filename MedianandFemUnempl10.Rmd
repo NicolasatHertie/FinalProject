@@ -15,8 +15,8 @@ toc: true
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
 ### 1. Setting Working Directory & Loading the data
 # Setting the Working Directory
-setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
-#setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
+# setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
+setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # Loading the Citations
 pkgs <- c("RJSONIO","WDI","dplyr","tidyr","knitr","DataCombine","lmtest","httr","XML","plyr","Amelia","XLConnect","countrycode","ggplot2","magrittr","fmsb","car","stargazer")
@@ -77,25 +77,21 @@ library(gridExtra)
 ```
 
 
-# Executive Summary
-
----
-
 # Introduction
 
 The expiry date of the Millennium Development Goals ([MDGs](http://www.un.org/millenniumgoals/aids.shtml)) is just around the corner, meanwhile the post-2015 agenda is being discussed intensively. In this context, it is important to assess the achievement of the MDGs and try to understand why some goals have not been reached. 
 
-Reducing HIV/AIDS incidence is an important aim of the MDGs. Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014]. In most regions of the world this goal has been fulfilled: new HIV infections declined and the overall number of new HIV/AIDS infections per 100 adults (15-49 years old) decreased by 44 per cent between 2001 and 2012 [@UN2014]. However, this trend cannot be observed in all 189 member states of the United Nations. On the contrary, HIV/AIDS prevalence has even increased in some countries. 
+Reducing HIV/AIDS incidence is an important aim of the MDGs. Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014]. In most regions of the world this goal has been fulfilled: new HIV/AIDS infections declined and the overall number of new HIV/AIDS infections per 100 adults (15-49 years old) decreased by 44 per cent between 2001 and 2012 [@UN2014]. However, this trend cannot be observed in all 189 member states of the United Nations. On the contrary, HIV/AIDS prevalence has even increased in some countries. 
 
---- 
+
 
 # Aim, Research Question and Hypotheses
 
-This paper aims to provide evidence to assess why some countries struggle to achieve MDG 6A. We believe that one possible explanation for the failure of some interventions in reducing HIV/AIDS may lie in the lack of a full understanding of the determinants of the disease, which can in turn lead to ill-specified interventions and wrongly targeted campaigns.
+Inspired by the puzzling question of why some countries will fail to achieve MDG 6a, this paper aims to provide evidence to assess the significance of specific determinants of health in explaining HIV/AIDS incidence rates at the country level. We believe that one possible explanation for the failure of some interventions in reducing HIV/AIDS may lie in the lack of a full understanding of the determinants of the disease, which can in turn lead to ill-specified interventions and wrongly targeted campaigns.
 
-The literature reviewed for this paper identifies a myriad of determinants of health. When it comes to specific diseases however, the existing literature only provides a narrow selection of potential determinants. The aim of this paper is to test whether social and community networks (often neglected by the literature on disease-specific determinants of health) significantly explain HIV/AIDS incidence rates at the country level. The hypothesis of this paper is that female school enrollment is a strong predictor of HIV incidence rates. By identifying variables that help to explain HIV/AIDS incidence,  this paper will help move forward the discussion of the determinants of HIV/AIDS . 
+The literature reviewed for this paper identifies a myriad of determinants of health. When it comes to specific diseases however, the existing literature only provides a narrow selection of potential determinants. The aim of this paper is to test whether social and community networks (often neglected by the literature on disease-specific determinants of health) significantly explain HIV/AIDS incidence rates at the country level. The hypothesis of this paper is that social and community networks are  strong predictors of HIV incidence rates. By identifying variables that help to explain HIV/AIDS incidence rates,  this paper will help move forward the discussion of the determinants of HIV/AIDS . 
 
----
+
 
 # Literature Review
 
@@ -103,20 +99,18 @@ Hurrelmann advocates an interdisciplinary framework for analysing what determine
 
 One framework that shows the interaction between individual and environmental factors over time is the salutogenic model developed by Antonovsky in 1979. According to Hurrelmann, Antonovsky's model is a great contribution to interdisciplinary theory, but the downside is its complexity [@Hurrelmann1989]. 
 
-A simpler and more common model on general determinants of health is the "rainbow model", developed by Dahlgren and Whitehead [@Dahlgren1991, p.11]. This model gives an overview of the main health determinants, reflecting the relationship between the individual, its environment and different health outcomes. Individuals are at the centre of the model with a set of fixed biological and genetical preconditions. Building upon these, four layers of influence on health can be identified: individual lifestyle factors, social and community networks, living and working conditions and general socio-economic, cultural and environmental conditions.
+A simpler and more common model on general determinants of health is the "Rainbow Model" developed by Dahlgren and Whitehead [@Dahlgren1991, p.11]. This model gives an overview of the main health determinants, reflecting the relationship between the individual, its environment and different health outcomes. Individuals are at the centre of the model with a set of fixed biological and genetical preconditions. Building upon these, four layers of influence on health can be identified: individual lifestyle factors, social and community networks, living and working conditions and general socio-economic, cultural and environmental conditions.
 
 **Figure 1: Main health determinants**
 
 ![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
 
-The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction between these dimensions at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya [@Sachs2002][@Dupas2009]. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV incidence. These campaigns were specifically targeting girls [@Dupas2009]. This research presents interesting evidence on the link between female school enrollment and HIV/AIDS incidence rates. To the extent that female school enrollment exposes girls to HIV/AIDS prevention campaigns before they become sexually active, it increases the likelihood that they will negotiate for protected sex, thus reducing the chances of getting infected. 
-
----
+The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction between these dimensions at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya [@Sachs2002][@Dupas2009]. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV incidence rates. These campaigns were specifically targeting girls [@Dupas2009]. This research presents interesting evidence on the link between female school enrollment and HIV/AIDS incidence rates. To the extent that female school enrollment exposes girls to HIV/AIDS prevention campaigns before they become sexually active, it increases the likelihood that they will negotiate for protected sex, thus reducing the chances of contracting the disease. 
 
 
 # Data Sources
 
-This paper utilises data from two different sources. For HIV/AIDS incidence rates at the country level, this research explored several databases such as UNAIDS, World Bank, Global Fund for AIDS, Tuberculosis and Malaria, WHO, the Institute for Health Metrics and Evaluation, PEPFA and the AIDS Data Hub. The database used to measure HIV/AIDS incidence rates in the data analysis was the one from UNAIDS given that it provided panel data for the period 2000-2012. All the other variables used in this research were obtained from the World Development Indicators (WDI) of the World Bank. 
+This paper utilises data from two different sources. For HIV/AIDS incidence rates at the country level, this research explored several databases such as UNAIDS, World Bank, Global Fund for AIDS, Tuberculosis and Malaria, WHO, the Institute for Health Metrics and Evaluation, PEPFA and the AIDS Data Hub. During the data analysis, the UNAIDS database was used to measure HIV/AIDS incidence rates, as it provides panel data for the period 2000-2012. All the other variables used in this research were obtained from the World Development Indicators (WDI) of the World Bank. 
 
 
 
@@ -124,22 +118,21 @@ This paper utilises data from two different sources. For HIV/AIDS incidence rate
 
 The WDI database comprises 1,342 indicators clustered in 10 thematic areas that range from health and education to infrastructure and public sector data. Information is available for 214 countries and dates back to 1960. All indicators are available for free at the [World Bank website](http://databank.worldbank.org/data/views/variableselection/selectvariables.aspx?source=world-development-indicators) and can be downloaded as an Excel sheet, CSV, tabbed TXT or SDMX. In addition, there is a special R package [WDI](http://cran.r-project.org/web/packages/WDI/WDI.pdf) designed to download and use the data. 
 
-WDI have been used in a wide range of fields and HIV/AIDS research is not an exception. For examples of relevant literature that also make use of WDI please see Haacker, Talbott and Kalemli [@Haacker2002]  [@Talbott2007]  [@Kalemli2011]. A list of all WDI indicators used for this research can be found in the Appendix.
+WDI have been used in a wide range of fields and HIV/AIDS research is not an exception. For examples of relevant literature that also make use of WDI please see Haacker, Talbott and Kalemli, among others [@Haacker2002]  [@Talbott2007]  [@Kalemli2011]. A list of all WDI indicators used for this research can be found in the Appendix.
 
 
 ## UNAIDS Dataset
 
-The UNAIDS dataset is available for free at the UNAIDS ([website](http://www.unaids.org/l)) and it has been put together by UNAIDS during the research for the UNAIDS GAP Report 2014 [@UNAIDS2014]. It provides data on HIV/AIDS incidence, prevalence and HIV-related deaths for the period 1990-2013. The dataset aditionally provides uncertainty bounds (low and high estimated) for most of the variables. Further, there is information for all UN member states and there is also regionally aggregated data. Some of the indicators such as prevalence and incidence are disaggregated for the different demographic groups, including data for adults, youth and children, male and female. 
+The UNAIDS dataset is available for free at the UNAIDS [website](http://www.unaids.org/l) and it has been put together by UNAIDS during the research for the UNAIDS GAP Report 2014 [@UNAIDS2014]. It provides data on HIV/AIDS incidence rates, prevalence rates and HIV-related deaths for the period 1990-2013. The dataset aditionally provides uncertainty bounds (low and high estimated) for most of the variables. Furthermore, it contains information for all UN member states and also provides regionally aggregated data. Some of the indicators such as prevalence and incidence rates are disaggregated for the different demographic groups, including data for adults, youth and children, male and female. 
 
 UNAIDS databases are often used in public health research. Some examples of papers using UNAIDS data on HIV/AIDS incidence and prevalence are Letamo, Bennell and Ferlay et al. [@Letamo2011]  [@Bennell2002]  [@Ferlay2010]. 
 
 The data is available as an Excel file.
- 
----
+
 
 # Methodology and Data Analysis
 
-The methodology consists of two statistical models. The first model has as dependent variable a dummy variable that takes the value of cero if HIV incidence rate is below the median and the value of one if the rate is above the median. This variable is regressed on N variables selected to represent each of Dahlgren and Whitehead's model. 
+The methodology consists of two statistical models. The first model has as dependent variable a dummy variable that takes the value of cero if HIV incidence rate is below the median and the value of one if the rate is above the median. This variable is regressed on 11 variables selected to represent each of Dahlgren and Whitehead's model. 
 
 **Model 1:** 
 $$I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{it} + {\beta}_4 ILF_{it} + {\epsilon}_{it}$$
@@ -148,35 +141,31 @@ Where I stands for HIV/AIDS incidence, SE stands for socioeconomic, cultural and
 
 To study the impact of socioeconomic, cultural and environmental variables this model uses GDP per capita, the share of rural population and CO2 emissions (metric tons per capita). To operationalise working and living condition variables, healthcare expenditure, access to water and sanitation, umployment rates and primary school enrollment were selected. With regards to the social and community networks level, the model uses female school enrollment and the difference between female unemployment to total unemployment. Individual lifestyle factors were operationalised using immunization against measles and DPT and life expectancy. 
 
-This paper focus on the impact of social and community networks on HIV incidence rates. It is therefore important to explain the reasoning behind the selection of the variables used to operationalised this level. Female school enrollment was selected based on the premise that a higher female school enrollment rate would increase the chances of providing HIV prevention information campaigns to girls before they become sexually active. This in turn is expected to foster the use of condoms. 
+This paper focus on the impact of social and community networks on HIV incidence rates. It is therefore important to explain the reasoning behind the selection of the variables used to operationalised this level. Female school enrollment was selected based on the premise that a higher female school enrollment rate would increase the chances of providing HIV prevention information campaigns to girls before they become sexually active. This in turn is expected to foster the use of condoms, thus reducing HIV/AIDS incidence rates.
 
 The difference of female unemployment to total unemployment was chosen in order to look at the relative position of women to men in the labour market. While female unemployment alone would be influenced by the dynamics of the labour market, discounting the total unemployment rate provides a better estimate of the relative position of women to men. It would have been desired to include a measure of female participation in the labour market. However, data on this indicator was not available. 
 
-Model 2 looks into more detail to the countries where HIV incidence rates are above the median and uses the same independent variables as model one. The dependent variable in model 2 is the logarithm of HIV incidences rates. In this case, given that the dependent variable is not a binomial variable but a contiuous one, model two is estimated using pooled OLS. 
+Model 2 looks into more detail to the countries where HIV/AIDS incidence rates are above the median and uses the same independent variables as model one. The dependent variable in model 2 is the logarithm of HIV/AIDS incidences rates. In this case, given that the dependent variable is not a binomial variable but a contiuous one, model two is estimated using pooled OLS. 
 
 **Model 2:** 
 $$ln(I_{it}) = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{it} + {\beta}_4 ILF_{it} + {\epsilon}_{it}$$
 
 Where I stands for HIV/AIDS incidence, SE stands for socioeconomic, cultural and environmental factors, WLC stands for working and living conditions, SCN stands for social and community networks and ILF stands for individual lifestyle factors. 
 
----
-
 # Data Gathering and Cleaning
 
 This section focuses on the process of gathering the data and cleaning the databases to prepare the variables for the data analysis. 
 
-The first step in this process was uploading the databases to R Studio. The first dataset consists of 29 World Development Indicators and it was downloaded from World Bank's website. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regionally aggregated data was dropped. Further, 169 rows that contained only missing values were deleted.
+The first step in this process was downloading the databases to R Studio. The first dataset consists of 29 World Development Indicators. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regionally aggregated data was dropped. Further, 169 rows that contained only missing values were deleted.
 
-After dropping empty rows, the data frame was alphabetically (ascending) ordered, rows were grouped by iso2c code and variables were renamed.
+After dropping empty rows, the data frame was alphabetically ordered (ascending order), rows were grouped by *iso2c* code and variables were renamed.
 
-The dataset was further cleaned preparing the data for multiple imputation using the AMELIA package. This process requires that the panel is as balanced as possible, as it feeds from all variables to predict values for the missing observations. A more detailed explanation of the imputation process will be provided in the inferential statistics section of this paper. In order to improve the balance of the panel, the next step consisted of dropping variables for which more than 80 percent of the observations (552) were missing.  In addition, countries with a population smaller than one million inhabitants were dropped from the database. 59 countries fell in that category: 46 islands, 5 European countries (Andorra, Liechtenstein, Luxemburg, Monaco and Montenegro), Bahrain, Bhutan, Belize, Djibouti, Equatorial Guinea, Guyana, Qatar and Suriname. Dropping these countries does not affect the research as the remaining database still contains a highly heterogeneous sample both in geographic and socio-economic terms. Furthermore, deleting these countries improves the dataset as most of these countries lacked information for most of the variables under scrutiny. 
+The dataset was further cleaned preparing the data for multiple imputation using the AMELIA package. This process requires that the panel is as balanced as possible, as it feeds from all variables to predict values for the missing observations. A more detailed explanation of the imputation process will be provided in the inferential statistics section of this paper. In order to improve the balance of the panel, the next step consisted in dropping variables for which more than 80 percent of the observations (552) were missing.  In addition, countries with a population smaller than one million inhabitants were dropped from the database. 59 countries fell in that category: 46 islands, 5 European countries (Andorra, Liechtenstein, Luxemburg, Monaco and Montenegro), Bahrain, Bhutan, Belize, Djibouti, Equatorial Guinea, Guyana, Qatar and Suriname. Dropping these countries does not affect the research as the remaining database still contains a highly heterogeneous sample both in geographic and socio-economic terms. Furthermore, deleting these countries improves the dataset as most of these countries lacked information for most of the variables under scrutiny. 
  
-The second database used for this research was downloaded from the UNAIDS' website and it provides information on HIV/AIDS incidence rates (as well as prevalence and deaths caused by HIV/AIDS). The data is publicly available. All columns except the country and the incidence rate were dropped. 
-After renaming the variables, a unique identifier was created and missing values were recoded as NAs. Moreover, some observations in the database were not specific numbers; instead, it was indicated that for that year, prevalence was below a certain threshold (<0.01%). In those cases, these observations were replaced by 0.009. The final step in the cleaning of the UNAIDS database consisted of deleting missing values for the dependent variable and deleting the regions with an iso2c equal to that of a particular country (NA and ZA) to avoid problems in the merging process. 
+The second database used for this research was downloaded from the UNAIDS' website and it provides information on HIV/AIDS incidence rates (as well as prevalence rates and deaths caused by HIV). The data is publicly available. All columns except the country and the incidence rate were dropped. 
+After renaming the variables, a unique identifier was created and missing values were recoded as *NAs*. Moreover, some observations in the database were not specific numbers; instead, it was indicated that for that year, incidence rates was below a certain threshold (<0.01%). In those cases, observations were replaced by 0.009. The final step in the cleaning of the UNAIDS database consisted in deleting missing values for the dependent variable and deleting the regions with an *iso2c* equal to that of a particular country (NA and ZA) to avoid problems in the merging process. 
 
-Once both databases were cleaned, the next step was to merge the datasets using a combination of iso2c and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing, that the UNAIDS' dataset included observations from 1990 to 2012 and WDI data covers the 2000-2012 period. This is why all observation from the UNAIDS dataset between 1990 and 1999 were dropped. Finally, all columns that were created by default when downloading WDI data to R (e.g. latitude, longitude and capital city) were deleted as they did not provide relevant information for this research. 
-
----
+Once both databases were cleaned, the next step was to merge the datasets using a combination of *iso2c* and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing, that the UNAIDS dataset included observations from 1990 to 2012 and WDI data covers the 2000-2012 period. This is why all observation from the UNAIDS dataset between 1990 and 1999 were dropped. Finally, all columns that were created by default when downloading WDI data to R (e.g. latitude, longitude and capital city) were deleted as they did not provide relevant information for this research. 
 
 # Descriptive Statistics
 
@@ -235,7 +224,7 @@ Merged$Dummy <- as.numeric(Merged$Incidence<=0.07)
 
 This section consists of the descriptive analysis of the main variables of interest. Tables, plots and histograms are shown to understand the distribution of the variables. 
 
-Figure 2 shows that in most countries of our dataset, HIV/AIDS incidence rates decreased between 2000 and 2012 (see Figure 2). The blue line in Figure 2 is however only representing the general downward trend of HIV/AIDS incidence over time in our sample. The black dots above the blue line show the dispersion of the observations around this trend. As it can be seen, there are severe outliers that still show a strongly higher HIV/AIDS incidence rate compared to the rest (mostly southern African countries).
+Figure 2 shows that in most countries of our dataset, HIV/AIDS incidence rates decreased between 2000 and 2012 (see Figure 2). The blue line in Figure 2 is however only representing the general downward trend of HIV/AIDS incidence over time in our sample. The black dots above the blue line show the dispersion of the observations around this trend. As it can be seen, there are several outliers that still show a strongly higher HIV/AIDS incidence rate compared to the rest (mostly southern African countries).
 
 **Figure 2: HIV/AIDS Incidence Rate over Time**
 
@@ -253,7 +242,7 @@ Looking at the incidence rate at the country level (Figures 3 and 4 in Appendix)
 
 A similar pattern can be detected when analysing the direction of the change of the HIV/AIDS incidence rate compared to the previous year by country (Figure 4 in Appendix). To analyse the change of the incidence rate from one year to the following, the incidence variable was lagged by one year and a new variable, calculating the difference between the lagged and the original incidence rate was created. 
 
-When looking at the distribution of the HIV/AIDS incidence variable in a histogram it becomes apparent that the incidence rate is indeed highly skewed to the left and only few incidence rates are higher than 1.
+When looking at the distribution of the HIV/AIDS incidence variable in a histogram it becomes apparent that the incidence rate is indeed highly skewed to the left and only a few incidence rates are higher than 1.
   
   
 **Figure 5: Distribution of HIV/AIDS Incidence Rate**
@@ -270,8 +259,8 @@ axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 ```
 
 
-In order to deal with the skewness of this variable, a dummy variable, differentiating between countries with a high HIV incidence and countries with a low HIV incidence was created for the first empirical model. 
-The most accurate measure of the central tendency of a skewed distribution is the median. Therefore, the dependent variable was coded as 1 if the HIV incidence rate is below the median and a value of 0 was assigned to countries with an HIV incidence rate above the median. 
+In order to deal with the skewness of this variable, a dummy variable, differentiating between countries with a high HIV/AIDS incidence and countries with a low HIV/AIDS incidence was created for the first empirical model. 
+The most accurate measure of the central tendency of a skewed distribution is the median. Therefore, the dependent variable was coded as 1 if the HIV/AIDS incidence rate is below the median and a value of 0 was assigned to countries with an HIV/AIDS incidence rate above the median. 
 
 \pagebreak
 
@@ -288,7 +277,7 @@ Histdep <- hist(Merged$Dummy, breaks= seq(0,1.5,by=0.1), xlab="HIV/AIDS Incidenc
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 ```
 
-For the second empirical model the sample was reduced and focused only on countries with a high HIV/AIDS incidence rate in order to explore whether the determinants identified in Model 1 hold true when zooming in on the more problematic cases.
+For the second empirical model the sample was reduced to the countries where HIV/AIDS incidence rate was higher than the median. This was done in order to explore whether the determinants identified in Model 1 hold true when zooming in on the more problematic cases.
 As the dependent variable was still skewed to the left after restricting the sample to those countries above the mean a log transformation was applied to approach a normal distribution.
 
 ```{r, echo=FALSE, include=FALSE}
@@ -308,9 +297,7 @@ HighInc$lIncidence <- log(HighInc$Incidence)
 hist(HighInc$lIncidence, xlab="HIV/AIDS Incidence Rate", main=NULL)
 ```
 
-Scatterplots were created for all independent variables by the levels of Dahlgrehn's model, in order to see whether further relevant variables are skewed and to broader explore the relationship of the selected determinants for each level (see Appendix). Due to high skewness in most of the variables and to ensure a better comparability of the variable units, all but one of the independent variables in the sample were logged.
-
-The only variable that was not logged is a variable comparing the share of female unemployment to total unemployment. The distribution of this variable comes already close to a normal distribution, so a log transformation is not of utter importance. Further, it has some values of zero, which would make it impossible to log the variable without further transforming it.
+Scatterplots were created for all independent variables by the levels of Dahlgren's model, in order to see whether further relevant variables are skewed and to broadly explore the relationship of the selected determinants within each level (see Appendix). Due to high skewness in most of the variables and to ensure a better comparability of the variable units, all but one of the independent variables in the sample were logged. The only variable that was not logged is a variable comparing female unemployment to total unemployment. The distribution of this variable comes already close to a normal distribution, so a log transformation is not of utter importance. Further, it has some zeros, which would make it impossible to log the variable without further transforming it.
 
 
 # Case Studies - Botswana, Lesotho, Uganda and Malawi
@@ -417,19 +404,19 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 ```
 
 
-In Figure 9 the case studies are plotted individually, showing the development of the HIV/AIDS incidence over time for each of the four case studies. Botswana and Malawi show a steep decrease in HIV incidence rates from 2000 to 2012. Malawi is even reaching to an HIV/AIDS incidence rate that is lower than 0.5 in 2012. The HIV/AIDS incidence rate of Uganda in contrast increases continuously between 2000 and 2012. The HIV/AIDS incidence rate of Lesotho is slowly decreasing over time, however there were to backlashes one in 2009 and one in 2011. 
+In Figure 9 the case studies are plotted individually, showing the development of the HIV/AIDS incidence rate over time for each of the four case studies. Botswana and Malawi show a steep decrease in HIV incidence rates from 2000 to 2012. The HIV/AIDS incidence rate of Uganda in contrast increases continuously between 2000 and 2012. The HIV/AIDS incidence rate of Lesotho is slowly decreasing over time, however there were two backlashes one in 2009 and one in 2011. 
 
 **Figure 9: HIV/AIDS Incidence in Selected Countries**
 
 ![Figurea](figa.png)
 
-Figure 10 shows the school enrollment rates of females per country over time. The descriptive statistics for female school enrollment in the selected countries are in general in line with our intuition. Malawi, one of the "best" practices has a very high female school enrollment rate. It showed a steep increase in female school enrollment between 2007 and 2012. Botswana the other "best" practice had a low but stable female school enrollment rate between 2000 and 2009 - after 2009 there was no data available for female school enrollment in Botswana. For Uganda, one of the "bad" cases, the rate of females enrolled in schools showed a general decreasing tendency with some backlashes for Uganda. For the other "bad" example Lesotho, the female school enrollment rate also decreased over time but stagnated between 2009 and 2012. 
+Figure 10 shows the school enrollment rates of females per country over time. The descriptive statistics for female school enrollment in the selected countries are in general in line with our intuition. Malawi, one of the "best" practices has a very high female school enrollment rate. It showed a steep increase in female school enrollment between 2007 and 2012. Botswana the other "best" practice had a low but stable female school enrollment rate between 2000 and 2009 - after 2009 there was no data available for female school enrollment in Botswana. For Uganda, one of the "bad" cases, the rate of females enrolled in schools showed a general decreasing trend. For Lesotho, the other "bad" example, the female school enrollment rate also decreased over time but stagnated between 2009 and 2012. 
 
 **Female School Enrollment in Selected Countries**
 
 ![Figure10](fig10.png)
 
-Figure 11 shows the female unemployment rate compared to total unemployment rate per country over time. The descriptive statistics are generally not reflecting our intuition very well. Malawi, one of the "best" practices had a low and very stable female unemployment rate compared to total unemployment rate between 2000 and 2012. Botswana the other "best" practice had a higher (around 3%) slightly increasing female unemployment rate compared to the total unemployment rate between 2000 and 20012. Uganda, one of the "bad" cases, a low and very stable female unemployment rate compared to total unemployment rate is observed over the 12 years. For the other "bad" example Lesotho, a very highf emale unemployment rate compared to total unemployment rate was observed until 2005, after that the rate decreased sharply until 2008 and than flactuated around 3 to 4 percent between 2008 and 2012.
+Figure 11 shows the female unemployment rate compared to total unemployment rate per country over time. The descriptive statistics are generally not reflecting our intuition very well. Malawi, one of the "best" practices had a low and very stable female unemployment rate compared to total unemployment rate between 2000 and 2012. Botswana the other "best" practice had a higher (around 3%) and slightly increasing female unemployment rate compared to the total unemployment rate between 2000 and 20012. In Uganda, one of the "bad" cases, a low and very stable female unemployment rate compared to total unemployment rate is observed over the 12 years. For the other "bad" example Lesotho, a very high female unemployment rate compared to total unemployment rate was observed until 2005, after that the rate decreased sharply until 2008 and than flactuated around 3 to 4 percent between 2008 and 2012.
 
 **Female Unemployment compared to Total Unemployment in Selected Countries**
 
@@ -439,9 +426,9 @@ Figure 11 shows the female unemployment rate compared to total unemployment rate
 
 ## Data Imputation
 
-The data loaded from the Worldbank contained a lot of missing data because some countries do not report information on specific variables on a yearly basis. A high share of missing values creates several problems and limits the data analysis. The paper imputed the missing data by using the "Amelia" package. "Amelia"  generates by default five multiple, complete datasets that contain estimations of missing data points.
+The data loaded from the World Bank contained a lot of missing data because some countries do not report information on specific variables on a yearly basis. A high share of missing values creates several problems and limits the data analysis. The paper imputed the missing data by using the "Amelia" package. "Amelia"  generates by default five multiple, complete datasets that contain estimations of missing data points.
 
-To enable the data imputation highly collinear variables had to be dropped. To test for multicollineraity this paper used variance inflation factors (VIF). The VIF showed that in a simple OLS regression model integrating all independent variables, three variables were highly multicollinear and had a variance inflation higher than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between GDP and GDP per capital and between Primary Education and Female School Enrollment. In a first step, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, Primary Education and GDP. After having further problems of multicollinearity with GDPpc we also excluded Healthcare Expenditure and two variables that were created for the descriptive statistics part only, when showing the difference of HIV/AIDS Incidence over time (Incidence2 and IncidenceDif).
+To enable the data imputation highly collinear variables had to be dropped. To test for multicollineraity this paper used variance inflation factors (VIF). The VIF showed that in a simple OLS regression model integrating all independent variables, three variables were highly multicollinear and had a variance inflation higher than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between GDP and GDP per capital and between primary education and female school enrollment. In a first step, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, in this case primary education and GDP. After having further problems of multicollinearity with GDPpc we also excluded healthcare expenditure and two variables that were created for the descriptive statistics part only, showing the difference of HIV/AIDS incidence rates over time.
 
 ```{r, echo=FALSE, include=FALSE}
 ###  Imputing missing values with amelia package
@@ -650,9 +637,9 @@ Botswana1.out <- sim(Model2.out, x = Botswana1.out)
 
 ```
 
-A detailed analysis of the predicted probabilities will be given for the main variable of interest Female School Enrollment. To calculate the predicted probabilities, quantiles of Female School Enrollment are computed and applied to four different scenarios. Each scenario fixes the mean values of the explanatory variables (excluding Female School Enrollment) to those of the case studies that were introduced in the descriptive statistics part.
+Given the statistical insignificance of one of out variables of interest (the share of female unemployment), a detailed analysis of the predicted probabilities will be given for the other variable of interest, i.e. female school enrollment. To calculate the predicted probabilities, quantiles of Female School Enrollment are computed and applied to four different scenarios. Each scenario fixes the mean values of the explanatory variables (excluding Female School Enrollment) to those of the case studies that were introduced in the descriptive statistics part (Uganda, Malawi, Lesotho and Botswana).
 
-The predicted probabilities were calculated using the ZELIG-package as ZELIG has the option to handle multiply-imputed data frames. The predicted probabilities plots show that a higher quartile of Female School Enrollment triggers a lower HIV/AIDS incidence. At the fourth quartile, the HIV/AIDS incidence is lowest in all four graphs. The uncertainty around the estimates is reflected by the bandwidth of the plots. It can be concluded, that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the Scenario of Uganda the strongest effect can be observed.
+The predicted probabilities were calculated using the ZELIG-package as ZELIG has the option to handle multiply-imputed data frames. The predicted probabilities plots show that a higher quartile of Female School Enrollment triggers a lower HIV/AIDS incidence. At the fourth quartile, the HIV/AIDS incidence is lowest in all four graphs. The uncertainty around the estimates is reflected by the bandwidth of the plots. It can be concluded, that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the scenario of Uganda the strongest effect was observed.
 
 
 **Predicted Probabilities for Female School Enrollment**
@@ -660,6 +647,10 @@ The predicted probabilities were calculated using the ZELIG-package as ZELIG has
 ```{r, echo=FALSE, message=FALSE, error=FALSE, fig.width=19, fig.height=12, dpi=150}
 # Plot predicted probabilities of Model 1 for Female School Enrollment
 par(mfrow=c(2,2))
+<<<<<<< HEAD
+
+=======
+>>>>>>> FETCH_HEAD
 plot(Uganda1.out)
 title(main="Scenario of Uganda", cex.main = 2)
 plot(Lesotho1.out)
@@ -677,13 +668,11 @@ From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 
 
 As explained in the previous section, the dependent variable for the second empirical model is only considering countries with an HIV/AIDS incidence rate higher than the median. Further, the dependent variable for this model was logged to better approach a normal distribution.
 
-From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 2 faces problems of heteroscedasticity, as a smaller dispersion around the regression line can be observed (for lower and higher values of x). Given the presence of heteroscedasticity in Model 2, the regression will be estimated with robust standard errors to decrease the heteroscedasticity of the error term.
+From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 2 faces problems of heteroscedasticity, as a smaller dispersion around the regression line can be observed (for lower and higher values of x). Given the presence of heteroscedasticity in Model 2, the regression will be estimated with robust standard errors. It is worth mentioning that the use of a fixed effects model was considered. Fixed effects account for unobserved time invariant factors. However, given the small size of the sample in Model 2 and the number of degrees of freedom required to estimate fixed effects, this estimation was not possible. 
 
-(It cannot be controlled for fixed effects of Model 2, because the degrees of freedom are too low.) 
-
-From the OLS regression output presented in Table 2 it can be seen that the variables Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are still statistically significant at the 95 percent confidence level (like the regression outputs in Model 1). Furthermore, the variable share of Female Unemployment became significant in this model (it was insignificant in Model 1). GDP per capita is only significant at a 90 percent confidence level.  
+From the OLS regression output presented in Table 2 it can be seen that the share of rural population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are still statistically significant at the 95 percent confidence level (like the regression outputs in Model 1). Furthermore, the variable share of Female Unemployment became significant in this model (it was insignificant in Model 1). GDP per capita is only significant at a 90 percent confidence level.  
  
-Surprisingly, the sign of the coefficient for Female School Enrollment does not match our theoretical assumptions on the direction of the effect and the finding is also opposite to the effect that was initially found for the predicted probabilities of Model 1. According to the regression output, a one percent increase in Female School Enrollment triggers a 1.38 percent increase in HIV/AIDS incidence. 
+Surprisingly, the sign of the coefficient for Female School Enrollment does not match our theoretical assumptions on the direction of the effect and the finding is also opposite to the effect that was initially found for the predicted probabilities in Model 1. According to the regression output, a one percent increase in Female School Enrollment triggers, *ceteris paribus*, a 1.38 percent increase in HIV/AIDS incidence. 
 
 The sign of the coefficient for the variable Female Unemployment compared to total unemployment is supporting the intuition of this paper: a one percent decrease in Female Unemployment compared to total unemployment is *ceteris paribus* followed by a 0.13 percent decrease in the HIV/AIDS incidence rate. 
 
@@ -735,49 +724,43 @@ knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression 
 
 # Findings
 
-Provided the special interest of this paper on the social and community networks level of the rainbow model, this section will mostly focus on the findings regarding the impact of female school enrollment and the differente of female to total unemployment on HIV incidence rates. As it was mentioned above, the interest in this particular level of Dahlgren and Whitehead's model is explained by the insufficient amount of research on the significance of such factors in explaining disease specific determinants of health. Furthermore, female schoole enrollment and the difference between female and total unemploymentis used in this paper to operationalize the social and community network factors. 
+Provided the special interest of this paper in the social and community networks level of the "Rainbow Model", this section will mostly focus on the findings regarding the impact of female school enrollment and the difference between female and total unemployment on HIV incidence rates. As it was mentioned above, the interest in this particular level of Dahlgren and Whitehead's model is explained by the insufficient amount of research on the significance of such factors in explaining disease specific determinants of health. Furthermore, female school enrollment and the difference between female and total unemployment is used in this paper to operationalize the social and community network factors. 
 
 
 The estimation of Model 1 found that female school enrollment was highly significant in explaining whether countries have an HIV/AIDS incidence rate above or below the median and the predicted probabilities showed that the effect was going in the assumed direction, namely that an increase in female school enrollment increased the probabilities of having an HIV/AIDS incidence rate lower than the median. In Model 2 however, the sign of this coefficient surprisingly changed. In this case - unlike in model 1 - an increase in female school enrollment leads, *ceteris paribus*, to an increase in HIV/AIDS incidence rates.  
 
-A potential explanation for the difference in the significance of female school enrollment relates to the sample that each model is analysing. While model 1 looks at all countries for which data was available, model 2 only looks at countries where HIV incidence rates were above the median. Looking closer into these countries, it was noticed that most of these countries are low-income African countries. As Dupas has observed, HIV prevention campaigns in some of these countries (the author looks mostly at West African countries) focus exclusively on abstinence [@Dupas2009]. Because abstinence campaigns often fail to increase the use of condoms, by focusing on ineffective prevention strategies, these countries do not benefit from the potential reduction of HIV/AIDS incidence rates that female school enrollment could bring. 
+A potential explanation for the difference in the significance of female school enrollment relates to the sample that each model is analysing. While Model 1 looks at all countries for which data was available, Model 2 only looks at countries where HIV incidence rates were above the median. Looking closer into these countries, it was noticed that most of these countries are low-income African countries. As Dupas has observed, HIV prevention campaigns in some of these countries (the author looks mostly at West African countries) focus exclusively on abstinence [@Dupas2009]. Because abstinence campaigns often fail to increase the use of condoms, by focusing on ineffective prevention strategies, these countries do not benefit from the potential reduction of HIV/AIDS incidence rates that female school enrollment could bring. 
 
-With regards to the difference between female and total unemployment, model 1 found no statistical significance. In Model 2 however the effect of this variable became significant and the direction of the effect was in line with the original assumptions for this variable, i.e. that a higher difference in female to total unemployment would lead, *ceteris paribus*, to higher HIV/AIDS incidence rates. 
-An explanation for the insignificant effects of relative female unemployment in Model 1 and the statistically significant effect in Model 2 is assumably lying in the problems of the coding of the variable. This paper the difference between female and total unemployment as a proxy for female labour market participation because data on female labour market participation was not available. The proxy might however come with inaccuracies in the measurement. In addition, in low- and middle-income countries with a high share of agricultural production, female unemployment might be overestimated given that these countries tend to neglect the value created by female domestic employment. 
-
-[@Sachs2002]
+With regards to the difference between female and total unemployment, Model 1 found no statistical significance. In Model 2 however the effect of this variable became significant and the direction of the effect was in line with the original assumptions for this variable, i.e. that a higher difference in female to total unemployment would lead, *ceteris paribus*, to higher HIV/AIDS incidence rates. 
+An explanation for the insignificant effects of relative female unemployment in Model 1 and the statistically significant effect in Model 2 is assumably lying in the problems with the coding of the variable. This paper uses the difference between female and total unemployment as a proxy for female labour market participation because data on female labour market participation was not available. The proxy might however suffer from inaccuracies in the measurement. In addition, in low- and middle-income countries with a high share of agricultural production, female unemployment might be overestimated given that these countries tend to neglect the value created by female domestic employment. 
 
 # Conclusions and Policy Recommendations
 
-The first that is worth evaluating is whether the findings of this research are in line with the results of existing evidence. As it was already mentioned, the link between most levels of Dahlgren and Whitehead's model (all except social and community networks level) has already been explored and they have been found to be significant determinants of HIV/AIDS incidence rates. This research however found that only a limited number of variables within each level were significant: while the share of rural population, CO2 emissions per capita and life expectancy were found to be significant at the 95 percent confidence level in both regression models, all the other variables included in this research (GDP per capita, healthcare expenditure, access to water, access to sanitation, immunisation against DPT and immunisation against measle) were not statistically significant across both model specifications.
-These findings cast doubts on the general applicability of Dahlgrehn and Whitehead [@Dahlgren] model to specific diseases like HIV/AIDS. 
+The first thing that is worth evaluating is whether the findings of this research are in line with the results of existing evidence. As it was already mentioned, the link between most levels of Dahlgren and Whitehead's model (all except social and community networks) has already been explored and all 3 levels have been found to be significant determinants of HIV/AIDS incidence rates. This research however found that only a limited number of variables within each level were significant: while the share of rural population, CO2 emissions per capita and life expectancy were found to be significant at the 95 percent confidence level in both regression models, all the other variables included in this research (GDP per capita, healthcare expenditure, access to water, access to sanitation, immunisation against DPT and immunisation against measle) were not statistically significant across both model specifications.
+These findings cast doubts on the general applicability of Dahlgren and Whitehead [@Dahlgren1991] model to specific diseases like HIV/AIDS. 
 
-Further, the general importance of social and community networks for determining HIV/AIDS incidence can not be fully confirmed by the findings of this paper. As mentioned before, Share of Female Unemployment is only statistically significant in Model 2 and the direction of the effect of female school enrollment changes across the different model specifications. Nevertheless, Female School Enrollment showed a strong statistical significance across both models and can therefore be assumed to be important even if potentially ambiguous determinant for HIV/AIDS incidence.
+Further, the general importance of social and community networks for determining HIV/AIDS incidence rates can not be fully confirmed by the findings of this paper. As mentioned before, the share of female unemployment is only statistically significant in Model 2 and the direction of the effect of female school enrollment changes across the different model specifications. Nevertheless, female school enrollment showed a strong statistical significance across both models and can therefore be assumed to be important even if potentially ambiguous determinant for HIV/AIDS incidence.
 
 On the basis of these conclusions, the following policy recommendations can be given:
 
-INVEST IN GIRLS EDUCATION: If female schooling is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
+**Invest in girls' education**: If female schooling is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
 
-FURTHER EXPLORE THE LINK BETWEEN FEMALE LABOUR PARTICIPATION AND HIV INCIDENCE: When looking at the difference between female and total unemployment, we realised that this indicator is not exactly portraying the variable that we wanted to analyze, namely female labour participation. It would be therefore interesting to test whether this variable is a good determinant of HIV before reaching any conclusion.
+**Further explore the link between female labour participation and HIV/AIDS incidence rates**: When looking at the difference between female and total unemployment, it was noticed that this indicator is not exactly portraying the variable that the hypothesis intended to test, namely female labour participation. Based on the belief that the relative position of women to men in the labour market can influence their capacity to bargain for protected sex, it is believed that further research is required to test this belief. 
 
-LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES: We realised that there is a gap in the literature exploring disease specific determinants of health regarding the impact of social and community level factors. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV.
+**Look at more determinants of specific diseases**: It was observed that the existing literature evolves around the determinants of a very limited number of diseases, particularly HIV/AIDS, malaria and cancer. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV/AIDS.
 
 
 # Limitations
 
 The paper had to make some compromises regarding its original aim as outlined in the first research proposal. Due to the significant amount of missing values and the presence of multicollinearity, a considerable number of variables had to be dropped and could ultimately not be integrated in the logistic regression models. 
  
-The selection of these variables was not arbitrary but followed instead the theoretical framework guiding this research, i.e. Dahlgren's model. Two levels of Dahlgren's model (Social and Community Networks and Individual Lifestyle Factors) ended up underrepresented after dropping these variables. 
-Especially, a better operationalization for the social and community networks would have been beneficial for this paper. Famale labour market participation would have been a better measure instead of taking the comparison of the female unemployment rate to the total unemployment rate as a proxy. Further interesting variables for the operationalization of this level could for example be measures on social cohesion, civil society engagement and trust in neighbours. Data on these variables were however neither available for most of the countries in our sample nor not available on a yearly basis.
+The selection of these variables was not arbitrary but followed instead the theoretical framework guiding this research, i.e. Dahlgren's model. Two levels of Dahlgren's model (social and community networks and individual lifestyle factors) ended up underrepresented after dropping these variables. 
+Especially, a better operationalization for the social and community networks would have been beneficial for this paper. Female labour market participation would have been a better measure instead of taking the comparison of the female unemployment rate to the total unemployment rate. Further interesting variables for the operationalization of this level would be, for example, measures on social cohesion, civil society engagement and trust in neighbours. Data on these variables were however neither available for most of the countries in our sample nor available on a yearly basis.
 To deal with this limitation, the research could only use the theoretical framework as an instrument to guide the selection of variables but cannot utilise the findings to test the validity of the model. 
-
-A limitation specific to Model 1 is that the dummy variable used in this paper (differentiating between countries with an HIV/AIDS incidence rates above and below the median) is not the most accurate variable to measure progress in the achievement of Target 6.A of the MDGs ("have halted by 2015 and begun to reverse the spread of HIV/AIDS") [@UN2014]. A plain dummy variable on whether MDG 6.a was achieved or not is however not suitable for identifying the specific determinants of HIV/AIDS at the country level as it is not differentiating between the relative size of the effect (an increase from 0,001 to 0,002 would be equally bad as a change from 0,1 to 0,3). Future research could however try to solve this problem for example by adding weights or ratios, which would facilitate a clearer explanation of why some countries will fail to achieve MDG 6.a. 
 
 A further limitation of Model 2 is that the dependent variable (logged HIV/AIDS incidence rate) for the sample of countries with a higher HIV/AIDS incidence rate is still not perfectly normally distributed after the log transformation. 
 According to [Cribari-Neto and Zeileis](http://cran.r-project.org/web/packages/betareg/vignettes/betareg.pdf) [@Cribari2010] a log transformation faces some disadvantages compared to a beta regression, which is an alternative method for dealing with non-normal frequency distributions of the dependent variable.
 According to the authors, a beta regression model is especially useful, for continuous dependent variables that are restricted to the standard unit interval (0, 1). A beta regression would therefore constitute an interesting additional approach to the OLS regression in Model 2.
-
----
 
 ---
 
