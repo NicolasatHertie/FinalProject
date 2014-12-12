@@ -108,7 +108,7 @@ A simpler and more common model on general determinants of health is the "rainbo
 
 ![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
 
-The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction of these variables at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV prevention. These campaigns were specifically target at girls. (REF)
+The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction between these dimensions at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV incidence. These campaigns were specifically targeting girls. (REF)
 
 ---
 
@@ -128,10 +128,11 @@ WDI have been used in a wide range of fields and HIV/AIDS research is not an exc
 
 ## UNAIDS Dataset
 
+The UNAIDS dataset is available for free at the UNAIDS website (REF) and it has been put together by UNAIDS during the research for the UNAIDS GAP Report 2014 (REF). It provides data on HIV incidence, prevalence and HIV-related deaths for the period 1990-2013. The dataset aditionally provides uncertainty bounds (low and high estimated) for most of the variables. Further, there is information for all UN member states and there is also regionally aggregated data. Some of the indicators such as prevalence and incidence are disaggregated for the differents demographic groups, including data for adults, youth and children, male and female. 
 
-Who used the data before? how does the data look like? in which format can one access the data?
-  
+UNAIDS databases are often used in public health research. Some examples of papers using UNAIDS data on HIV incidence and prevalence are Letamo (REF), Bennell (REF) and Ferlay et al.(). 
 
+The data is available as an Excel file.
  
 ---
 # Methodology and Data Analysis
@@ -162,16 +163,16 @@ Where I stands for HIV/AIDS incidence, SE stands for socioeconomic, cultural and
 
 This section focuses on the process of gathering the data and cleaning the databases to prepare the variables for the data analysis. 
 
-The first step in this process was uploading the databases to R Studio. The first dataset consists of 29 World Development Indicators and it was downloaded from World Bank's website. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regional data was dropped. Further, 169 rows that contained only NA values were deleted.
+The first step in this process was uploading the databases to R Studio. The first dataset consists of 29 World Development Indicators and it was downloaded from World Bank's website. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regionally aggregated data was dropped. Further, 169 rows that contained only NA values were deleted.
 
 After dropping empty rows, the data frame was alphabetically (ascending) ordered, rows were grouped by iso2c code and variables were renamed.
 
-The dataset was further cleaned preparing the data for imputation using the AMELIA package. The imputation will be conducted however at a further stage of the research. This process requires that the panel is as balanced as possible, as it feeds from all variables to predict values for the missing observations. The next step was thus dropping variables for which more than 80% of the observations (552) were missing.  In addition, countries with a population smaller than one million inhabitants were dropped from the database. 59 countries fell in that category: 46 islands, 5 European countries (Andorra, Liechtenstein, Luxemburg, Monaco and Montenegro), Bahrain, Bhutan, Belize, Djibouti, Equatorial Guinea, Guyana, Qatar and Suriname. Dropping these countries does not affect the research as the remaining database still contains a highly heterogeneous sample both in geographic and socio-economic terms. Furthermore, deleting these countries improves the dataset as most of these countries lacked information for most of the studied variables. 
+The dataset was further cleaned preparing the data for imputation using the AMELIA package. This process requires that the panel is as balanced as possible, as it feeds from all variables to predict values for the missing observations. A more detailed explanation of the imputation process will be providid in the inferential statistics section of this paper. In order to improve the balance of the panel, the next step consisted of dropping variables for which more than 80% of the observations (552) were missing.  In addition, countries with a population smaller than one million inhabitants were dropped from the database. 59 countries fell in that category: 46 islands, 5 European countries (Andorra, Liechtenstein, Luxemburg, Monaco and Montenegro), Bahrain, Bhutan, Belize, Djibouti, Equatorial Guinea, Guyana, Qatar and Suriname. Dropping these countries does not affect the research as the remaining database still contains a highly heterogeneous sample both in geographic and socio-economic terms. Furthermore, deleting these countries improves the dataset as most of these countries lacked information for most of the studied variables. 
  
 The second database used for this research was downloaded from UNAIDS' website and it provides information on HIV/AIDS incidence rates (as well as prevalence and deaths caused by HIV/AIDS). The data is publicly available. All columns except the country and the incidence rate were dropped. 
 After renaming the variables, a unique identifier was created and missing values were recoded as NAs. Moreover, some observations in the database were not specific numbers; instead, it was indicated that for that year, prevalence was below a certain threshold (0.01%). In those cases, these observations were replaced by 0.009. The final step in the cleaning of the UNAIDS database consisted of deleting missing values for the dependent variable and deleting the regions with an iso2c equal to a country's iso2c (NA and ZA) to avoid problems in the merging process. 
 
-Once both databases were cleaned, the next step was to merge the datasets using the combination of iso2c and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing that UNAIDS' dataset included observations from 1990 to 2012 so all observation between 1990 and 1999 were dropped. Finally, unnecessary columns from the new database were eliminated.
+Once both databases were cleaned, the next step was to merge the datasets using the combination of iso2c and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing that UNAIDS' dataset included observations from 1990 to 2012 and WDI data covers the 2000-2012 period so all observation from the UNAIDS dataset between 1990 and 1999 were dropped. Finally, unnecessary columns from the new database were eliminated.
 
 ---
 
