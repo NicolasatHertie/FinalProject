@@ -3,8 +3,6 @@ output:
   html_document: 
     theme: flatly
 authors: Meilin Moellenkamp and Nicolas Rosemberg
-bibliography:
-- RpackageCitations.bib
 ---
 
 ```{r, include=FALSE}
@@ -42,7 +40,7 @@ Is it really a global problem? While HIV/AIDS incidence rates are highly concent
 **Distribution of HIV/AIDS in low- and middle-income countries**
 
 ```{r, results='asis', echo=FALSE, error=FALSE}
-IncidenceMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
+IncidenceMap <- gvisGeoChart(Merged, locationvar = 'country',
                         colorvar = 'Incidence',
                         options = list(
                           colors = "['#fff7bc', '#d95f0e']"
@@ -52,24 +50,24 @@ print(IncidenceMap, tag = 'chart')
 ```
 Source: UNAIDS 
 
-If you are coming from one of the countries that are grey in the map and you are wondering, *"Is HIV not a problem in my country?"* Well, it might be! The grey countries are actually those countries for which data was insufficient. 
+If you are coming from one of the countries that are grey in the map and you are wondering, *"Is HIV not a problem in my country?"* Well, it might be! The grey countries are actually those countries for which our dataset was insufficient. 
 
 # REDUCING HIV FIGHTS POVERTY
 
-Experts in the field of poverty reduction designed a list of goals that would help to reduce poverty across the world. These goals are called the Millenium Development Goals (MDGs) and the deadline to reach these goals is only some months away (September 2015). Halting and reversing the spread of HIV is one of these goals (MGD 6 - Target b). The inclusion of HIV control as one of the MDGs reflects that besides saving and improving people's lives, reducing HIV helps to fight poverty. 
+Experts in the field of poverty reduction designed a list of goals that would help to reduce poverty across the world. These goals are called the Millenium Development Goals (MDGs) and the deadline to reach these goals is only some months away (September 2015). Halting and reversing the spread of HIV is one of these goals (MGD 6 - Target A). The inclusion of HIV control as one of the MDGs reflects that besides saving and improving people's lives, reducing HIV helps to fight poverty. 
 
-Inspired by the puzzling question of why some countries failed to reach MDG6, we decided to embark ourselves in this research.
+Inspired by the puzzling question of why some countries failed to reach MDG 6, we decided to embark ourselves in this research.
 
 For more information on the MDGs please refer to the following links:
 
 
-- *BACKGROUND INFORMATION*
+*BACKGROUND INFORMATION*
 
 **UNITED NATIONS**: http://www.un.org/millenniumgoals/
 
 **ONE**: http://www.one.org/international/mdg/
 
-- *PROGRESS REPORT*
+*PROGRESS REPORT*
 
 **CENTER FOR GLOBAL DEVELOPMENT**: http://www.cgdev.org/page/mdg-progress-index-gauging-country-level-achievements
 
@@ -78,7 +76,7 @@ For more information on the MDGs please refer to the following links:
 
 The first part of the research explored the existing literature on determinants of health and found that the papers on determinants of specific diseases mostly focus on a narrow range of variables. 
 
-To fill this gap, we started by identifiying a model of general determinants of health that we could use to test for disease-specific determinants of health. We chose Dahlgren and Whitehead's model because it provides a simple yet comprehensive framework to identify variables. According to this model, there are a wide range of factors that influence our health, such as general socioeconomic factors, working and living conditions, social and community networks and individual factors (like smoking or drinking alcohol).
+To fill this gap, we started by identifiying a model of general determinants of health that we could use to test for disease-specific determinants of health. We chose Dahlgren and Whitehead's model because it provides a simple yet comprehensive framework to identify variables. According to this model, a wide range of factors influence our health, such as general socioeconomic factors, working and living conditions, social and community networks and individual factors (like smoking or drinking alcohol).
 
 **Dahlgren and Whitehead's model**
 
@@ -86,11 +84,11 @@ To fill this gap, we started by identifiying a model of general determinants of 
 
 *Source: Dahlgren and Whitehead (1991)*
 
-While the (limited) literature on specific determinants of HIV mostly focused on socioeconomic factors and individual factors, there are not so many papers looking at the influence of social and community networks. This is why we decided to explore social and community factors and see whether they are significant to explain the incidence of HIV at the country level.
+While the (limited) literature on specific determinants of HIV mostly focused on socioeconomic factors and individual factors, there are not so many papers looking at the influence of social and community networks. This is why we decided to explore social and community factors and see whether they are important for explaining the incidence of HIV/AIDS at the country level. For understanding the importance of social and community networks, we were especially interested in the impact of female school enrollment and female participation in the labour market. We assume, that females who are highly educated and who participate in the labour market are better informed about the risks of diseases like HIV/AIDS and are more self-confident in negotiating for safer sex.
 
 # CASE STUDY SELECTION
 
-We were particularly interested in looking at some case studies to take a closer look at the relation between our selected variables. To choose the case studies we looked at the evolution of HIV incidence across time and selected the countries where incidence either strongly increased or strongly decreased or countries where incidence showed an erratic behaovior. From these sampled countries, we took 2 best practices (Botswana and Malawi, green lines) and two bad practices (Lesotho and Uganda, red lines).
+We were particularly interested in looking at some case studies to take a closer look at the relation between our selected variables. To choose the case studies we looked at the evolution of HIV incidence across time and selected the countries where incidence either increased or strongly decreased over time. From these sampled countries, we took 2 best practices (Botswana and Malawi, green lines) and two bad practices (Lesotho and Uganda, red lines).
 
 **Case Studies**
 
@@ -98,10 +96,10 @@ We were particularly interested in looking at some case studies to take a closer
 
 options(digits=2)
 
-HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
+HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"), ] 
 
 HighIncidence$CaseStudy <- HighIncidence$Incidence
-HighIncidence$CaseStudy[HighIncidence$country=="Zimbabwe" | HighIncidence$country=="Zambia"| HighIncidence$country=="Swaziland" | HighIncidence$country=="South Africa" | HighIncidence$country=="Namibia" | HighIncidence$country=="Mozambique" | HighIncidence$country=="Sierra Leone"  | HighIncidence$country=="Papua New Guinea"] <-0
+HighIncidence$CaseStudy[HighIncidence$country=="Zimbabwe" | HighIncidence$country=="Zambia"| HighIncidence$country=="Swaziland" | HighIncidence$country=="South Africa" | HighIncidence$country=="Namibia" | HighIncidence$country=="Mozambique"] <-0
 HighIncidence$CaseStudy[HighIncidence$country=="Lesotho" | HighIncidence$country=="Uganda"] <-2
 HighIncidence$CaseStudy[HighIncidence$country=="Malawi" | HighIncidence$country=="Botswana"] <-1
 
@@ -116,7 +114,6 @@ print(Cases)
 
 # WHAT DID WE FIND?
 
-- We were interested in looking at the impact of two variables on HIV incidence rates. The first variable was female school enrollment. Early education represents an excellent opportunity to conduct HIV preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female school enrollment on HIV incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female school enrollment would reduce HIV incidence. The data supported this hypothesis.
 
 **Female School Enrollment - Case Studies**
 
@@ -131,7 +128,20 @@ FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, co
 suppressWarnings(print(FemSchool))
 ```
 
-- The second variable that we explore was the difference between female unemployment and total unemployment. We expected that a high rate of female employment to total unemployment would describe a society where women have relatively less power than men and this would mean that men could more easily bargain for unprotected sex. As a consequence, one would expect that a higher difference in female to total unemployment would be associated with higher HIV incidence rates. This hypothesis was not supported by out findings, according to which the difference between female and total unemployment has no impact on HIV incidence rates.
+
+- We were interested in looking at the impact of two variables on HIV/AIDS incidence rates. The first variable was female school enrollment. Early education represents an excellent opportunity to conduct HIV/AIDS preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female school enrollment on HIV/AIDS incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female school enrollment would reduce HIV/AIDS incidence. The data supported this hypothesis.
+
+
+**Female Unemployment compared to Total Unemployment - Case Studies**
+
+```{r, results='asis', echo=FALSE, error=FALSE, message=FALSE}
+ShFemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=ShFemUnempl, group=country, color=country, shape=country))  + geom_line () + geom_point()+ ylab( "Female Unemployment compared to Total Unemployment") + xlab("Year")
+
+suppressWarnings(print(ShFemUnempl))
+```
+
+
+- The second variable that we explore was the difference between female unemployment and total unemployment. We expected that a high rate of female employment to total unemployment would describe a society where women have relatively less power than men and this would mean that men could more easily bargain for unprotected sex. As a consequence, one would expect that a higher difference in female to total unemployment would be associated with higher HIV/AIDS incidence rates. This hypothesis was not supported by out findings, according to which the difference between female and total unemployment has no impact on HIV/AIDS incidence rates.
 
 For a better understanding of the dynamics of our datasets, feel free to play with the following interactive tool: 
 
@@ -153,7 +163,7 @@ Demo <- plyr::rename(Demo, c("DPT" = "Immunization against DPT"))
 Demo <- plyr::rename(Demo, c("Measles" = "Immunization against Measles"))
 Demo <- plyr::rename(Demo, c("FemUnempl" = "Female Unemployment Rate"))
 Demo <- plyr::rename(Demo, c("ShFemUnempl" = "Female Unemployment Rate 2 (Female Unemployment compared to Total Unemployment)"))
-Demo <- plyr::rename(Demo, c("Incidence" = "HIV Incidence Rate"))
+Demo <- plyr::rename(Demo, c("Incidence" = "HIV/AIDS Incidence Rate"))
 
 
 M <- gvisMotionChart(Demo, "country", "year",
@@ -165,22 +175,18 @@ print(M, tag = 'chart')
 
 Choose from the dropdown list the variables that you will like to see in the x and y axis. If you want to change the color coding or make the size of the bubbles change according to the values of a specific variable, you can select that on the upper-right corner. If you are interested in the behavior of a particular country, you can select that on the lower-right corner. Also note that you can create bar and line charts by choosing the respective tab on the upper side of the tool.
 
-We were particularly interested in looking at the evolution of HIV incidence rates (y axis) in relation to the evolution of female school enrollment (x axis). As you can see, while female school enrollment increases, HIV incidence rates decrease.
-
-
-
-
+We were particularly interested in looking at the evolution of HIV/AIDS incidence rates (y axis) in relation to the evolution of female school enrollment (x axis). As you can see, while female school enrollment increases, HIV/AIDS incidence rates decrease.
 
 
 # SO... WHY IS THIS RELEVANT?
 
 We believe that these findings can lead to interesting policy recommendations. 
 
-1. **INVEST IN GIRLS EDUCATION:** If female school enrollment is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
+1. **INVEST IN GIRLS EDUCATION:** If female school enrollment is a significant determinant of HIV/AIDS, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
 
-2. **FURTHER EXPLORE THE LINK BETWEEN FEMALE LABOUR PARTICIPATION AND HIV INCIDENCE:** When looking at the difference between female and total unemployment, we realised that this indicator is not exactly portraying the variable that we wanted to analyze, namely female labour participation. It would be therefore interesting to test whether this variable is a good determinant of HIV before reaching any conclusion.
+2. **FURTHER EXPLORE THE LINK BETWEEN FEMALE LABOUR PARTICIPATION AND HIV/AIDS INCIDENCE:** When looking at the difference between female and total unemployment, we realised that this indicator is not exactly portraying the variable that we wanted to analyze, namely female labour participation. It would be therefore interesting to test whether this variable is a good determinant of HIV/AIDS before reaching any conclusion.
 
-3. **LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES:** We realised that there is a gap in the literature exploring disease specific determinants of health regarding the impact of social and community level factors. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV.
+3. **LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES:** We realised that there is a gap in the literature exploring disease specific determinants of health regarding the impact of social and community level factors. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV/AIDS.
 
 
 Thank you for visiting our website. 
