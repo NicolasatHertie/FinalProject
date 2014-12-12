@@ -21,7 +21,7 @@ Please report any bugs or suggestions at: https://github.com/NicolasatHertie/Fin
 
 ### Instructions to use this repository:
 
-This repository is a branch of our master repository. It contains an RMD file and an html file that are used to create a website.
+This repository is a branch of our master repository. It contains an RMD file and an html file that are used to create a website. In addition, the repository includes a copy of our cleaned database and an image of the model in which our theoretical framework is based. 
 
 The website can be access at: http://nicolasathertie.github.io/FinalProject/
 
