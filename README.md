@@ -66,7 +66,7 @@ The website is envisioned to convey our reserch to a general audience in an enga
 Finally, the presentation must present the research question and key findings. It is intended to show data that can be presented in less than 10 minutes.  
 
 ### Word count:
-XXX
+5755
 
 
 ### Deadline for submission:
