@@ -129,7 +129,7 @@ For a better understanding of the dynamics of our datasets, feel free to play wi
 ```{r, results='asis', echo=FALSE}
 
 Demo <- Merged
-Demo <- Demo[,c(4:20)]
+Demo <- Demo[,c(2:21)]
 Demo <- plyr::rename(Demo, c("GDPpc" = "GDP per capita"))
 Demo <- plyr::rename(Demo, c("Rural" = "Rural Population (%)"))
 Demo <- plyr::rename(Demo, c("CO2" = "CO2 Emissions"))
