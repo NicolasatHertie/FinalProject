@@ -5,7 +5,7 @@ bibliography:
 - RpackageCitations.bib
 date: "12 December 2014"
 output: 
-  html_document:
+  pdf_document:
     number_sections: yes
 highlight: zenburn
 authors: Meilin Moellenkamp and Nicolas Rosemberg
@@ -16,8 +16,8 @@ toc: true
 ### 1. Setting Working Directory & Loading the data
 
 # Setting the Working Directory
-# setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
-setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
+setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
+#setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # Loading the Citations
 pkgs <- c("RJSONIO","WDI","dplyr","tidyr","knitr","DataCombine","lmtest","httr","XML","plyr","Amelia","XLConnect","countrycode","ggplot2","magrittr","fmsb","car","stargazer","Zelig","RCurl","reshape2","gridExtra")
@@ -496,6 +496,9 @@ plot(Imputed.out)
 dev.off()
 ```
 
+
+\pagebreak
+
 ## Model 1 - Comparison of countries with an HIV Incidence Rate below and above the Median
 
 For Model 1 logistic regressions are used for predicting the likelihood that a country has a low HIV incidence rate (the dependent variable Y is equal to 1, rather than 0) given certain values of the explanatory variable. As explained in the descriptive statistics part, the dependent variable of Model 1 is a dummy variable, that takes the value of 1 if the HIV incidence rate is below the median and 0 for countries with an HIV incidence rate above the median. 
@@ -827,7 +830,7 @@ scatterplotMatrix(~ Incidence + DPT + Measles, transform=TRUE, data=Merged)
 
 ```
 
-\pagebreak
+
 
 **Figure 16: Histogram of Female Unemployment compared to Total Unemployment (not logged)**
 
@@ -882,3 +885,168 @@ plot(Model2, which=1)
 ```
 
 \pagebreak
+
+
+**Tables with Macro Model Variables**
+
+- General socio-economic, cultural and environmental conditions
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               GDP (constant 2005 US$)                  GDP per capita, PPP (constant 2011 internPoverty gap at $1.25 a day <br>(PPP) (%)
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            2704                                     2624                                     658
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Rural population (% of total population) CO2 emissions (metric tons per capita)   Population growth (annual %)
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            2968                                     2158                                     2992
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Living and working conditions
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Access to electricity (% of population)  Health expenditure (total, %GDP)         Health expenditure per capita
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            170                                      2434                                     2434
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Hospital beds (per 1,000 people)         Births attended by skilled health staff (Improved water source (% of population wi
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            1124                                     785                                      2533
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Improved sanitation facilities (% of popuUnemployment, total (% of total labor forEmployment in agriculture (% of total emp
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            2512                                     2262                                     1318
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Children in employment, total (% of childSchool enrollment, primary (% gross)     Agriculture, value added (% of GDP)
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            202                                      2082                                     2331
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Social and community networks
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Unemployment, female (% of female labor fSchool enrollment, primary, female (% groLiteracy rate, adult female (% of females
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            2262                                     2064                                     420
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Out-of-pocket health expenditure (% of toLife expectancy at birth, total (years)  GINI index
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            2434                                     2609                                     659
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Income share held by highest 10%         Income share held by lowest 10%          Female headed households(% of households
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            659                                      659                                      128
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Individual lifestyle factors
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Condom use, population ages 15-24, femaleCondom use, population ages 15-24, male (Contraceptive prevalence (% of women ages
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            117                                      101                                      464
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Variables**               Immunization, DPT (% of children ages 12-Immunization, measles (% of children agesPrevalence of overweight (% of children u
+--------------------        ----------------------------------       ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214                                      214
+
+**Observations**            2655                                     2655                                     324
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------------
+**Variables**               Smoking prevalence, females (% of adults)Smoking prevalence, males (% of adults)
+--------------------        ----------------------------------       ----------------------------------
+**Dataset**                 World Development Indicators             World Development Indicators
+
+**Year**                    1960-2013 (2000-2013)                    1960-2013 (2000-2013)
+
+**Number of countries**     214                                      214
+
+**Observations**            135                                      135
+----------------------------------------------------------------------------------------------------------------
+
+\pagebreak
+
+
+**References**
+
