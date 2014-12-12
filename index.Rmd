@@ -145,7 +145,7 @@ Demo <- plyr::rename(Demo, c("Incidence" = "HIV Incidence Rate"))
 
 
 M <- gvisMotionChart(Demo, "country", "year",
-                     options=list(width=400, height=380))
+                     options=list(width=8000, height=6800))
 
 
 print(M, tag = 'chart')
