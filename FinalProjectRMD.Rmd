@@ -1,5 +1,5 @@
 ---
-title: "Healthy communities - Understanding determinants of HIV"
+title: "Healthy Communities - Understanding Determinants of HIV"
 bibliography:
 - Literature.bib
 - RpackageCitations.bib
@@ -20,7 +20,7 @@ toc: true
 setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # Loading the Citations
-pkgs <- c("RJSONIO","WDI","dplyr","tidyr","knitr","DataCombine","lmtest","httr","XML","plyr","Amelia","XLConnect","countrycode","ggplot2","magrittr","fmsb","car","stargazer")
+pkgs <- c("RJSONIO","WDI","dplyr","tidyr","knitr","DataCombine","lmtest","httr","XML","plyr","Amelia","XLConnect","countrycode","ggplot2","magrittr","fmsb","car","stargazer","Zelig","RCurl","reshape2","gridExtra")
 repmis::LoadandCite(pkgs, file = 'RpackageCitations.bib')
 
 # Loading the merged files from the Working directory
@@ -42,8 +42,6 @@ library(dplyr)
 library(tidyr)
 # install.packages("httr")  
 library(httr) 
-# install.packages("dplyr")  
-library(dplyr)
 # install.packages("XML")  
 library(XML)
 #install.packages("plyr")
