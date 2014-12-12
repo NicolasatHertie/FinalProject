@@ -97,13 +97,21 @@ The literature reviewed for this paper identifies a myriad of determinants of he
 
 Hurrelmann advocates an interdisciplinary framework for analysing what determines health outcomes [@Hurrelmann1989, p.76]. He considers it necessary to use a model that integrates all the aspects of the organism, individual and the environment.
 
-One framework that shows the interaction between individual and environmental factors over time is the salutogenic model developed by Antonovsky in 1979. According to Hurrelmann, Antonovsky's model is a great contribution to interdisciplinary theory, but the downside is its complexity [@Hurrelmann1989]. 
+One framework that shows the interaction between individual and environmental factors over time is the salutogenic model developed by Antonovsky in 1979. According to Hurrelmann, Antonovsky's model is a great contribution to interdisciplinary theory, but the downside is its complexity [@Hurrelmann1989].
+
+According  to Antonovsky's model, the health of an individual depends on its *general resistance resources*. These resources are developed during the life course of an individual and they are influenced by the environment and the socio-cultural context of the individual. These resistance resources are responsible for an individual's coping ability with potential stressors (risk factors) on the psychosocial, physical and biochemical level [@Hurrelmann1989].
 
 A simpler and more common model on general determinants of health is the "Rainbow Model" developed by Dahlgren and Whitehead [@Dahlgren1991, p.11]. This model gives an overview of the main health determinants, reflecting the relationship between the individual, its environment and different health outcomes. Individuals are at the centre of the model with a set of fixed biological and genetical preconditions. Building upon these, four layers of influence on health can be identified: individual lifestyle factors, social and community networks, living and working conditions and general socio-economic, cultural and environmental conditions.
 
 **Figure 1: Main health determinants**
 
 ![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
+
+Eshetu and Woldesenbet outline their main criticism of Dahlgren's model as being that it does not take into account the special circumstances of developing countries [@Eshetu2011]. The authors question the idea of the universality of health determinants and claim that the context of health determinants in the world???s poorest countriesis very different to the context of high-income countries. One of their main arguments is that the strategies for reducing health inequalities are different in developing and developed countries. To illustrate this points, Eshetu and Woldesenbet explain that the some causes of inequality such as extreme poverty, tribalism, lack of good governance, corruption, illiteracy and colonial heritage are only relevant to the African context [@Eshetu2011].
+
+However, this statement highly depends on the operationalization of the framework. This shortcoming can be overcome by translating the theoretical model into specific indicators that reflect the differences between developed and developing countries. Furthermore, this paper will use Dahlgren's framework only as a guideline to cluster and categorize the factors influencing HIV/AIDS incidences and prevalence rates.
+
+The levels of Dahlgren's "Rainbow Model" should not be perceived as autonomous and independent from each other. In fact, there is a sginificant amount of literature exploring the linkages between the different levels [@Solar2010].
 
 The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction between these dimensions at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya [@Sachs2002][@Dupas2009]. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV incidence rates. These campaigns were specifically targeting girls [@Dupas2009]. This research presents interesting evidence on the link between female school enrollment and HIV/AIDS incidence rates. To the extent that female school enrollment exposes girls to HIV/AIDS prevention campaigns before they become sexually active, it increases the likelihood that they will negotiate for protected sex, thus reducing the chances of contracting the disease. 
 
@@ -647,10 +655,6 @@ The predicted probabilities were calculated using the ZELIG-package as ZELIG has
 ```{r, echo=FALSE, message=FALSE, error=FALSE, fig.width=19, fig.height=12, dpi=150}
 # Plot predicted probabilities of Model 1 for Female School Enrollment
 par(mfrow=c(2,2))
-<<<<<<< HEAD
-
-=======
->>>>>>> FETCH_HEAD
 plot(Uganda1.out)
 title(main="Scenario of Uganda", cex.main = 2)
 plot(Lesotho1.out)
