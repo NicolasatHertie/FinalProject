@@ -62,7 +62,7 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 ## HIV Incidence Rates over Time 
 ![Figure2](fig2.png)
 
-## Selecting interesting Cases for Extreme Changes in HIV/AIDS Incidence Rates
+## Selecting interesting Cases for Changes in HIV/AIDS Incidence
 ![Figureb](figb.png)
 
 ## Case Studies
@@ -104,7 +104,6 @@ Imputed.out <- amelia(Merged, m = 5, ts = "year", cs = "iso2c", idvars = "countr
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, error=FALSE,fig.width=19, fig.height=12, dpi=150}
 # Plot imputed variables
 plot(Imputed.out, which.vars=4:13)
-?plot
 ```
 
 ## Logistic Regression Results - Model 1
@@ -116,6 +115,9 @@ Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanit
 
 ```
 
+
+## Predicted Probabilities for Female School Enrollment
+
 ```{r, echo=FALSE, results="asis", error=FALSE, fig.width=19, fig.height=12, dpi=150}
 # Regression Results of Logistic Regression
 
@@ -124,11 +126,9 @@ Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 E
 labels_1 <- as.data.frame(summary(Model1.out)$coef)
 labels_1$Variables <- Variables
 labels_1 <- MoveFront(labels_1, "Variables")
-names(labels_1) <- c("Variables", "Coeff.", "Std. Error", "T-Stat.", "P-Value")
-knitr::kable(labels_1, digits = 2, row.names = FALSE, caption = "Logistic Regression Results of Model 1", longtable=TRUE)
+names(labels_1) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
+knitr::kable(labels_1, digits = 2, row.names = FALSE, caption = "Logistic Regression Results of Model 1")
 ```
-
-## Predicted Probabilities Female School Enrollment
 
 ```{r, echo=FALSE, include=FALSE}
 ## Predicted Probabilities - Female School Enrollment
@@ -275,7 +275,7 @@ summary(c.out)
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
 # Linear pooled OLS regression with robust standard errors
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+Variables <- c("Constant", "GDP per capita", "Rural Population", "CO2 Emissions", "Healthcare Expenditure", "Water Access", "Sanitation Access", "Life Expectancy", "DPT Immunisation", "Measles Immunisation", "Female School Enrollment", "Female Unemployment")
 labels_3 <- as.data.frame(summary(c.out)$coef)
 labels_3$Variables <- Variables
 labels_3 <- MoveFront(labels_3, "Variables")
