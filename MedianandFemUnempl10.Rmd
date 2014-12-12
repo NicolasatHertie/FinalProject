@@ -14,6 +14,7 @@ toc: true
 
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
 ### 1. Setting Working Directory & Loading the data
+
 # Setting the Working Directory
 # setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
 setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
@@ -67,10 +68,9 @@ library(car)
 library(stargazer)
 #install.packages("Zelig")
 library(Zelig)
-
+#install.packages("RCurl")
 library(RCurl)
-library(Zelig)
-library(ggplot2)
+#install.packages("reshape2")
 library(reshape2)
 #install.packages("gridExtra")
 library(gridExtra)
@@ -195,7 +195,6 @@ Merged <- slide(Merged, Var = "Incidence", GroupVar = "iso2c", slideBy = -1,
 # Creating a variable with the difference between t0 and t1
 Merged$IncidenceDif <- as.numeric(Merged$Incidence) - as.numeric(Merged$Incidence2)
 
-
 # Logging the independent variables for better comparability and imputations
 Merged$lGDPpc <- log(Merged$GDPpc)
 Merged$lRural <- log(Merged$Rural)
@@ -218,7 +217,7 @@ Merged$QFemSchool[Merged$lFemSchool>4.53 & Merged$lFemSchool<=4.622] <-2
 Merged$QFemSchool[Merged$lFemSchool>4.622 & Merged$lFemSchool<=4.697] <-3
 Merged$QFemSchool[Merged$lFemSchool>4.697] <-4
 
-# Creating a variable with the with the share of Females Unemployed of the Total Number of Unemployed
+# Creating a variable with the share of Females Unemployed of the Total Number of Unemployed
 #Merged$SFemUnempl <- Merged$FemUnempl - Merged$Unemploym
 Merged$ShFemUnempl <- as.numeric(Merged$FemUnempl) - as.numeric(Merged$Unemploym)
 
@@ -321,34 +320,35 @@ Figure 8 shows the four case studies that were selected: two "best" practices (g
 options(digits = 4)
 
 # Creating subsets
-HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
+HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"), ] 
 
+# Looking at the evolution of incidence rates in the selected countries
 Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=country)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year")
-                                                                                                                          
-#Cases <- Cases + ggtitle("Figure 6: Interesting Cases for HIV Incidence Rates") + theme(plot.title = element_text(lineheight=3, face="bold"))
+
+Cases <- Cases + ggtitle("Figure 6: Interesting Cases for HIV Incidence Rates") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig6.png", width=7, height=4, dpi=100)
 
 
 CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Uganda"), ]
-Cases <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year")
+Cases2 <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year")
 ggsave("figa.png", width=7, height=4, dpi=100)
 
 ```
 
   
 ```{r, results='asis', echo=FALSE}
- 
-HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
+
  
 HighIncidence$CaseStudy <- HighIncidence$Incidence
 HighIncidence$CaseStudy[HighIncidence$country=="Zimbabwe" | HighIncidence$country=="Zambia"| HighIncidence$country=="Swaziland" | HighIncidence$country=="South Africa" | HighIncidence$country=="Namibia" | HighIncidence$country=="Mozambique" | HighIncidence$country=="Sierra Leone"  | HighIncidence$country=="Papua New Guinea"] <-0
 HighIncidence$CaseStudy[HighIncidence$country=="Lesotho" | HighIncidence$country=="Uganda"] <-2
 HighIncidence$CaseStudy[HighIncidence$country=="Malawi" | HighIncidence$country=="Botswana"] <-1
  
-Cases <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=CaseStudy)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year") + scale_color_gradient2(midpoint=1, low="grey", mid="darkgreen", high="darkred") + theme(legend.position="none")                                                                                                                                                      
+Cases3 <- ggplot(data=HighIncidence, aes(x=year, y=Incidence, group=country, color=CaseStudy)) + geom_line() + geom_point() + ylab( "Incidence") + xlab("Year") + scale_color_gradient2(midpoint=1, low="grey", mid="darkgreen", high="darkred") + theme(legend.position="none")  
+ggsave("figb.png", width=7, height=4, dpi=100)
                                                                                                                           
-Cases <- Cases + theme(plot.title = element_text(lineheight=3, face="bold"))
-print(Cases)
+Cases3 <- Cases3 + theme(plot.title = element_text(lineheight=3, face="bold"))
+print(Cases3)
 ```
 
 ```{r, echo=FALSE, results='asis', include=FALSE}
