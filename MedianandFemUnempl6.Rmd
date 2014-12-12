@@ -76,12 +76,15 @@ library(reshape2)
 library(gridExtra)
 ```
 
+# Executive Summary
+
+---
 
 # Introduction
 
 The expiry date of the Millennium Development Goals ([MDGs](http://www.un.org/millenniumgoals/aids.shtml)) is just around the corner, meanwhile the post-2015 agenda is being discussed intensively. In this context, it is important to assess the achievement of the MDGs and try to understand why some goals have not been reached. 
 
-Reducing HIV prevalence is an important aim of the MDGs. Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014]. In most regions of the world this goal has been fulfilled: new HIV infections declined and the overall number of new HIV/AIDS infections per 100 adults (15-49 years old) decreased by 44 per cent between 2001 and 2012 [@UN2014]. However, this trend cannot be observed in all 189 member states of the United Nations. On the contrary, HIV/AIDS prevalence has even increased in some countries. 
+Reducing HIV incidence is an important aim of the MDGs. Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014]. In most regions of the world this goal has been fulfilled: new HIV infections declined and the overall number of new HIV/AIDS infections per 100 adults (15-49 years old) decreased by 44 per cent between 2001 and 2012 [@UN2014]. However, this trend cannot be observed in all 189 member states of the United Nations. On the contrary, HIV/AIDS prevalence has even increased in some countries. 
 
 --- 
 
@@ -89,9 +92,7 @@ Reducing HIV prevalence is an important aim of the MDGs. Target 6.A of the MDGs 
 
 This paper aims to provide evidence to assess why some countries struggle to achieve MDG 6A. We believe that one possible explanation for the failure of some interventions in reducing HIV/AIDS may lie in the lack of a full understanding of the determinants of the disease, which can in turn lead to ill-specified interventions and wrongly targeted campaigns.
 
-The literature reviewed for this paper identifies a myriad of determinants of health. However, there is a gap in the literature when it comes to the determinants of specific diseases. The aim of this paper is to test the applicability of one of the most commonly used theories of determinants of health, to explain the evolution of HIV/AIDS rates. The first hypothesis of this paper is that all general determinants of health (as identified by our reference model) are determinants of HIV/AIDS. By identifying variables that help to explain HIV/AIDS incidence and prevalence, this paper will help move forward the discussion of the determinants of HIV/AIDS . 
-
-Furthermore, given that the literature identifies interlinkages between the different determinants of health [see @Solar2010], this paper will evaluate to what extent those linkages are reflected on the micro level. The second hypothesis of this paper is that socioeconomic, environmental and cultural factors can be used to explain individual lifestyle factors.
+The literature reviewed for this paper identifies a myriad of determinants of health. When it comes to specific diseases however, the existing literature only provides a narrow selection of potential determinants. The aim of this paper is to test whether social and community networks (often neglected by the literature on disease-specific determinants of health) significantly explain HIV/AIDS incidence rates at the country level. The hypothesis of this paper is that female school enrollment is a strong predictor of HIV incidence rates. By identifying variables that help to explain HIV/AIDS incidence,  this paper will help move forward the discussion of the determinants of HIV/AIDS . 
 
 ---
 
@@ -101,20 +102,22 @@ Hurrelmann [@Hurrelmann1989, p.76] advocates an interdisciplinary framework for 
 
 One framework that shows the interaction between individual and environmental factors over time is the salutogenic model developed by Antonovsky in 1979. According to Hurrelmann, Antonovsky's model is a great contribution to interdisciplinary theory, but the downside is its complexity [@Hurrelmann1989]. 
 
-A simpler and more common model on the main determinants of health is the "rainbow model", developed by Dahlgren and Whitehead [@Dahlgren1991, p.11]. This model gives an overview of the main health determinants, reflecting the relationship between the individual, its environment and different health outcomes. Individuals are at the centre of the model with a set of fixed biological and genetical preconditions. Building upon these, four layers of influence on health can be identified: individual lifestyle factors, social and community networks, living and working conditions and general socio-economic, cultural and environmental conditions.
+A simpler and more common model on general determinants of health is the "rainbow model", developed by Dahlgren and Whitehead [@Dahlgren1991, p.11]. This model gives an overview of the main health determinants, reflecting the relationship between the individual, its environment and different health outcomes. Individuals are at the centre of the model with a set of fixed biological and genetical preconditions. Building upon these, four layers of influence on health can be identified: individual lifestyle factors, social and community networks, living and working conditions and general socio-economic, cultural and environmental conditions.
 
 **Figure 1: Main health determinants**
 
 ![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
 
-
+The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction of these variables at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV prevention. These campaigns were specifically target at girls. (REF)
 
 ---
 
 
 # Data Sources
 
-For this research, two main sources of data were explored. Firstly, databases comprising information for several countries were examined in order to increase comparability of the data. Among the most commonly used databases in the field of this research, it is worth mentioning those from UNAIDS, World Bank, Global Fund for AIDS, Tuberculosis and Malaria, WHO, the Institute for Health Metrics and Evaluation, PEPFA and the AIDS Data Hub. Secondly, country-specific data was used to check the trends of some of the most important variables of this research and to enable micro level analysis. These databases include those from the National Bureau of Statistics (from each country under analysis), Demographic Health Surveys (DHS) and the AIDS Indicator Survey (AIS), obtained from the United States Agency for International Development (USAID).  
+This paper utilises data from two different sources. For HIV/AIDS incidence rates at the country level, this research explored several databases such as UNAIDS, World Bank, Global Fund for AIDS, Tuberculosis and Malaria, WHO, the Institute for Health Metrics and Evaluation, PEPFA and the AIDS Data Hub. The database used for the data analysis was the one from UNAIDS given that it provided panel data for the period 2000-2012. All the other variables used in this research were obtained from the World Development Indicators (WDI) from the World Bank. 
+
+
 
 ## World Development Indicators (WDI)
 
@@ -123,16 +126,12 @@ The WDI database comprises 1342 indicators clustered in 10 thematic areas that r
 WDI have been used in a wide range of fields and HIV/AIDS research is not an exception. For examples of relevant literature that also make use of WDI please see [@Haacker2002], [@Talbott2007] and [@Kalemli2011]. A list of all WDI indicators used for this research can be found in the Appendix.
 
 
-## Demographic Health Surveys (DHS) and AIDS Indicator Survey (AIS)
+## UNAIDS Dataset
 
-DHS have a high reputation for collecting accurate and nationally representative household data [@WB2014]. Relevant HIV/AIDS literature used the DHS data like [@Haacker2002] and [@WSS2014]. 
-For the case of Vietnam three datasets for the years 2005, 2002 and 1997 are available in USAID's DHS database. The most recent available DHS dataset will be used for the micro level analysis of this research. The DHS was conducted by the General Statistical Office National Institute for Hygiene and Epidemiology between September and December 2005. There are three core questionnaires in DHS surveys: a household, a women's and a men's questionnaire. The DHS sample for Vietnam counts 6337 households, including 7289 observations for female respondents (women aged 15 to 49) and 6707 observations for male respondents (men aged 15 to 49).
 
-As an extension of the DHS data, the micro analysis also integrates the AIDS Indicator Survey (AIS) for Vietnam, again being conducted in 2005. The AIS provides nationally representative estimates of HIV rates, by collecting blood from representative samples of the population of both men and women in a country. The AIS for Vietnam includes 1675 households. In all households, women and men aged 15-49 are eligible to participate in the survey. The linkage of DHS' HIV test results to the full DHS survey record (without personal identifiers) allows for an in-depth analysis of the socio-demographic and behavioural factors associated with HIV prevalence.
- 
-Both datasets can be downloaded as Stata System File, Flat Data, SAS System File and SPSS System File. Individual and AIS datasets can also be downloaded as a hierarchical file format.   
+Who used the data before? how does the data look like? in which format can one access the data?
+  
 
-It is worth mentioning that special permission was granted in downloading the DHS and AIS databases, representing a potential challenge for the reproducibility of our research. 
  
 ---
 # Methodology and Data Analysis
@@ -157,7 +156,7 @@ $$ln(I_{it}) = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN
 
 Where I stands for HIV/AIDS incidence, SE stands for socioeconomic, cultural and environmental factors, WLC stands for working and living conditions, SCN stands for social and community networks and ILF stands for individual lifestyle factors. 
 
---
+---
 
 # Data Gathering and Cleaning
 
@@ -173,6 +172,8 @@ The second database used for this research was downloaded from UNAIDS' website a
 After renaming the variables, a unique identifier was created and missing values were recoded as NAs. Moreover, some observations in the database were not specific numbers; instead, it was indicated that for that year, prevalence was below a certain threshold (0.01%). In those cases, these observations were replaced by 0.009. The final step in the cleaning of the UNAIDS database consisted of deleting missing values for the dependent variable and deleting the regions with an iso2c equal to a country's iso2c (NA and ZA) to avoid problems in the merging process. 
 
 Once both databases were cleaned, the next step was to merge the datasets using the combination of iso2c and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing that UNAIDS' dataset included observations from 1990 to 2012 so all observation between 1990 and 1999 were dropped. Finally, unnecessary columns from the new database were eliminated.
+
+---
 
 # Descriptive Statistics
 
@@ -433,7 +434,7 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 ## Female Unemployment Share in Selected Countries
 ![Figure11a](fig11a.png)
 
-
+---
 
 # Inferential Statistics
 
@@ -441,13 +442,13 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 
 The data loaded from the Worldbank contained a lot of missing data because some countries do not report information on specific variables on a yearly basis. A high fraction of missing values produces a variety of problems and limitations to the data analysis. The paper imputed the missing data by using the "Amelia" package to solve this problem. "Amelia"  generates by default five multiple, complete datasets that contain estimations of missing data points.
 
-To enable the data imputation highly collinear variables had to be dropped. The test for variance inflation factors showed that in a simple OLS regression model integrating all independent variables, three variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital and between Primary Education and Female School Enrollment. In a first step, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, Primary Education and GDP. After having further problems of multicollinearity with GDPpc we also excluded Healthcare Expenditure and two variables that were created for the descriptive statistics part only, when showing the difference of HIV/AIDS Incidence over time (Incidence2 and IncidenceDif).
+Before the data imputation highly collinear variables had to be dropped. The level of the Variance Inflation Factors 
 
 ```{r, echo=FALSE, include=FALSE}
 ###  Imputing missing values with amelia package
 
 # check for Variance Inflation
-collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + ShFemUnempl + FemSchool + LifeExpect + DPT + Measles + Population + Incidence2 + IncidenceDif, data=Merged)
+collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Water + Sanitation + Unemploym + HCexpendpc + ShFemUnempl + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
 ```
 
 
@@ -457,13 +458,14 @@ collinear1 <- lm(Incidence ~ GDP + GDPpc + Rural + CO2 + HCexpend + Primary + Wa
 ```
 
 ```{r, echo=FALSE, include=FALSE}
-collinear2 <- lm(Incidence ~ GDPpc + Rural + CO2 + Water + Sanitation + HCexpend + ShFemUnempl + Unemploym + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
+collinear2 <- lm(Incidence ~ GDPpc + Rural + CO2 + Water + Sanitation + HCexpendpc + ShFemUnempl + Unemploym + FemSchool + LifeExpect + DPT + Measles + Population, data=Merged)
 vif(collinear2)
 # Testing for multicollinearity
 collinear2 <- vif(collinear2)
 ```
 
 
+As can be seen from the Scatterplots (see Appendix) most of the variables are not normally distributed. Further, the variables all have different scales. Therefore, the independent variables were logged for enabling comparisons in the data analysis part.
 
 ```{r, echo=FALSE, include=FALSE}
 
@@ -474,7 +476,7 @@ Merged$Primary <- NULL
 Merged$Incidence2 <- NULL
 Merged$IncidenceDif <- NULL
 Merged$FemUnempl <- NULL
-Merged$HCexpendpc <- NULL
+Merged$HCexpend <- NULL
 
 
 # save data for presentation
@@ -496,13 +498,13 @@ dev.off()
 
 ## Model 1 - Comparison of countries with an HIV Incidence Rate below and above the Median
 
-For Model 1 logistic regressions are used for predicting the likelihood that a country has a low HIV incidence rate (the dependent variable Y is equal to 1, rather than 0) given certain values of the HIV determinants (values of X) being hypothetically assumed. As explained in the descriptive statistics part, the dependent variable of Model 1 is a dummy variable, being 1 if the HIV incidence rate is below the median and 0 for countries with an HIV incidence rate above the median. 
+For Model 1 logistic regressions are used for predicting the likelihood that a country has a low HIV incidence rate (the dependent variable Y is equal to 1, rather than 0) given certain values of the HIV determinants (values of X) being hypothetically assumed. 
 
-As Odds and Odds ratios are difficult to interpret and do not allow to make direct statements about predictors in our model, predicted probabilities are calculated after running the logistic regressions. The interpretation of the logistic regression results presented in table 1 will thus focus only on the significance of the variables. 
+As the incidence variable is highly skewed to the left, the most accurate measure of the central tendency of the distribution is the median. Therefore, the dependent variable is coded as a dummy variable, being 1 if the HIV incidence rate is below the median and 0 for countries with an HIV incidence rate above the median. 
 
-A detailed analysis of the predicted probabilities will be given for the main variable of interest Female School Enrollment. For the predicted probability quintiles of Female School Enrollment are computed and applied to four different scenarios, the case studies that were introduced in the descriptive statistics part.
+As Odds and Odds ratios are difficult to interpret and to present to a broad audience predicted probabilities are calculated after running the logistic regressions. The interpretation of the logistic regression results presented in table 1 will focus only on the significance of the variables. 
 
-From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 1 faces problems of heteroscedasticity, as a smaller dispersion around the regression line can be observed for lower values of X compared to higher values of X.
+A more detailed analysis of the predicted probabilities will be given for the main variables of interest Female School Enrollment and Share of Female Unemployment. Predicted probability scenarios are calculated for the four case studies that were introduced in the descriptive statistics part.
 
 
 ```{r, echo=FALSE, include=FALSE}
@@ -523,7 +525,7 @@ Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanit
 # Regression Results of Logistic Regression
 
 # create table with nice labels
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
 labels_1 <- as.data.frame(summary(Model1.out)$coef)
 labels_1$Variables <- Variables
 labels_1 <- MoveFront(labels_1, "Variables")
@@ -531,8 +533,7 @@ names(labels_1) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "
 knitr::kable(labels_1, digits = 2, row.names = FALSE, caption = "Logistic Regression Results of Model 1")
 ```
 
-From the logistic regression results presented in Table 1 it can be seen that the variables GDP per capita, Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are showing statistically significant results at the 95 percent confidence level. 
-The variables Immunization against DPT, Immunization against Measles, Access to Water, Access to Sanitation and Healthcare Expenditure and Share of Female Unemployment are however not statistically significant.
+
 
 ```{r, echo=FALSE, include = FALSE}
 
@@ -651,10 +652,8 @@ Botswana1.out <-  setx(Model2.out,
 
 # Calculating the Predicted Probabilities
 Botswana1.out <- sim(Model2.out, x = Botswana1.out)
-
 ```
 
-The predicted probabilities were calculated by using the "Zelig"-package as Zelig has the option to handle multiply-imputed data frames. The predicted probabilities plots show that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the Scenario of Uganda the strongest effect can be observed effect.
 
 **Predicted Probabilities for Female School Enrollment**
 
@@ -676,19 +675,7 @@ title(main="Scenario of Malawi", cex.main = 2)
 
 
 ## Model 2 - Focusing on Countries with an HIV Incidence Rate above the Median
-
-As explained in the decriptive statistics part, the dependent variable for the second empirical model is only considering countries with a higher HIV/AIDS incidence than the median. Further, the dependent variable for this model was logged to better approach a normal distribution.
-
-From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 2 faces problems of heteroscedasticity, as a smaller dispersion around the regression line for lower and higher values of x can be observed. Therefore, in Model 2 it will be controlled for robust standard errors.
-It cannot be controlled for fixed effects of Model 2, because the degrees of freedom are too low. 
-
-From the OLS regression output presented in Table 2 it can be seen, that the variables Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are still statistically significant at the 95 percent confidence level (like the regression outputs in Model 1). Further, the variable share of Female Unemployment became significant in this even though it was insignificant in Model 1. GDP per capita is only significant at a 90 percent confidence level in this model.  
  
-Surprisingly, the sign of the coefficient for Female School Enrollment does not match our theoretical assumptions on the direction of the effect and the finding is also opposite to the effect that was initially found for the predicted probabilities of Model 1. According to the regression output, a one percent increase in Female School Enrollment triggers a 1.38 percent increase in HIV/AIDS incidence. 
-
-The sign of the coefficient for the variable share of Female Unemployment is confirming the hypothetically assumed effect. A one percent decrease in Female Unemployment compared to total unemployment is followed by a 0.13 percent decrease in the HIV/AIDS incidence rate. 
-
-
 ```{r, echo=FALSE, include=FALSE}
 ### Creating a subset with the countries that have an incidence rate higher than the mean
  
@@ -712,20 +699,53 @@ summary(b.out)
 
 #plot(b.out)
  
-# Linear pooled OLS regression with robust standard errors
+# Estimating with robust standard errors
  
 c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls", robust= "weave")
 
 
 summary(c.out)
  
+# Estimating the model with fixed effects
+ 
+d.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl + as.factor(country), data = Imputed2.out, model = "ls")
+ 
+summary(d.out)
+ 
+# Estimating the model with fixed effects and robust standard errors
+ 
+e.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl + as.factor(country), data = Imputed2.out, model = "ls", robust=TRUE)
+ 
+summary(e.out)
+ 
+#install.packages("mitools")
+#library("mitools")
+# imp.data <- imputationList(Imputed2.out$imputations)
+# mitools.fit <- MIcombine(with(imp.data, lm(Incidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + Inverse + FemSchool + year))
+# summary(mitools.fit)                         
+# mitools.res <- summary(mitools.fit)
+# mitools.res <- cbind(mitools.res, df = mitools.fit$df)
+# mitools.res
+ 
 ```
  
  
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
+# Showing Linear pooled OLS regression in output table with nice labels
+Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+labels_2 <- as.data.frame(summary(b.out)$coef)
+labels_2$Variables <- Variables
+labels_2 <- MoveFront(labels_2, "Variables")
+names(labels_2) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
+knitr::kable(labels_2, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2")
+ 
+```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
 # Linear pooled OLS regression with robust standard errors
-Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "CO2 Emissions per capita", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
 labels_3 <- as.data.frame(summary(c.out)$coef)
 labels_3$Variables <- Variables
 labels_3 <- MoveFront(labels_3, "Variables")
@@ -733,35 +753,52 @@ names(labels_3) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "
 knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2 with robust standard errors")
  
 ```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Fixed effects estimation 
+knitr::kable(as.data.frame(summary(d.out)$coef), caption = "Fixed Effects Regression Results of Model 2")
+
+#Variables <- c("Constant", "GDP per capita", "Share of Rural Population", "Share of CO2", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "Immunisation against DPT", "Immunisation against Measles", "Female School Enrollment", "Share of Female Unemployment")
+#labels_4 <- as.data.frame(summary(d.out)$coef)
+#labels_4$Variables <- Variables
+#labels_4 <- MoveFront(labels_4, "Variables")
+#names(labels_4) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
+#knitr::kable(labels_4, output.lines=1:11, digits = 2, row.names = FALSE)
 
 
+```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+# Fixed effects estimation with robust standard errors
+#knitr::kable(as.data.frame(summary(e.out)$coef))
+ 
+```
+ 
+```{r, echo=FALSE, results="asis", error=FALSE}
+ 
+#knitr::kable(as.data.frame(summary(e.out)$coef))
+ 
+```
+
+The test for variance inflation factors showed that in our first logistic regression model six variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital, Unemployment and Female unemployment, Primary education and female schooling. Therefore, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, namely unemployment, primary education and GDP.
+
+---
 
 # Conclusions
 
-It can be concluded, that half of the variables that were assumed to be important determinants for the HIV/AIDS incidence rate - in line with the rainbow model of Dahlgren and Whitehead on the main determinants of health - were found to have statistically significant effects on HIV/AIDS incidence at the country level in both models. 
-
-The level "Social and Community Networks" of the rainbow model was of highest interest for this paper, as it considers less well established determinants of HIV/AIDS. The variables used for operationalizing this level were Female School Enrollment and Female Unemployment Rate compared to the total unemployment rate.   
-In Model 1 a highly significant effect for Female School Enrollment was found and the predicted probabilities showed that the effect was going in the assumed direction. In Model 2 however, the sign of the coefficient surprisingly changed and was found to be opposite of the direction of the effect found in Model 1. 
-The explanation this paper provides for the difference of the effects for Female Schooling lies in the different samples of the two models analysed.
-
-While in Model 1 the sample includes all countries that data was available for, Model 2 is using a restricted sample, focusing only on the countries with an HIV/AIDS incidence rate above the median. The countries considered in Model 2 are mostly poor African countries and Female School Enrollment might have a different effect in these countries compared to the countries in the unrestricted sample. Acoording to Dupas, sex education of teenagers in Kenya is not about explaining the risks of sexually transmitted diseases and promoting the use of condoms but rather exclusively focusing on abstinence promotion programmes [@Dupas2009]. This might not be as effective compared to  HIV/AIDS awareness raising and prevention programmes, as abstince is against the human nature. Therefore, Female School Enrollment might not have the same effect in poor African countries compared to other countries in our sample. 
-
-For Female Unemployment compared to total unemployment no statistically significant effect was found in Model 1. In Model 2 however the effect of Female Unemployment Share became significant and the direction of the effect was in line with the original assumptions for this variable.
-An explanation for the insignificant effects for Female Unemployment Share in Model 1 and the statistically significant effect in Model 2 is assumably lying in the problems of the coding of the variable. This paper used Female Unemployment Share as a proxy for female labour market participation because data on female labour market participation was not available. The proxy might however come with inaccuracies in the measurement.
-
 [@Sachs2002]
 [@Dupas2009]
-
-
-
-# Limitations
 
 
 The IncidenceDif variable would actually be the most accurate variable in terms of measuring whether Target 6.A of the MDGs ("have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014] was fulfilled until 2012. A dummy variable on whether MDG6a was fulfilled or not is however not very suitable for identifying the specific determinants of HIV/AIDS at country level as it is not differentiating between the relative size of the effect (an increase from 0,001 to 0,002 would be as bad as a change from 0,1 to 0,3).
 
 Model 2 - variable is not perfect normal distribution - better beta regression
 
-Famale Labour Market Participation
+---
+
+# Limitations
 
 The paper had to make some compromises regarding its original aim as outlined in the first research proposal. Due to the significant amount of missing values and the presence of multicollinearity, a considerable number of variables had to be dropped and could ultimately not be integrated in the logistic regression models. 
  
@@ -812,7 +849,7 @@ scatterplotMatrix(~ Incidence + GDPpc + Rural + CO2 + LifeExpect + Population,
 
 ```{r, echo=FALSE}
 # Scatterplot of variables for living and working conditions 
-scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpend,
+scatterplotMatrix(~ Incidence + Water + Sanitation + Unemploym + HCexpendpc,
                   transform=TRUE, data=Merged)
 ```
 
