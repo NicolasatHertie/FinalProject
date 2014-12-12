@@ -656,6 +656,7 @@ Botswana1.out <-  setx(Model2.out,
 # Calculating the Predicted Probabilities
 Botswana1.out <- sim(Model2.out, x = Botswana1.out)
 
+
 ```
 
 The predicted probabilities were calculated by using the "Zelig"-package as Zelig has the option to handle multiply-imputed data frames. The predicted probabilities plots show that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the Scenario of Uganda the strongest effect can be observed effect.
@@ -719,6 +720,8 @@ summary(b.out)
 # Linear pooled OLS regression with robust standard errors
  
 c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls", robust= "weave")
+
+confint(c.out)
 
 summary(c.out)
  
