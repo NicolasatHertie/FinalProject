@@ -374,7 +374,6 @@ GDPpc <- ggplot(data=CaseStudies, aes(x=year, y=GDPpc, group=country, color=coun
 ggsave("fig9.png", width=7, height=4, dpi=100)
 
 FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()+ ylab( "Gross Female School Enrollment") + xlab("Year")
-FemSchool <- FemSchool + scale_y_continuous(limits=c(30, 150))
 ggsave("fig10.png", width=7, height=4, dpi=100)
 
 
@@ -386,7 +385,7 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 # FemUnempl <- FemUnempl + ggtitle("Figure 11: Level of Female Unemployment in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig11.png", width=7, height=4, dpi=100)
 
-ShFemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=ShFemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point()+ ylab( "Female Unemployment") + xlab("Year")
+ShFemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=ShFemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point() + ylab("Female Unemployment") + xlab("Year")
 # FemUnempl <- FemUnempl + ggtitle("Figure 11a: Level of Female Unemployment Share in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig11a.png", width=7, height=4, dpi=100)
 
@@ -661,10 +660,7 @@ The predicted probabilities were calculated using the ZELIG-package as ZELIG has
 ```{r, echo=FALSE, message=FALSE, error=FALSE, fig.width=19, fig.height=12, dpi=150}
 # Plot predicted probabilities of Model 1 for Female School Enrollment
 par(mfrow=c(2,2))
-
-plot(Uganda1.out, xlab="vvvv", ylab="hhhh")
-
-?plot
+plot(Uganda1.out)
 title(main="Scenario of Uganda", cex.main = 2)
 plot(Lesotho1.out)
 title(main="Scenario of Lesotho", cex.main = 2)
