@@ -112,7 +112,7 @@ print(Cases)
 
 # WHAT DID WE FIND?
 
-- We were interested in looking at the impact of two variables on HIV incidence rates. The first variable was female schooling. Early education represents an excellent opportunity to conduct HIV preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female schooling on HIV incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female schooling would reduce HIV incidence. The data supported this hypothesis.
+- We were interested in looking at the impact of two variables on HIV incidence rates. The first variable was female school enrollment. Early education represents an excellent opportunity to conduct HIV preventation campaigns before children become sexually active. Given that girls are more often negotiating for protected sex, we looked at the impact of female school enrollment on HIV incidence rates. We expected that this variable would be significant and have a negative impact on incidence, which means that higher female school enrollment would reduce HIV incidence. The data supported this hypothesis.
 
 **Female School Enrollment - Case Studies**
 
@@ -124,7 +124,7 @@ CaseStudies <- CaseStudies[which (CaseStudies$country=="Lesotho" | CaseStudies$c
 
 FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()+ ylab( "Gross Female School Enrollment") + xlab("Year")
 
-print(FemSchool)
+suppressWarnings(print(FemSchool))
 ```
 
 - The second variable that we explore was the difference between female unemployment and total unemployment. We expected that a high rate of female employment to total unemployment would describe a society where women have relatively less power than men and this would mean that men could more easily bargain for unprotected sex. As a consequence, one would expect that a higher difference in female to total unemployment would be associated with higher HIV incidence rates. This hypothesis was not supported by out findings, according to which the difference between female and total unemployment has no impact on HIV incidence rates.
@@ -160,7 +160,7 @@ print(M, tag = 'chart')
 
 Choose from the dropdown list the variables that you will like to see in the x and y axis. If you want to change the color coding or make the size of the bubbles change according to the values of a specific variable, you can select that on the upper-right corner. If you are interested in the behavior of a particular country, you can select that on the lower-right corner. Also note that you can create bar and line charts by choosing the respective tab on the upper side of the tool.
 
-We were particularly interested in looking at the evolution of HIV incidence rates (y axis) in relation to the evolution of female schooling (x axis). As you can see, while female schooling increases, HIV incidence rates decrease.
+We were particularly interested in looking at the evolution of HIV incidence rates (y axis) in relation to the evolution of female school enrollment (x axis). As you can see, while female school enrollment increases, HIV incidence rates decrease.
 
 
 
@@ -171,11 +171,12 @@ We were particularly interested in looking at the evolution of HIV incidence rat
 
 We believe that these findings can lead to interesting policy recommendations. 
 
-1. **INVEST IN GIRLS EDUCATION:** If female schooling is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
+1. **INVEST IN GIRLS EDUCATION:** If female school enrollment is a significant determinant of HIV, investing in female education is not only a good investment because it will improve the skills of women and increase their opportunities to get a job but also because it will make the population healthier thus reducing the costs of the health system.
 
 2. **FURTHER EXPLORE THE LINK BETWEEN FEMALE LABOUR PARTICIPATION AND HIV INCIDENCE:** When looking at the difference between female and total unemployment, we realised that this indicator is not exactly portraying the variable that we wanted to analyze, namely female labour participation. It would be therefore interesting to test whether this variable is a good determinant of HIV before reaching any conclusion.
 
 3. **LOOK AT MORE DETERMINANTS OF SPECIFIC DISEASES:** We realised that there is a gap in the literature exploring disease specific determinants of health regarding the impact of social and community level factors. It would be interesting to evaluate the determinants of other diseases and see whether these coincide with the determinants of HIV.
 
 
-Thank you for visiting our website. If you have any questions, please contact us at m.moellenkamp@mpp.hertie-school.org or n.rosemberg@mpp.hertie-school.org
+Thank you for visiting our website. 
+If you have any questions, please contact us at m.moellenkamp@mpp.hertie-school.org or n.rosemberg@mpp.hertie-school.org
