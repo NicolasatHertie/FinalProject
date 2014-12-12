@@ -235,7 +235,7 @@ Merged$Dummy <- as.numeric(Merged$Incidence<=0.07)
 
 This section consists of the descriptive analysis of the main variables of interest. Tables, plots and histograms are shown to understand the distribution of the variables. 
 
-Figure 2 shows that in most countries of our dataset, HIV/AIDS incidence rates decreased between 2000 and 2012 (see Figure 2). The blue line in Figure 2 is however only representing the general downward trend of HIV/AIDS incidence over time in our sample. The black dots above the blue line show that the dispersion of the observations around the trend. As it can be seen, there are severe outliers that show a strong increase in incidence rate there are still some outliers to this trend (mostly .
+Figure 2 shows that in most countries of our dataset, HIV/AIDS incidence rates decreased between 2000 and 2012 (see Figure 2). The blue line in Figure 2 is however only representing the general downward trend of HIV/AIDS incidence over time in our sample. The black dots above the blue line show the dispersion of the observations around this trend. As it can be seen, there are severe outliers that still show a strongly higher HIV/AIDS incidence rate compared to the rest (mostly southern African countries).
 
 **Figure 2: HIV/AIDS Incidence Rate over Time**
 
@@ -249,11 +249,11 @@ dev.off()
 
 ![Figure2](fig2.png)
 
-From Figures 3 and 4 (see Appendix) it can be seen which countries are not following this general downward sloping trend. Figure 3 plots the range of observations on HIV/AIDS incidence per country. The figure shows that most countries have low HIV/AIDS incidence rates slightly above 0, but some outliers (countries with high incidence rates) can be identified.
+Looking at the incidence rate at the country level (Figures 3 and 4 in Appendix) it can be seen which countries are not following the general trend. While most countries have an HIV/AIDS incidence rate slightly above 0, some outliers (countries with high incidence rates) can be identified (Figure 3 in Appendix).
 
-Figure 4 is showing the direction of the change of the HIV/AIDS incidence rate compared to the previous year by country. To analyse the change of the incidence rate from one year to the following year the incidence variable was lagged by one year and a new variable, calculating the difference between the lagged and the original incidence variable was created. 
+A similar pattern can be detected when analysing the direction of the change of the HIV/AIDS incidence rate compared to the previous year by country (Figure 4 in Appendix). To analyse the change of the incidence rate from one year to the following, the incidence variable was lagged by one year and a new variable, calculating the difference between the lagged and the original incidence rate was created. 
 
-When looking at the distribution of the HIV/AIDS incidence variable in a histogram it becomes apparent that the incidence variable is indeed highly skewed to the left and only few incidence rates are higher than 1.
+When looking at the distribution of the HIV/AIDS incidence variable in a histogram it becomes apparent that the incidence rate is indeed highly skewed to the left and only few incidence rates are higher than 1.
   
   
 **Figure 5: Distribution of HIV/AIDS Incidence Rate**
@@ -270,7 +270,7 @@ axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 ```
 
 
-In order to deal with the skewness of this variable, a dummy variable, differentiating between countries with a high HIV incidence and countries with a low HIV incidence is created for the first empirical model. 
+In order to deal with the skewness of this variable, a dummy variable, differentiating between countries with a high HIV incidence and countries with a low HIV incidence was created for the first empirical model. 
 The most accurate measure of the central tendency of a skewed distribution is the median. Therefore, the dependent variable was coded as 1 if the HIV incidence rate is below the median and a value of 0 was assigned to countries with an HIV incidence rate above the median. 
 
 \pagebreak
@@ -288,8 +288,8 @@ Histdep <- hist(Merged$Dummy, breaks= seq(0,1.5,by=0.1), xlab="HIV/AIDS Incidenc
 axis(side=2, at=seq(0,800,100), labels=seq(0,800,100))
 ```
 
-For the second empirical model the sample was reduced and focuses only on countries with a high HIV/AIDS incidence in order to explore, whether the determinants identified in Model 1 hold true when zooming in on the more problematic cases.
-As the dependent variable was still skewed to the left after restricting the sample to those countries above the mean a log transformation was necessary to approach a normal distribution.
+For the second empirical model the sample was reduced and focused only on countries with a high HIV/AIDS incidence rate in order to explore whether the determinants identified in Model 1 hold true when zooming in on the more problematic cases.
+As the dependent variable was still skewed to the left after restricting the sample to those countries above the mean a log transformation was applied to approach a normal distribution.
 
 ```{r, echo=FALSE, include=FALSE}
 
@@ -308,18 +308,16 @@ HighInc$lIncidence <- log(HighInc$Incidence)
 hist(HighInc$lIncidence, xlab="HIV/AIDS Incidence Rate", main=NULL)
 ```
 
-Scatterplots were created for all independent variables by the categories of Dahlgrehn's model in order to see whether further relevant variables are skewed (see Appendix). Due to a high skewness in most of the variables and to ensure a better comparability of the variable units all but one of the independent variables in the sample were logged.
+Scatterplots were created for all independent variables by the levels of Dahlgrehn's model, in order to see whether further relevant variables are skewed and to broader explore the relationship of the selected determinants for each level (see Appendix). Due to high skewness in most of the variables and to ensure a better comparability of the variable units, all but one of the independent variables in the sample were logged.
 
-The only variable that was not logged is a variable comparing the share of female unemployment to total unemployment. The distribution of this variable comes already close to a normal distribution, so a log transformation is not urgently necessary. Further, it has some values of zero, which would make it difficult to log the variable.
+The only variable that was not logged is a variable comparing the share of female unemployment to total unemployment. The distribution of this variable comes already close to a normal distribution, so a log transformation is not of utter importance. Further, it has some values of zero, which would make it impossible to log the variable without further transforming it.
 
 
 # Case Studies - Botswana, Lesotho, Uganda and Malawi
 
-In the following, four case studies are presented to develop a better understanding of best practices and bad practices among countries with high changes in Incidence rates between 2000 and 2012. The cases were selected by the "extreme case selection method" on the basis of peculiar positive or negative changes in incidence rates over time (see Figure 4 in Appendix) [@Gerring2008].
+In the following, four case studies are presented to develop a better understanding of best practices and bad practices among countries with high changes in HIV/AIDS incidence rates between 2000 and 2012. The cases were selected by the "extreme case selection method" on the basis of peculiar positive or negative changes in incidence rates over time (see Figure 4 in Appendix) [@Gerring2008].
 
-Figure 8 shows the two best practices (green colour), namely Botswana and Malawi and the two bad practices (red colour), Uganda and Lesotho that were selected. In Figure 9 it
-
-
+Figure 8 shows two best practices (green colour), namely Botswana and Malawi and two bad practices (red colour), Uganda and Lesotho. In Figure 9 it...
 
 
 ```{r, echo=FALSE}
@@ -443,9 +441,9 @@ FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, co
 
 ## Data Imputation
 
-The data loaded from the Worldbank contained a lot of missing data because some countries do not report information on specific variables on a yearly basis. A high fraction of missing values produces a variety of problems and limitations to the data analysis. The paper imputed the missing data by using the "Amelia" package to solve this problem. "Amelia"  generates by default five multiple, complete datasets that contain estimations of missing data points.
+The data loaded from the Worldbank contained a lot of missing data because some countries do not report information on specific variables on a yearly basis. A high share of missing values creates several problems and limits the data analysis. The paper imputed the missing data by using the "Amelia" package. "Amelia"  generates by default five multiple, complete datasets that contain estimations of missing data points.
 
-To enable the data imputation highly collinear variables had to be dropped. The test for variance inflation factors showed that in a simple OLS regression model integrating all independent variables, three variables showed high multicollinearity and had a higher variance inflation than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between the GDP and GDP per capital and between Primary Education and Female School Enrollment. In a first step, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, Primary Education and GDP. After having further problems of multicollinearity with GDPpc we also excluded Healthcare Expenditure and two variables that were created for the descriptive statistics part only, when showing the difference of HIV/AIDS Incidence over time (Incidence2 and IncidenceDif).
+To enable the data imputation highly collinear variables had to be dropped. To test for multicollineraity this paper used variance inflation factors (VIF). The VIF showed that in a simple OLS regression model integrating all independent variables, three variables were highly multicollinear and had a variance inflation higher than the threshold of 10. We tested the multicollinearity between the variables and found that there was high multicollinearity between GDP and GDP per capital and between Primary Education and Female School Enrollment. In a first step, we excluded one of these multicollinear variables for each group based on their explanatory strength for our research question, Primary Education and GDP. After having further problems of multicollinearity with GDPpc we also excluded Healthcare Expenditure and two variables that were created for the descriptive statistics part only, when showing the difference of HIV/AIDS Incidence over time (Incidence2 and IncidenceDif).
 
 ```{r, echo=FALSE, include=FALSE}
 ###  Imputing missing values with amelia package
@@ -500,13 +498,9 @@ dev.off()
 
 ## Model 1 - Comparison of countries with an HIV Incidence Rate below and above the Median
 
-For Model 1 logistic regressions are used for predicting the likelihood that a country has a low HIV incidence rate (the dependent variable Y is equal to 1, rather than 0) given certain values of the HIV determinants (values of X) being hypothetically assumed. As explained in the descriptive statistics part, the dependent variable of Model 1 is a dummy variable, being 1 if the HIV incidence rate is below the median and 0 for countries with an HIV incidence rate above the median. 
+For Model 1 logistic regressions are used for predicting the likelihood that a country has a low HIV incidence rate (the dependent variable Y is equal to 1, rather than 0) given certain values of the explanatory variable. As explained in the descriptive statistics part, the dependent variable of Model 1 is a dummy variable, that takes the value of 1 if the HIV incidence rate is below the median and 0 for countries with an HIV incidence rate above the median. 
 
-As Odds and Odds ratios are difficult to interpret and do not allow to make direct statements about predictors in our model, predicted probabilities are calculated after running the logistic regressions. The interpretation of the logistic regression results presented in table 1 will thus focus only on the significance of the variables. 
-
-A detailed analysis of the predicted probabilities will be given for the main variable of interest Female School Enrollment. For the predicted probability quintiles of Female School Enrollment are computed and applied to four different scenarios, the case studies that were introduced in the descriptive statistics part.
-
-From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 1 faces problems of heteroscedasticity, as a smaller dispersion around the regression line can be observed for lower values of X compared to higher values of X.
+As Odds and Odds ratios are difficult to interpret and do not allow to make direct statements about predictors in our model, predicted probabilities were calculated after running the logistic regressions. The interpretation of the logistic regression results presented in table 1 will thus focus only on the significance of the variables. 
 
 
 ```{r, echo=FALSE, include=FALSE}
@@ -658,8 +652,9 @@ Botswana1.out <- sim(Model2.out, x = Botswana1.out)
 
 ```
 
-The predicted probabilities were calculated by using the "Zelig"-package as Zelig has the option to handle multiply-imputed data frames. The predicted probabilities plots show that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the Scenario of Uganda the strongest effect can be observed effect.
+A detailed analysis of the predicted probabilities will be given for the main variable of interest Female School Enrollment. To calculate the predicted probabilities, quantiles of Female School Enrollment are computed and applied to four different scenarios. Each scenario fixes the mean values of the explanatory variables (excluding Female School Enrollment) to those of the case studies that were introduced in the descriptive statistics part.
 
+The predicted probabilities were calculated using the ZELIG-package as ZELIG has the option to handle multiply-imputed data frames. The predicted probabilities plots show that a higher quartile of Female School Enrollment triggers a lower HIV/AIDS incidence. At the fourth quartile, the HIV/AIDS incidence is lowest in all four graphs. The uncertainty around the estimates is reflected by the bandwidth of the plots. It can be concluded, that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the Scenario of Uganda the strongest effect can be observed.
 **Predicted Probabilities for Female School Enrollment**
 
 ```{r, echo=FALSE, message=FALSE, error=FALSE, fig.width=19, fig.height=12, dpi=150}
@@ -677,20 +672,21 @@ title(main="Scenario of Malawi", cex.main = 2)
 
 ```
 
-
+From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 1 faces problems of heteroscedasticity, as a smaller dispersion around the regression line can be observed for lower values of X compared to higher values of X.
 
 ## Model 2 - Focusing on Countries with an HIV Incidence Rate above the Median
 
-As explained in the decriptive statistics part, the dependent variable for the second empirical model is only considering countries with a higher HIV/AIDS incidence than the median. Further, the dependent variable for this model was logged to better approach a normal distribution.
+As explained in the previous section, the dependent variable for the second empirical model is only considering countries with an HIV/AIDS incidence rate higher than the median. Further, the dependent variable for this model was logged to better approach a normal distribution.
 
-From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 2 faces problems of heteroscedasticity, as a smaller dispersion around the regression line for lower and higher values of x can be observed. Therefore, in Model 2 it will be controlled for robust standard errors.
-It cannot be controlled for fixed effects of Model 2, because the degrees of freedom are too low. 
+From the Residuals vs. Fitted plot (see Appendix) it can be assumed, that Model 2 faces problems of heteroscedasticity, as a smaller dispersion around the regression line can be observed (for lower and higher values of x). Given the presence of heteroscedasticity in Model 2, the regression will be estimated with robust standard errors to decrease the heteroscedasticity of the error term.
 
-From the OLS regression output presented in Table 2 it can be seen, that the variables Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are still statistically significant at the 95 percent confidence level (like the regression outputs in Model 1). Further, the variable share of Female Unemployment became significant in this even though it was insignificant in Model 1. GDP per capita is only significant at a 90 percent confidence level in this model.  
+(It cannot be controlled for fixed effects of Model 2, because the degrees of freedom are too low.) 
+
+From the OLS regression output presented in Table 2 it can be seen that the variables Share of Rural Population, CO2 Emissions per capita, Life Expectancy and Female School Enrollment are still statistically significant at the 95 percent confidence level (like the regression outputs in Model 1). Furthermore, the variable share of Female Unemployment became significant in this model (it was insignificant in Model 1). GDP per capita is only significant at a 90 percent confidence level.  
  
 Surprisingly, the sign of the coefficient for Female School Enrollment does not match our theoretical assumptions on the direction of the effect and the finding is also opposite to the effect that was initially found for the predicted probabilities of Model 1. According to the regression output, a one percent increase in Female School Enrollment triggers a 1.38 percent increase in HIV/AIDS incidence. 
 
-The sign of the coefficient for the variable share of Female Unemployment is confirming the hypothetically assumed effect. A one percent decrease in Female Unemployment compared to total unemployment is followed by a 0.13 percent decrease in the HIV/AIDS incidence rate. 
+The sign of the coefficient for the variable Female Unemployment compared to total unemployment is supporting the intuition of this paper: a one percent decrease in Female Unemployment compared to total unemployment is *ceteris paribus* followed by a 0.13 percent decrease in the HIV/AIDS incidence rate. 
 
 
 ```{r, echo=FALSE, include=FALSE}
