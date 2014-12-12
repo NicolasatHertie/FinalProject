@@ -15,8 +15,8 @@ toc: true
 ```{r, echo=FALSE, include=FALSE, error=FALSE}
 ### 1. Setting Working Directory & Loading the data
 # Setting the Working Directory
-setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
-#setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
+# setwd("/Users/Meilin/Desktop/Collaborative Social Data/FinalProject")
+setwd("/Users/Nico/Documents/Hertie/Social science data analysis/Final project/FinalProject")
 
 # Loading the Citations
 pkgs <- c("RJSONIO","WDI","dplyr","tidyr","knitr","DataCombine","lmtest","httr","XML","plyr","Amelia","XLConnect","countrycode","ggplot2","magrittr","fmsb","car","stargazer")
@@ -85,7 +85,7 @@ library(gridExtra)
 
 The expiry date of the Millennium Development Goals ([MDGs](http://www.un.org/millenniumgoals/aids.shtml)) is just around the corner, meanwhile the post-2015 agenda is being discussed intensively. In this context, it is important to assess the achievement of the MDGs and try to understand why some goals have not been reached. 
 
-Reducing HIV incidence is an important aim of the MDGs. Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014]. In most regions of the world this goal has been fulfilled: new HIV infections declined and the overall number of new HIV/AIDS infections per 100 adults (15-49 years old) decreased by 44 per cent between 2001 and 2012 [@UN2014]. However, this trend cannot be observed in all 189 member states of the United Nations. On the contrary, HIV/AIDS prevalence has even increased in some countries. 
+Reducing HIV/AIDS incidence is an important aim of the MDGs. Target 6.A of the MDGs specifies that countries should "have halted by 2015 and begun to reverse the spread of HIV/AIDS" [@UN2014]. In most regions of the world this goal has been fulfilled: new HIV infections declined and the overall number of new HIV/AIDS infections per 100 adults (15-49 years old) decreased by 44 per cent between 2001 and 2012 [@UN2014]. However, this trend cannot be observed in all 189 member states of the United Nations. On the contrary, HIV/AIDS prevalence has even increased in some countries. 
 
 --- 
 
@@ -99,7 +99,7 @@ The literature reviewed for this paper identifies a myriad of determinants of he
 
 # Literature Review
 
-Hurrelmann [@Hurrelmann1989, p.76] advocates an interdisciplinary framework for analysing what determines health outcomes. He considers it necessary to use a model that integrates all the aspects of the organism, individual and the environment.
+Hurrelmann advocates an interdisciplinary framework for analysing what determines health outcomes [@Hurrelmann1989, p.76]. He considers it necessary to use a model that integrates all the aspects of the organism, individual and the environment.
 
 One framework that shows the interaction between individual and environmental factors over time is the salutogenic model developed by Antonovsky in 1979. According to Hurrelmann, Antonovsky's model is a great contribution to interdisciplinary theory, but the downside is its complexity [@Hurrelmann1989]. 
 
@@ -109,29 +109,29 @@ A simpler and more common model on general determinants of health is the "rainbo
 
 ![Figure1](http://www.publichealth.ie/sites/default/files/D-%26-W.jpg)
 
-The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction between these dimensions at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV incidence. These campaigns were specifically targeting girls. (REF)
+The link between health, education and gender was extensively researched by Sachs and Dupas. While Sachs provides several examples of the interaction between these dimensions at the macro level, Dupas successfully tested the linkage between female education and health by conducting randomized control trials in Kenya [@Sachs2002][@Dupas2009]. Among the findings of her research, it is worth mentioning the significant effect of risk reduction campaigns on HIV incidence. These campaigns were specifically targeting girls [@Dupas2009]. This research presents interesting evidence on the link between female school enrollment and HIV/AIDS incidence rates. To the extent that female school enrollment exposes girls to HIV/AIDS prevention campaigns before they become sexually active, it increases the likelihood that they will negotiate for protected sex, thus reducing the chances of getting infected. 
 
 ---
 
 
 # Data Sources
 
-This paper utilises data from two different sources. For HIV/AIDS incidence rates at the country level, this research explored several databases such as UNAIDS, World Bank, Global Fund for AIDS, Tuberculosis and Malaria, WHO, the Institute for Health Metrics and Evaluation, PEPFA and the AIDS Data Hub. The database used for the data analysis was the one from UNAIDS given that it provided panel data for the period 2000-2012. All the other variables used in this research were obtained from the World Development Indicators (WDI) from the World Bank. 
+This paper utilises data from two different sources. For HIV/AIDS incidence rates at the country level, this research explored several databases such as UNAIDS, World Bank, Global Fund for AIDS, Tuberculosis and Malaria, WHO, the Institute for Health Metrics and Evaluation, PEPFA and the AIDS Data Hub. The database used to measure HIV/AIDS incidence rates in the data analysis was the one from UNAIDS given that it provided panel data for the period 2000-2012. All the other variables used in this research were obtained from the World Development Indicators (WDI) of the World Bank. 
 
 
 
 ## World Development Indicators (WDI)
 
-The WDI database comprises 1342 indicators clustered in 10 thematic areas that range from health and education to infrastructure and public sector data. Information is available for 214 countries and dates back to 1960. All indicators are available for free at the [World Bank website](http://databank.worldbank.org/data/views/variableselection/selectvariables.aspx?source=world-development-indicators) and can be downloaded as an Excel sheet, CSV, tabbed TXT or SDMX. In addition, there is a special R package [WDI](http://cran.r-project.org/web/packages/WDI/WDI.pdf) designed to download and use the data. 
+The WDI database comprises 1,342 indicators clustered in 10 thematic areas that range from health and education to infrastructure and public sector data. Information is available for 214 countries and dates back to 1960. All indicators are available for free at the [World Bank website](http://databank.worldbank.org/data/views/variableselection/selectvariables.aspx?source=world-development-indicators) and can be downloaded as an Excel sheet, CSV, tabbed TXT or SDMX. In addition, there is a special R package [WDI](http://cran.r-project.org/web/packages/WDI/WDI.pdf) designed to download and use the data. 
 
-WDI have been used in a wide range of fields and HIV/AIDS research is not an exception. For examples of relevant literature that also make use of WDI please see [@Haacker2002], [@Talbott2007] and [@Kalemli2011]. A list of all WDI indicators used for this research can be found in the Appendix.
+WDI have been used in a wide range of fields and HIV/AIDS research is not an exception. For examples of relevant literature that also make use of WDI please see Haacker, Talbott and Kalemli [@Haacker2002]  [@Talbott2007]  [@Kalemli2011]. A list of all WDI indicators used for this research can be found in the Appendix.
 
 
 ## UNAIDS Dataset
 
-The UNAIDS dataset is available for free at the UNAIDS website (REF) and it has been put together by UNAIDS during the research for the UNAIDS GAP Report 2014 (REF). It provides data on HIV incidence, prevalence and HIV-related deaths for the period 1990-2013. The dataset aditionally provides uncertainty bounds (low and high estimated) for most of the variables. Further, there is information for all UN member states and there is also regionally aggregated data. Some of the indicators such as prevalence and incidence are disaggregated for the differents demographic groups, including data for adults, youth and children, male and female. 
+The UNAIDS dataset is available for free at the UNAIDS ([website](http://www.unaids.org/l)) and it has been put together by UNAIDS during the research for the UNAIDS GAP Report 2014 [@UNAIDS2014]. It provides data on HIV/AIDS incidence, prevalence and HIV-related deaths for the period 1990-2013. The dataset aditionally provides uncertainty bounds (low and high estimated) for most of the variables. Further, there is information for all UN member states and there is also regionally aggregated data. Some of the indicators such as prevalence and incidence are disaggregated for the different demographic groups, including data for adults, youth and children, male and female. 
 
-UNAIDS databases are often used in public health research. Some examples of papers using UNAIDS data on HIV incidence and prevalence are Letamo (REF), Bennell (REF) and Ferlay et al.(). 
+UNAIDS databases are often used in public health research. Some examples of papers using UNAIDS data on HIV/AIDS incidence and prevalence are Letamo, Bennell and Ferlay et al. [@Letamo2011]  [@Bennell2002]  [@Ferlay2010]. 
 
 The data is available as an Excel file.
  
@@ -165,16 +165,16 @@ Where I stands for HIV/AIDS incidence, SE stands for socioeconomic, cultural and
 
 This section focuses on the process of gathering the data and cleaning the databases to prepare the variables for the data analysis. 
 
-The first step in this process was uploading the databases to R Studio. The first dataset consists of 29 World Development Indicators and it was downloaded from World Bank's website. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regionally aggregated data was dropped. Further, 169 rows that contained only NA values were deleted.
+The first step in this process was uploading the databases to R Studio. The first dataset consists of 29 World Development Indicators and it was downloaded from World Bank's website. These indicators represent the independent variables used for this research plus the population indicator that is used to filter small countries. Provided that the focus of this research is on country level data, all regionally aggregated data was dropped. Further, 169 rows that contained only missing values were deleted.
 
 After dropping empty rows, the data frame was alphabetically (ascending) ordered, rows were grouped by iso2c code and variables were renamed.
 
-The dataset was further cleaned preparing the data for imputation using the AMELIA package. This process requires that the panel is as balanced as possible, as it feeds from all variables to predict values for the missing observations. A more detailed explanation of the imputation process will be providid in the inferential statistics section of this paper. In order to improve the balance of the panel, the next step consisted of dropping variables for which more than 80% of the observations (552) were missing.  In addition, countries with a population smaller than one million inhabitants were dropped from the database. 59 countries fell in that category: 46 islands, 5 European countries (Andorra, Liechtenstein, Luxemburg, Monaco and Montenegro), Bahrain, Bhutan, Belize, Djibouti, Equatorial Guinea, Guyana, Qatar and Suriname. Dropping these countries does not affect the research as the remaining database still contains a highly heterogeneous sample both in geographic and socio-economic terms. Furthermore, deleting these countries improves the dataset as most of these countries lacked information for most of the studied variables. 
+The dataset was further cleaned preparing the data for multiple imputation using the AMELIA package. This process requires that the panel is as balanced as possible, as it feeds from all variables to predict values for the missing observations. A more detailed explanation of the imputation process will be provided in the inferential statistics section of this paper. In order to improve the balance of the panel, the next step consisted of dropping variables for which more than 80 percent of the observations (552) were missing.  In addition, countries with a population smaller than one million inhabitants were dropped from the database. 59 countries fell in that category: 46 islands, 5 European countries (Andorra, Liechtenstein, Luxemburg, Monaco and Montenegro), Bahrain, Bhutan, Belize, Djibouti, Equatorial Guinea, Guyana, Qatar and Suriname. Dropping these countries does not affect the research as the remaining database still contains a highly heterogeneous sample both in geographic and socio-economic terms. Furthermore, deleting these countries improves the dataset as most of these countries lacked information for most of the variables under scrutiny. 
  
-The second database used for this research was downloaded from UNAIDS' website and it provides information on HIV/AIDS incidence rates (as well as prevalence and deaths caused by HIV/AIDS). The data is publicly available. All columns except the country and the incidence rate were dropped. 
-After renaming the variables, a unique identifier was created and missing values were recoded as NAs. Moreover, some observations in the database were not specific numbers; instead, it was indicated that for that year, prevalence was below a certain threshold (0.01%). In those cases, these observations were replaced by 0.009. The final step in the cleaning of the UNAIDS database consisted of deleting missing values for the dependent variable and deleting the regions with an iso2c equal to a country's iso2c (NA and ZA) to avoid problems in the merging process. 
+The second database used for this research was downloaded from the UNAIDS' website and it provides information on HIV/AIDS incidence rates (as well as prevalence and deaths caused by HIV/AIDS). The data is publicly available. All columns except the country and the incidence rate were dropped. 
+After renaming the variables, a unique identifier was created and missing values were recoded as NAs. Moreover, some observations in the database were not specific numbers; instead, it was indicated that for that year, prevalence was below a certain threshold (<0.01%). In those cases, these observations were replaced by 0.009. The final step in the cleaning of the UNAIDS database consisted of deleting missing values for the dependent variable and deleting the regions with an iso2c equal to that of a particular country (NA and ZA) to avoid problems in the merging process. 
 
-Once both databases were cleaned, the next step was to merge the datasets using the combination of iso2c and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing that UNAIDS' dataset included observations from 1990 to 2012 and WDI data covers the 2000-2012 period so all observation from the UNAIDS dataset between 1990 and 1999 were dropped. Finally, unnecessary columns from the new database were eliminated.
+Once both databases were cleaned, the next step was to merge the datasets using a combination of iso2c and year as unique identifier. In the merging process, only observations that were present in both datasets were kept. It is worth noticing, that the UNAIDS' dataset included observations from 1990 to 2012 and WDI data covers the 2000-2012 period. This is why all observation from the UNAIDS dataset between 1990 and 1999 were dropped. Finally, all columns that were created by default when downloading WDI data to R (e.g. latitude, longitude and capital city) were deleted as they did not provide relevant information for this research. 
 
 ---
 
@@ -244,7 +244,7 @@ Figure 2 shows that in most countries of our dataset, HIV/AIDS incidence rates d
 IncT <- ggplot(aes(x = year, y = Incidence), data = Merged) + geom_point(position = "jitter") + theme_bw() + geom_smooth()
 #IncT <- IncT + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig2.png", width=4, height=3, dpi=90)
-dev.off()
+#dev.off()
 ```
 
 ![Figure2](fig2.png)
@@ -656,6 +656,7 @@ Botswana1.out <-  setx(Model2.out,
 # Calculating the Predicted Probabilities
 Botswana1.out <- sim(Model2.out, x = Botswana1.out)
 
+
 ```
 
 The predicted probabilities were calculated by using the "Zelig"-package as Zelig has the option to handle multiply-imputed data frames. The predicted probabilities plots show that the effect of Female School Enrollment is going in the same direction for all four scenarios even though, the expected values for the predicted probabilities differ. For the Scenario of Uganda the strongest effect can be observed effect.
@@ -720,6 +721,7 @@ summary(b.out)
  
 c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls", robust= "weave")
 
+confint(c.out)
 
 summary(c.out)
  
@@ -751,7 +753,7 @@ A potential explanation for the difference in the significance of female school 
 With regards to the difference between female and total unemployment, model 1 found no statistical significance. In Model 2 however the effect of this variable became significant and the direction of the effect was in line with the original assumptions for this variable, i.e. that a higher difference in female to total unemployment would lead, *ceteris paribus*, to higher HIV/AIDS incidence rates. 
 An explanation for the insignificant effects of relative female unemployment in Model 1 and the statistically significant effect in Model 2 is assumably lying in the problems of the coding of the variable. This paper the difference between female and total unemployment as a proxy for female labour market participation because data on female labour market participation was not available. The proxy might however come with inaccuracies in the measurement. In addition, in low- and middle-income countries with a high share of agricultural production, female unemployment might be overestimated given that these countries tend to neglect the value created by female domestic employment. 
 
-[@Sachs2002]
+
 
 # Conclusions and Policy Recommendations
 
