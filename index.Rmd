@@ -37,7 +37,7 @@ Is it really a global problem? While HIV/AIDS incidence rates are highly concent
 
 **Distribution of HIV/AIDS in low- and middle-income countries**
 
-```{r, results='asis', echo=FALSE}
+```{r, results='asis', echo=FALSE, error=FALSE}
 IncidenceMap <- gvisGeoChart(Merged, locationvar = 'iso2c',
                         colorvar = 'Incidence',
                         options = list(
@@ -90,7 +90,7 @@ We were particularly interested in looking at some case studies to take a closer
 
 **Case Studies**
 
-```{r, results='asis', echo=FALSE}
+```{r, results='asis', echo=FALSE, error=FALSE}
 
 HighIncidence <- Merged[which (Merged$country=="Zimbabwe" | Merged$country=="Zambia"| Merged$country=="Swaziland" | Merged$country=="South Africa" | Merged$country=="Namibia" | Merged$country=="Mozambique" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Botswana"  | Merged$country=="Uganda"  | Merged$country=="Sierra Leone"  | Merged$country=="Papua New Guinea"), ] 
 
@@ -113,7 +113,7 @@ print(Cases)
 
 **Female School Enrollment - Case Studies**
 
-```{r, results='asis', echo=FALSE}
+```{r, results='asis', echo=FALSE, error=FALSE}
 
 CaseStudies <-HighIncidence
 CaseStudies <- CaseStudies[which (CaseStudies$country=="Lesotho" | CaseStudies$country=="Malawi" | CaseStudies$country=="Botswana"  | CaseStudies$country=="Uganda"), ] 
@@ -128,7 +128,7 @@ print(FemSchool)
 
 For a better understanding of the dynamics of our datasets, feel free to play with the following interactive tool: 
 
-```{r, results='asis', echo=FALSE}
+```{r, results='asis', echo=FALSE, error=FALSE}
 
 Demo <- Merged
 Demo <- Demo[,c(2:21)]
