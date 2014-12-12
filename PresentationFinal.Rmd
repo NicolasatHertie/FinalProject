@@ -52,7 +52,7 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 **Methodology**
 
 - Model 1: Logistic Regression & Predicted Probabilities
-- Model 2: Pooled OLS Regression 
+- Model 2: Pooled OLS Regression (with robust stand. Errors)
 
 
 ## Distribution of HIV Incidence Rates
@@ -61,6 +61,9 @@ $$ I_{it} = {\beta}_0 +{\beta}_1 SE_{it} + {\beta}_2 WLC_{it} + {\beta}_3 SCN_{i
 
 ## HIV Incidence Rates over Time 
 ![Figure2](fig2.png)
+
+## Selecting interesting Cases for Changes in HIV/AIDS Incidence
+![Figureb](figb.png)
 
 ## Case Studies
 ![Figurea](figa.png)
@@ -114,6 +117,7 @@ Model1.out <- zelig(Dummy ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanit
 ```
 
 
+## Predicted Probabilities for Female School Enrollment
 
 ```{r, echo=FALSE, results="asis", error=FALSE, fig.width=19, fig.height=12, dpi=150}
 # Regression Results of Logistic Regression
@@ -233,9 +237,6 @@ plot(Botswana1.out)
 title(main="Scenario of Botswana", cex.main = 2)
 plot(Malawi1.out)
 title(main="Scenario of Malawi", cex.main = 2)
-
-?kable
-
 ```
 
 
@@ -262,14 +263,6 @@ for (i in 1:5){
   Imputed2.out$imputations[[i]] <- Imputed2.out$imputations[[i]][which(Imputed.out$imputations[[i]]$Incidence>=0.07), ]
 }
  
-# Running a linear pooled OLS regression
-
-b.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls")
- 
-summary(b.out)
-
-#plot(b.out)
- 
 # Linear pooled OLS regression with robust standard errors
  
 c.out <- zelig(lIncidence ~ lGDPpc + lRural + lCO2 + lHCexpend + lWater + lSanitation + lLifeExpect + lDPT + lMeasles + lFemSchool + ShFemUnempl, data = Imputed2.out, model = "ls", robust= "weave")
@@ -283,11 +276,11 @@ summary(c.out)
 ```{r, echo=FALSE, results="asis", error=FALSE}
  
 # Linear pooled OLS regression with robust standard errors
-Variables <- c("Constant", "GDP per capita", "Rural Population", "CO2 Emissions", "Healthcare Expenditure", "Access to Water", "Access to Sanitation", "Life Expectancy", "DPT Immunisation", "Measles Immunisation", "Female School Enrollment", "Female Unemployment Share")
+Variables <- c("Constant", "GDP per capita", "Rural Population", "CO2 Emissions", "Healthcare Expenditure", "Water Access", "Sanitation Access", "Life Expectancy", "DPT Immunisation", "Measles Immunisation", "Female School Enrollment", "Female Unemployment")
 labels_3 <- as.data.frame(summary(c.out)$coef)
 labels_3$Variables <- Variables
 labels_3 <- MoveFront(labels_3, "Variables")
-names(labels_3) <- c("Variables", "Coefficients", "Std. Error", "T-Statistic", "P-Value")
+names(labels_3) <- c("Variables", "Coeff.", "Std. Error", "T-Stat.", "P-Value")
 knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression Results of Model 2 with robust standard errors", longtable=TRUE)
  
 ```
@@ -296,23 +289,16 @@ knitr::kable(labels_3, digits = 2, row.names = FALSE, caption = "OLS Regression 
 ## Conclusions & Limitations - Model 1
 
 1. **Logistic Regression Results of Model 1 (all countries)**
-- Generally in line with hypothesis
-- Most of the variables are statistically significant
-- Only Immunisation Variables and GDP per capital are not significant
+- Results are generally in line with hypothesis
+- GDP per capital, Rural Population, CO2 Emissions, Life Expectancy and Female School Enrollment are statistically significant
+- BUT: Female Unemployment compared to total unemployment is not statistically significant
 
 2. **Predicted Probabilities of Model 1 (selected countries)**
 - Direction of effect of Female School Enrollment matches initial assumptions for all case studies
-- Direction of effect of Female Unemployment does not match initial assumptions for any case study
 
 ## Conclusions & Limitations - Model 2
 
 3. **Linear Regression of Model 2 (countries with incidence above mean)**
-- Significance of some variables changes
-- Female School Enrollment and Female Unemployment remain highly significant
-- Effect of Female School Enrollment becomes positive (!)
-
-4. **Fixed Effects Regression of Model 2 (countries with incidence above mean)**
-- Significance of some variables changes compared to simple linear model
-- Female School Enrollment and Female Unemployment become insignificant
-- Immunisation rates for DPT & Measles become highly significant (!)
-
+Significance of some variables changes:
+- Female Unemployment compared to total unemployment becomes highly significant
+- Effect of Female School Enrollment remains highly significant but becomes positive (!)
