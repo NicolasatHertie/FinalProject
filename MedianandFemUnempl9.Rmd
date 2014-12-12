@@ -317,8 +317,9 @@ The only variable that was not logged is a variable comparing the share of femal
 
 In the following, four case studies are presented to develop a better understanding of best practices and bad practices among countries with high changes in HIV/AIDS incidence rates between 2000 and 2012. The cases were selected by the "extreme case selection method" on the basis of peculiar positive or negative changes in incidence rates over time (see Figure 4 in Appendix) [@Gerring2008].
 
-Figure 8 shows two best practices (green colour), namely Botswana and Malawi and two bad practices (red colour), Uganda and Lesotho. In Figure 9 it...
+Figure 8 shows the four case studies that were selected: two best practices (green colour), namely Botswana and Malawi and two bad practices (red colour), Uganda and Lesotho. 
 
+**Figure 8: Interesting Cases for Change in HIV Incidence Rates**
 
 ```{r, echo=FALSE}
 
@@ -339,8 +340,6 @@ ggsave("figa.png", width=7, height=4, dpi=100)
 
 ```
 
-**Figure 8: Interesting Cases for Change in HIV Incidence Rates**
-  
   
 ```{r, results='asis', echo=FALSE}
  
@@ -362,7 +361,6 @@ print(Cases)
 # Creating subsets
 CaseStudies <- Merged[which (Merged$country=="Botswana" | Merged$country=="Lesotho" | Merged$country=="Malawi" | Merged$country=="Uganda"), ] 
 
-
 Water <- ggplot(data=CaseStudies, aes(x=year, y=Water, group=country, color=country)) + geom_line() + geom_point()+ ylab( "Access to Water") + xlab("Year")
 # Water <- Water + ggtitle("Figure 7: Access to Water in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
 ggsave("fig7.png", width=7, height=4, dpi=100)
@@ -376,8 +374,11 @@ GDPpc <- ggplot(data=CaseStudies, aes(x=year, y=GDPpc, group=country, color=coun
 ggsave("fig9.png", width=7, height=4, dpi=100)
 
 FemSchool <- ggplot(data=CaseStudies, aes(x=year, y=FemSchool, group=country, color=country, shape=country))  + geom_line () + geom_point()+ ylab( "Gross Female School Enrollment") + xlab("Year")
-# FemSchool <- FemSchool + ggtitle("Figure 10: Level of Female Schooling in Selected Countries") + theme(plot.title = element_text(lineheight=3, face="bold"))
+FemSchool <- FemSchool + scale_y_continuous(limits=c(30, 150))
 ggsave("fig10.png", width=7, height=4, dpi=100)
+
+
+?ggplot
 
 CaseStudies$FemUnempl <- as.numeric(CaseStudies$FemUnempl)
 
@@ -413,26 +414,28 @@ HCE <- ggplot(data=CaseStudies, aes(x=year, y=HCexpend, group=country, color=cou
 Incidence <- ggplot(data=CaseStudies, aes(x=year, y=Incidence, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
 
 FemUnempl <- ggplot(data=CaseStudies, aes(x=year, y=FemUnempl, group=country, color=country, shape=country)) + geom_line() + geom_point() + guides(fill=FALSE)
-```
-
-```{r, echo=FALSE}
-# Creating a joint plot with some descriptive statistics
-#library(grid)
-#grid.arrange(Incidence,FemUnempl, ncol=1)
 
 ```
 
 
-## Case Studies
+In Figure 9 the case studies are plotted individually, showing the development of the HIV/AIDS incidence over time for each of the four case studies. Botswana and Malawi show a steep decrease in HIV incidence rates from 2000 to 2012. Malawi is even reaching to an HIV/AIDS incidence rate that is lower than 0.5 in 2012. The HIV/AIDS incidence rate of Uganda in contrast increases continuously between 2000 and 2012. The HIV/AIDS incidence rate of Lesotho is slowly decreasing over time, however there were to backlashes one in 2009 and one in 2011. 
+
+**Figure 9: HIV/AIDS Incidence in Selected Countries**
+
 ![Figurea](figa.png)
 
-## Female Schooling in Selected Countries
+Figure 10 shows the school enrollment rates of females per country over time. The rate of females enrolled in schools showed a general decreasing tendency with some backlashes for Uganda. In Lesotho the female school enrollment rate also decreased over time but stagnated between 2009 and 2012. Botswana had a very low and stable female school enrollment rate between 2000 and 2009. Malawi had a high show a steep decrease in HIV incidence rates from 2000 to 2012. Malawi is even reaching to an HIV/AIDS incidence rate that is lower than 0.5 in 2012. The HIV/AIDS incidence rate of Uganda in contrast increases continuously between 2000 and 2012. The HIV/AIDS incidence rate of Lesotho is slowly decreasing over time, however there were to backlashes one in 2009 and one in 2011. 
+
+**Female School Enrollment in Selected Countries**
+
 ![Figure10](fig10.png)
 
-## Female Unemployment in Selected Countries
+**Female Unemployment in Selected Countries**
+
 ![Figure11](fig11.png)
 
-## Female Unemployment Share in Selected Countries
+**Female Unemployment Share in Selected Countries**
+
 ![Figure11a](fig11a.png)
 
 
@@ -571,7 +574,7 @@ Uganda1.out <- sim(Model2.out, x = Uganda1.out)
 ```{r, echo=FALSE, include = FALSE}
 #### MODEL 1.2.2 - Calculating predicted probabilities for Quintiles of Female School Enrollment for the Scenario Lesotho
 
-# Creating a subset for calculating the means
+# Creating a subset  for calculating the means
 Lesotho <- finalimputed[which (finalimputed$country=="Lesotho"), ]
 
 # Calculating the means for Lesotho
