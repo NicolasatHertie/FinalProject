@@ -113,7 +113,7 @@ print(Cases)
 
 **Female School Enrollment - Case Studies**
 
-```{r, results='asis', echo=FALSE, error=FALSE}
+```{r, results='asis', echo=FALSE, error=FALSE, message=FALSE}
 
 CaseStudies <-HighIncidence
 CaseStudies <- CaseStudies[which (CaseStudies$country=="Lesotho" | CaseStudies$country=="Malawi" | CaseStudies$country=="Botswana"  | CaseStudies$country=="Uganda"), ] 
