@@ -21,6 +21,10 @@ repmis::LoadandCite(pkgs)
 # Loading the merged files from the Working directory
 Merged <- read.csv(file="MergedData")
 # MergedOld <- read.csv(file="MergedOld")
+
+# Creating Variable Share of Female Unemployment compared to Total Unemployment
+Merged$ShFemUnempl <- as.numeric(Merged$FemUnempl) - as.numeric(Merged$Unemploym)
+
 ```
 
 # WELCOME
@@ -134,7 +138,7 @@ For a better understanding of the dynamics of our datasets, feel free to play wi
 ```{r, results='asis', echo=FALSE, error=FALSE}
 
 Demo <- Merged
-Demo <- Demo[,c(2:21)]
+Demo <- Demo[,c(2:22)]
 Demo <- plyr::rename(Demo, c("GDPpc" = "GDP per capita"))
 Demo <- plyr::rename(Demo, c("Rural" = "Rural Population (%)"))
 Demo <- plyr::rename(Demo, c("CO2" = "CO2 Emissions"))
@@ -148,6 +152,7 @@ Demo <- plyr::rename(Demo, c("LifeExpect" = "Life Expectancy"))
 Demo <- plyr::rename(Demo, c("DPT" = "Immunization against DPT"))
 Demo <- plyr::rename(Demo, c("Measles" = "Immunization against Measles"))
 Demo <- plyr::rename(Demo, c("FemUnempl" = "Female Unemployment Rate"))
+Demo <- plyr::rename(Demo, c("ShFemUnempl" = "Female Unemployment Rate 2 (Female Unemployment compared to Total Unemployment)"))
 Demo <- plyr::rename(Demo, c("Incidence" = "HIV Incidence Rate"))
 
 
