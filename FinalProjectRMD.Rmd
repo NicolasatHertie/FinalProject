@@ -5,7 +5,7 @@ bibliography:
 - RpackageCitations.bib
 date: "12 December 2014"
 output: 
-  pdf_document:
+  html_document:
     number_sections: yes
 highlight: zenburn
 authors: Meilin Moellenkamp and Nicolas Rosemberg
