@@ -21,12 +21,11 @@ Please report any bugs or suggestions at: https://github.com/NicolasatHertie/Fin
 
 ### Instructions to use this repository:
 
-Besides the Readme file, our repository "FinalProject" contains two BibTeX files, an R file, two RMD files, two PDF files,
-and an HTML file. The PDFs and the HTML were created using the knit function of R Studio. 
+Besides the Readme file, our repository "FinalProject" contains two BibTeX files, an R file, two RMD files, two PDF files, an HTML file and a pciture. The PDFs and the HTML were created using the knit function of R Studio. 
 The referenced literature can be found in the BibTeX file "Literature.bib". The R Packages used for this paper are cited in
-the BibTeX file "Packages.bib". As the BibTeX files and the RMD files are dynamically linked, it is important to save all three 
-files in the same directory when running the RMD files. Further, the R file creates a dataset that is then used by both RMD files called "FinalProjectPresentation" and "FinalProjectRMD". Even though, these files are not dynamically linked, all files should be rooted at the same directory as the R file saves the final dataset in the directory where the RMD "FinalProjectRMD" is loading the dataset from. Further, the "FinalProjectRMD" is saving another final dataset which is needed for the RMD "FinalProjectPresentation". Alternatively, if the files are rooted in other sub-directories please specify the new relative paths before running the RMD files. 
-The "FinalProjectPresentation" RMD file contains the code to knit the beamer presentation that summarizes our research and findings. The presentation is also available as a PDF file with the same name "FinalProjectPresentation".
+the BibTeX file "RPackageCitations.bib". As the BibTeX files and the RMD files are dynamically linked, it is important to save all three files in the same directory when running the RMD files. Further, the R file creates a dataset that is then used by both RMD files called "FinalProjectPresentation" and "FinalProjectRMD". This is why it is of utter importance to run the "FinalProjectR" file before running the "FinalProjectRMD" one. Even though these files are not dynamically linked, all files should be rooted at the same directory as the R file saves the final dataset in the directory where the RMD "FinalProjectRMD" is loading the dataset from. Further, the "FinalProjectRMD" is saving another final dataset which is needed for the RMD "FinalProjectPresentation". Alternatively, if the files are rooted in other sub-directories please specify the new relative paths before running the RMD files. 
+
+The "FinalProjectPresentation" RMD file contains the code to knit the beamer presentation that summarizes our research and findings. The presentation is also available as a PDF file with the same name "FinalProjectPresentation". The "FinalProjectPresentation" file also uses the picture that is in the repository. This picture is a screenshot from the map produced in our website. 
 
 In addition to this, this repository includes a branch called gh-pages. In this branch we have 3 files: an RMD file, an html file and a png file. The RMD file includes the code to knit the html file which then creates our website.
 
