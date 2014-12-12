@@ -1,5 +1,7 @@
 ---
-output: html_document 
+output: 
+  html_document: 
+    theme: flatly
 authors: Meilin Moellenkamp and Nicolas Rosemberg
 bibliography:
 - RpackageCitations.bib
